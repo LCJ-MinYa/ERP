@@ -4,22 +4,9 @@
  * @flow
  */
 
-import React, { Component } from 'react';
 import {
   AppRegistry,
-  StyleSheet,
-  Text,
-  View
 } from 'react-native';
+import rootMain from './app/component/main/rootMain.js';
 
-var Main = require('./app/component/main/main.js');
-
-export default class ERP extends Component {
-    render() {
-        return (
-            <Main />
-        );
-    }
-}
-
-AppRegistry.registerComponent('ERP', () => ERP);
+AppRegistry.registerComponent('ERP', () => rootMain);
