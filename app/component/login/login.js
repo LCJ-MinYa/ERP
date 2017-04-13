@@ -35,6 +35,7 @@ var login = React.createClass({
                     <TextInput
                         style={styles.inputStyle}
                         placeholder='请输入登录账号'
+                        underlineColorAndroid={'transparent'}
                         onChangeText={(text)=>{
                             this.setState({
                                 username: text
@@ -47,7 +48,8 @@ var login = React.createClass({
                     <TextInput
                         style={styles.inputStyle}
                         placeholder='请输入登录密码'
-                        password='true'
+                        password={true}
+                        underlineColorAndroid={'transparent'}
                         onChangeText={(text)=>{
                             this.setState({
                                 password: text
