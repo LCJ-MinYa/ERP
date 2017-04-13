@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 
 import { 
-	StackNavigator,
-	TabNavigator
+  StackNavigator,
+  TabNavigator
 } from 'react-navigation'; 
 
 //tabbar导航
@@ -21,11 +21,12 @@ import msgScreen from '../msg/msg.js';
 import mineScreen from '../mine/mine.js';
 
 //navigator导航
+import loginScreen from '../login/login.js';
 import productListScreen from '../product/productList.js';
 
 const MainScreenNavigator = TabNavigator({
-  	Product: { screen: productScreen },
-  	Cart: { screen: cartScreen },
+    Product: { screen: productScreen },
+    Cart: { screen: cartScreen },
     Order: { screen: orderScreen },
     Msg: { screen: msgScreen },
     Mine: { screen: mineScreen }
@@ -46,7 +47,11 @@ const MainScreenNavigator = TabNavigator({
 //设置头部导航条是否作为根视图
 const rootMain = StackNavigator({
     Root: { screen: MainScreenNavigator },
-    ProductList: { screen: productListScreen }
+    ProductList: { screen: productListScreen },
+    Login: { screen: loginScreen },
+},{
+    headerMode: 'none',
+    initialRouteName: 'Login'
 });
 
 export default rootMain;

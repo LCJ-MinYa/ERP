@@ -12,9 +12,13 @@ import tabBar from '../common/tabBar.js';
 
 var product = React.createClass({
   	render() {
+  		const { navigate } = this.props.navigation;
     	return (
-      		<Text style={{marginTop: 100}} onPress={()=> this.props.navigation.navigate('ProductList')}>商品首页</Text>
+      		<Text style={{marginTop: 100}} onPress={()=> this.props.navigation.navigate('ProductList')}>商品首页{this.debug(navigate)}</Text>
     	);
+  	},
+  	debug(navigate){
+  		console.log(navigate);
   	}
 })
 
