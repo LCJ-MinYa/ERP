@@ -6,17 +6,17 @@ import {
 
 var getData = function(key){
     AsyncStorage.getItem(key, (error, data)=>{
-        alert(data);
+        console.log(data);
     })
 }
 var setData = function(key, value){
     AsyncStorage.setItem(key, value, ()=>{
-        alert("设置数据");
+        console.log("设置数据");
     });
 }
 var deleteData = function(){
     AsyncStorage.removeItem(key, ()=>{
-        alert("删除数据");
+        console.log("删除数据");
     });
 }
 

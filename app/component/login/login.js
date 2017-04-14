@@ -12,12 +12,13 @@ import {
 } from 'react-native';
 
 import customStorage from '../../utils/customStorage.js';
+import request from '../../utils/request.js';
 var {width, height} = Dimensions.get('window');
 
 var login = React.createClass({
     getInitialState: function() {
         return {
-            username: '',
+            userName: '',
             password: '' 
         };
     },
@@ -38,7 +39,7 @@ var login = React.createClass({
                         underlineColorAndroid={'transparent'}
                         onChangeText={(text)=>{
                             this.setState({
-                                username: text
+                                userName: text
                             })
                         }}
                     />
@@ -68,14 +69,19 @@ var login = React.createClass({
     	);
   	},
     clickLogin(){
-        let username = this.state.username;
+        let userName = this.state.userName;
         let password = this.state.password;
-        if(!username){
+        if(!userName){
             alert("请输入登录账号");
         }else if(!password){
             alert("请输入登录密码");
         }else{
-            alert("登录中...");
+            request.PostService('/api/user/login', {
+                userName: userName,
+                password: password
+            },function(result){
+                console.log(result);
+            })
         }
     }
 })
