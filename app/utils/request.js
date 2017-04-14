@@ -109,15 +109,13 @@ class request extends Component {
 		params.profileId = this.getProfileId();
 		params.timestamp = this.getTimestamp();
 		params.token = this.getToken();
-		params.signstr = this.getSingnStr(params, false);
-		console.log(params);
-		console.log(this.toQueryString(params));
+		params.signstr = this.getSingnStr(params);
 		//发送POST请求
 		fetch(URL, {
 			method: 'POST',
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
 			},
 			body: this.toQueryString(params)
 		})
