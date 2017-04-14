@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import customStorage from '../../utils/customStorage.js';
-import request from '../../utils/request.js';
+import Request from '../../utils/request.js';
 var {width, height} = Dimensions.get('window');
 
 var login = React.createClass({
@@ -65,6 +65,8 @@ var login = React.createClass({
                 >
                     <Text style={styles.btnText}>登录</Text> 
                 </TouchableHighlight>
+
+                <Request/>
             </View>
     	);
   	},
@@ -76,12 +78,14 @@ var login = React.createClass({
         }else if(!password){
             alert("请输入登录密码");
         }else{
-            request.PostService('/api/user/login', {
-                userName: userName,
-                password: password
-            },function(result){
-                console.log(result);
-            })
+            console.log(this);
+            console.log(Request);
+            // Request.PostService('/api/user/login', {
+            //     userName: userName,
+            //     password: password
+            // },function(result){
+            //     console.log(result);
+            // });
         }
     }
 })

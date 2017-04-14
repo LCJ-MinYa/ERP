@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import {
   	StyleSheet,
   	View,
+  	ActivityIndicator
 } from 'react-native';
 
 import storage from './customStorage.js';
@@ -12,6 +13,22 @@ import config from '../config/config.js';
 import sha1 from './sha1.js';
 
 class request extends Component {
+	constructor(props){
+		super(props);
+		this.state = {
+			isShowLoading: false
+		}
+	}
+
+	render(){
+		return(
+			<ActivityIndicator
+				animating={this.state.isShowLoading}
+				size={'large'}
+			/>
+		);
+	}
+
 	/*
      *  getProfileId获取profileId参数
      *  return:返回字符串形式的profileId
@@ -123,6 +140,7 @@ class request extends Component {
 		.then((result) => result.json())
 		//将数据通过回调返回
 		.then((resultJSON) => {
+			//this.setState({isShowLoading: false});
 			callback(resultJSON);
 		})
 		//捕获fetch错误异常
