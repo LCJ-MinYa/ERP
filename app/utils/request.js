@@ -26,9 +26,6 @@ var request = React.createClass({
 			/>
 		);
 	},
-	componentDidMount(){
-		console.log(this);
-	},
 
 	/*
      *  getProfileId获取profileId参数

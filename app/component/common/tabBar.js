@@ -1,6 +1,9 @@
 'use strict';
+import React, { Component } from 'react';
+
 import {
   StyleSheet,
+  Image
 } from 'react-native';
 
 var setNavigationOptions = function(obj, title, label, icon){

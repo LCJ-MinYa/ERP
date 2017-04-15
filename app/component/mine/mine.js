@@ -8,12 +8,18 @@ import {
   	Image
 } from 'react-native';
 import tabBar from '../common/tabBar.js';
+import storage from '../../utils/customStorage.js';
 
 var mine = React.createClass({
   	render() {
     	return (
-      		<Text>我的首页</Text>
+    		<View>
+    			<Text style={{marginTop: 100}} onPress={this.clearLogin}>我的首页</Text>
+    		</View>
     	);
+  	},
+  	clearLogin(){
+  		storage.clearAll();
   	}
 })
 
