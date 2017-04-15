@@ -126,6 +126,7 @@ var request = React.createClass({
 		params.timestamp = this.getTimestamp();
 		params.token = this.getToken();
 		params.signstr = this.getSingnStr(params);
+		console.log(params);
 		//发送POST请求
 		fetch(URL, {
 			method: 'POST',

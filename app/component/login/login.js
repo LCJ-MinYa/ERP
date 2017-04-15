@@ -86,6 +86,7 @@ var login = React.createClass({
                 console.log(result);
                 storage.setData("token",result.data.token);
                 storage.setData("profileId",result.data.profileId);
+                console.log(storage);
                 _this.props.navigation.navigate('Root');
             });
         }

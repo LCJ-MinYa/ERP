@@ -1,22 +1,17 @@
 'use strict';
 
-import {
-    AsyncStorage
-} from 'react-native';
+let Global = {};
 
 let getData = function(key){
-    return AsyncStorage.getItem(key)
-    .then((value)=>{
-        console.log(value);
-        return value;
-    })
+    for(let i in Global){
+        if(key == i){
+            return Global[i];
+        }
+    }
+    return undefined;
 }
 let setData = function(key, value){
-    let JsonStringValue = JSON.stringify(value);
-    return AsyncStorage.setItem(key, JsonStringValue)
-    .then(()=>{
-        console.log("设置" + key + '的值为' + JsonStringValue);
-    })
+    Global[key] = value;
 }
 let deleteData = function(key){
     return AsyncStorage.removeItem(key)
@@ -36,5 +31,6 @@ module.exports = {
     setData,
     deleteData,
     getData,
-    clearAll
+    clearAll,
+    Global
 }

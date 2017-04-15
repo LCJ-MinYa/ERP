@@ -29,13 +29,13 @@ import storage from '../../utils/customStorage.js';
 let initRoute;
 let token = storage.getData('token');
 let profileId = storage.getData('profileId');
-console.log(typeof(token));
-if(token && typeof(token) == 'string' && profileId && typeof(profileId) == 'string'){
+if(token && profileId){
     initRoute = 'Root';
 }else{
     initRoute = 'Login';
 }
 console.log(initRoute);
+console.log(storage);
 
 const MainScreenNavigator = TabNavigator({
     Product: { screen: productScreen },
