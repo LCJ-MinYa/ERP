@@ -66,7 +66,7 @@ var login = React.createClass({
                     <Text style={styles.btnText}>登录</Text> 
                 </TouchableHighlight>
 
-                <Request/>
+                <Request ref="request"/>
             </View>
     	);
   	},
@@ -78,14 +78,12 @@ var login = React.createClass({
         }else if(!password){
             alert("请输入登录密码");
         }else{
-            console.log(this);
-            console.log(Request);
-            // Request.PostService('/api/user/login', {
-            //     userName: userName,
-            //     password: password
-            // },function(result){
-            //     console.log(result);
-            // });
+            this.refs.request.PostService('/api/user/login', {
+                userName: userName,
+                password: password
+            },function(result){
+                console.log(result);
+            });
         }
     }
 })

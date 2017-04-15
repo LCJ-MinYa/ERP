@@ -12,14 +12,12 @@ import storage from './customStorage.js';
 import config from '../config/config.js';
 import sha1 from './sha1.js';
 
-class request extends Component {
-	constructor(props){
-		super(props);
-		this.state = {
-			isShowLoading: false
-		}
-	}
-
+var request = React.createClass({
+    getInitialState: function() {
+        return {
+            isShowLoading: false
+        };
+    },
 	render(){
 		return(
 			<ActivityIndicator
@@ -27,45 +25,48 @@ class request extends Component {
 				size={'large'}
 			/>
 		);
-	}
+	},
+	componentDidMount(){
+		console.log(this);
+	},
 
 	/*
      *  getProfileId获取profileId参数
      *  return:返回字符串形式的profileId
      */
-	static getProfileId(){
+	getProfileId(){
 		var profileId = storage.getData('profileId');
 		if(!profileId){
 			return '';
 		}
 		return profileId;
-	}
+	},
 
 	/*
      *  getTimestamp获取当前时间戳参数
      *  return:返回number类型时间戳
      */
-	static getTimestamp(){
+	getTimestamp(){
 		return Math.round(new Date().getTime() / 1000);
-	}
+	},
 
 	/*
      *  getToken获取用户保存的token
      *  return:返回string类型token
      */
-	static getToken(){
+	getToken(){
 		var token = storage.getData('token');
 		if(!token){
 			return '';
 		}
 		return token;
-	}
+	},
 
 	/*
      *  getParamsStr
      *  return:返回string类型parStr
      */
-    static getParamsStr(data){
+    getParamsStr(data){
 		var orgParams = [];
 	    for (var i in data) {
 	        orgParams.push(i)
@@ -88,22 +89,22 @@ class request extends Component {
 	    }
 	    console.log("parStr=====" + parStr);
 	    return parStr;     	
-    }
+    },
 
-    static getSingnStr(data){
+    getSingnStr(data){
     	var parStr = this.getParamsStr(data);
     	if(parStr.length > 0){
     		return sha1.sha1(parStr);
     	}
     	return '';
-    }
+    },
 
 	/*
      *  toQueryString更改JSON格式数据
      *  obj:传入obj参数
      *  return:返回字符串形式的参数
      */
-	static toQueryString(obj) {
+	toQueryString(obj) {
 	    return obj ? Object.keys(obj).sort().map(function (key) {
 	        var val = obj[key];
 	        if (Array.isArray(val)) {
@@ -113,7 +114,7 @@ class request extends Component {
 	        }
 	        return encodeURIComponent(key) + '=' + encodeURIComponent(val);
 	    }).join('&') : '';
-	}
+	},
 
 	/*
      *  post请求
@@ -121,7 +122,8 @@ class request extends Component {
      *  params:参数
      *  callback:回调函数
      */
-	static PostService(url, params, callback){
+	PostService(url, params, callback){
+		this.setState({isShowLoading: true});
 		let URL = config.API + url;
 		params.profileId = this.getProfileId();
 		params.timestamp = this.getTimestamp();
@@ -140,7 +142,7 @@ class request extends Component {
 		.then((result) => result.json())
 		//将数据通过回调返回
 		.then((resultJSON) => {
-			//this.setState({isShowLoading: false});
+			this.setState({isShowLoading: false});
 			callback(resultJSON);
 		})
 		//捕获fetch错误异常
@@ -148,6 +150,6 @@ class request extends Component {
         	console.error(error);
       	});
 	}
-}
+});
 
 export default request;
