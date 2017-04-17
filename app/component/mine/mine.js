@@ -19,7 +19,10 @@ var mine = React.createClass({
     	);
   	},
   	clearLogin(){
-  		storage.clearAll();
+  		storage.getData('token')
+  		.then((value)=>{
+  			console.log(value);
+  		})
   	}
 })
 

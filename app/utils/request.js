@@ -32,11 +32,15 @@ var request = React.createClass({
      *  return:返回字符串形式的profileId
      */
 	getProfileId(){
-		var profileId = storage.getData('profileId');
-		if(!profileId){
-			return '';
-		}
-		return profileId;
+		let profileId;
+		storage.getData('profileId')
+		.then((value)=>{
+			profileId = value;
+			if(!profileId){
+				return '';
+			}
+			return profileId;
+		})
 	},
 
 	/*
@@ -52,11 +56,15 @@ var request = React.createClass({
      *  return:返回string类型token
      */
 	getToken(){
-		var token = storage.getData('token');
-		if(!token){
-			return '';
-		}
-		return token;
+		let token;
+		storage.getData('token')
+		.then((value)=>{
+			token = value;
+			if(!token){
+				return '';
+			}
+			return token;
+		})
 	},
 
 	/*

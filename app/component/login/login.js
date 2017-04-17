@@ -19,8 +19,24 @@ var login = React.createClass({
     getInitialState: function() {
         return {
             userName: '',
-            password: '' 
+            password: '',
+            isLogin: false,
         };
+    },
+    componentDidMount(){
+        let token, profileId;
+        storage.getData('token')
+        .then((value)=>{ 
+            token = value;
+            storage.getData('profileId')
+            .then((value)=>{
+                profileId = value;
+                if(token && profileId){
+                    this.setState({isLogin: true});
+                    this.props.navigation.navigate('Root');
+                }
+            })
+        })
     },
   	render() {
     	return (
@@ -86,7 +102,6 @@ var login = React.createClass({
                 console.log(result);
                 storage.setData("token",result.data.token);
                 storage.setData("profileId",result.data.profileId);
-                console.log(storage);
                 _this.props.navigation.navigate('Root');
             });
         }

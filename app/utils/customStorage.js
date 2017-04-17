@@ -1,36 +1,29 @@
 'use strict';
 
-let Global = {};
+import {
+    AsyncStorage
+} from 'react-native';
+
+let setData = function(key, value){
+    return AsyncStorage.setItem(key, value);
+    return true;
+}
 
 let getData = function(key){
-    for(let i in Global){
-        if(key == i){
-            return Global[i];
-        }
-    }
-    return undefined;
+    return AsyncStorage.getItem(key);
 }
-let setData = function(key, value){
-    Global[key] = value;
-}
+
 let deleteData = function(key){
-    return AsyncStorage.removeItem(key)
-    .then(()=>{
-        console.log("删除成功");
-    })
+    return AsyncStorage.removeItem(key);
 }
 
 let clearAll = function(){
-    return AsyncStorage.clear()
-    .then(()=>{
-        console.log('清楚全部数据');
-    })
+    return AsyncStorage.clear();
 }
 
 module.exports = {
     setData,
     deleteData,
     getData,
-    clearAll,
-    Global
+    clearAll
 }

@@ -10,11 +10,15 @@ import {
 import { StackNavigator } from 'react-navigation';
 import tabBar from '../common/tabBar.js';
 
+import ProductHeader from '../common/productHeader.js';
+
 var product = React.createClass({
   	render() {
   		const { navigate } = this.props.navigation;
     	return (
-      		<Text style={{marginTop: 100}} onPress={()=> this.props.navigation.navigate('ProductList')}>商品首页</Text>
+      		<View style={styles.container}>
+                <ProductHeader/>
+            </View>
     	);
   	}
 })
@@ -22,7 +26,10 @@ var product = React.createClass({
 tabBar.setNavigationOptions(product, '商品首页', '商品', 'shopping');
 
 const styles = StyleSheet.create({
-
+    container:{
+        flex: 1,
+        backgroundColor: '#eee'
+    },
 });
 
 export default product;

@@ -1,13 +1,5 @@
 'use strict';
 
-import React,{ Component } from 'react';
-
-import {
-  StyleSheet,
-  View,
-  Text,
-} from 'react-native';
-
 import { 
   StackNavigator,
   TabNavigator
@@ -26,17 +18,6 @@ import productListScreen from '../product/productList.js';
 
 import storage from '../../utils/customStorage.js';
 
-let initRoute;
-let token = storage.getData('token');
-let profileId = storage.getData('profileId');
-if(token && profileId){
-    initRoute = 'Root';
-}else{
-    initRoute = 'Login';
-}
-console.log(initRoute);
-console.log(storage);
-
 const MainScreenNavigator = TabNavigator({
     Product: { screen: productScreen },
     Cart: { screen: cartScreen },
@@ -53,6 +34,9 @@ const MainScreenNavigator = TabNavigator({
         },
         style:{
             backgroundColor: '#fafafa',
+        },
+        indicatorStyle: {
+            height: 0
         }
     }
 });
@@ -64,7 +48,13 @@ const rootMain = StackNavigator({
     Login: { screen: loginScreen },
 },{
     headerMode: 'none',
-    initialRouteName: initRoute
+    initialRouteName: 'Root',
+    onTransitionStart: ()=>{
+        console.log('导航栏切换开始');
+    },
+    onTransitionEnd: ()=>{
+        console.log('导航栏切换结束');
+    }
 });
 
 export default rootMain;
