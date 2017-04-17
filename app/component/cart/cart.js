@@ -8,7 +8,6 @@ import {
   	Text,
   	Image
 } from 'react-native';
-import tabBar from '../common/tabBar.js';
 
 var cart = React.createClass({
   	render() {
@@ -17,8 +16,6 @@ var cart = React.createClass({
     	);
   	}
 })
-
-tabBar.setNavigationOptions(cart, '购物车页面', '购物车', 'cart');
 
 const styles = StyleSheet.create({
 

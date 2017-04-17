@@ -19,8 +19,7 @@ var login = React.createClass({
     getInitialState: function() {
         return {
             userName: '',
-            password: '',
-            isLogin: false,
+            password: ''
         };
     },
     componentDidMount(){
@@ -32,8 +31,7 @@ var login = React.createClass({
             .then((value)=>{
                 profileId = value;
                 if(token && profileId){
-                    this.setState({isLogin: true});
-                    this.props.navigation.navigate('Root');
+                    //this.props.navigation.navigate('Root');
                 }
             })
         })

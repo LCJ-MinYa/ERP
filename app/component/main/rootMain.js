@@ -2,7 +2,8 @@
 
 import { 
   StackNavigator,
-  TabNavigator
+  TabNavigator,
+  Platform
 } from 'react-navigation'; 
 
 //tabbar导航
@@ -16,14 +17,75 @@ import mineScreen from '../mine/mine.js';
 import loginScreen from '../login/login.js';
 import productListScreen from '../product/productList.js';
 
+import tabBar from '../common/tabBar.js';
 import storage from '../../utils/customStorage.js';
 
+//商品导航
+const productStack = StackNavigator({
+    Product: {
+        screen: productScreen,
+        path: '/'
+    },
+    ProductList: {
+        screen: productListScreen,
+        path: '/list'
+    }
+},{
+    headerMode: 'none',
+})
+
+//购物车导航
+const cartStack = StackNavigator({
+    Cart: {
+        screen: cartScreen,
+        path: '/'
+    },
+},{
+    headerMode: 'none',
+})
+
+//订单导航
+const orderStack = StackNavigator({
+    Order: {
+        screen: orderScreen,
+        path: '/'
+    },
+},{
+    headerMode: 'none',
+})
+
+//信息导航
+const msgStack = StackNavigator({
+    Msg: {
+        screen: msgScreen,
+        path: '/'
+    },
+},{
+    headerMode: 'none',
+})
+
+//我的导航
+const mineStack = StackNavigator({
+    Mine: {
+        screen: mineScreen,
+        path: '/'
+    },
+},{
+    headerMode: 'none',
+})
+
+tabBar.setNavigationOptions(productStack, '商品首页', '商品', 'shopping');
+tabBar.setNavigationOptions(cartStack, '购物车页面', '购物车', 'cart');
+tabBar.setNavigationOptions(orderStack, '订单页面', '订单', 'order');
+tabBar.setNavigationOptions(msgStack, '消息页面', '消息', 'msg');
+tabBar.setNavigationOptions(mineStack, '我的页面', '我的', 'mine');
+
 const MainScreenNavigator = TabNavigator({
-    Product: { screen: productScreen },
-    Cart: { screen: cartScreen },
-    Order: { screen: orderScreen },
-    Msg: { screen: msgScreen },
-    Mine: { screen: mineScreen }
+    ProductTab: { screen: productStack },
+    CartTab: { screen: cartStack },
+    OrderTab: { screen: orderStack },
+    MsgTab: { screen: msgStack },
+    MineTab: { screen: mineStack }
 },{
     tabBarPosition: 'bottom',
     tabBarOptions:{
@@ -44,9 +106,9 @@ const MainScreenNavigator = TabNavigator({
 //设置头部导航条是否作为根视图
 const rootMain = StackNavigator({
     Root: { screen: MainScreenNavigator },
-    ProductList: { screen: productListScreen },
     Login: { screen: loginScreen },
 },{
+    mode: 'modal',
     headerMode: 'none',
     initialRouteName: 'Root',
     onTransitionStart: ()=>{

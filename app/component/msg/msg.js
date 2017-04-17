@@ -7,7 +7,6 @@ import {
   	Text,
   	Image
 } from 'react-native';
-import tabBar from '../common/tabBar.js';
 
 var msg = React.createClass({
   	render() {
@@ -16,8 +15,6 @@ var msg = React.createClass({
     	);
   	}
 })
-
-tabBar.setNavigationOptions(msg, '消息页面', '消息', 'msg');
 
 const styles = StyleSheet.create({
 

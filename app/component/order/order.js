@@ -7,7 +7,6 @@ import {
   	Text,
   	Image
 } from 'react-native';
-import tabBar from '../common/tabBar.js';
 
 var order = React.createClass({
   	render() {
@@ -16,8 +15,6 @@ var order = React.createClass({
     	);
   	}
 })
-
-tabBar.setNavigationOptions(order, '订单页面', '订单', 'order');
 
 const styles = StyleSheet.create({
 

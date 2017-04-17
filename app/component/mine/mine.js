@@ -7,7 +7,6 @@ import {
   	Text,
   	Image
 } from 'react-native';
-import tabBar from '../common/tabBar.js';
 import storage from '../../utils/customStorage.js';
 
 var mine = React.createClass({
@@ -25,8 +24,6 @@ var mine = React.createClass({
   		})
   	}
 })
-
-tabBar.setNavigationOptions(mine, '我的页面', '我的', 'mine');
 
 const styles = StyleSheet.create({
 

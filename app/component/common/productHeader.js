@@ -26,7 +26,7 @@ let productHeader = React.createClass({
 	  	);
   	},
   	goLeft(){
-  		alert('left');
+  		this.props.popGoLeft('ProductList');
   	},
   	goRight(){
   		alert('right');
@@ -59,10 +59,9 @@ const styles = StyleSheet.create({
 	middleInput:{
 		flexDirection: 'row',
 		width: width - 44*2,
-		height: 32,
+		height: 30,
 		backgroundColor: '#eee',
 		justifyContent: 'flex-start',
-		borderRadius: 2,
 		alignItems: 'center'
 	},
 	searchIcon:{
