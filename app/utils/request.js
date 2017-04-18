@@ -5,10 +5,11 @@ import React, { Component } from 'react';
 import {
   	StyleSheet,
   	View,
-  	ActivityIndicator
+  	ActivityIndicator,
+  	Alert
 } from 'react-native';
 
-import storage from './customStorage.js';
+import Storage from './customStorage.js';
 import config from '../config/config.js';
 import sha1 from './sha1.js';
 
@@ -27,20 +28,21 @@ var request = React.createClass({
 		);
 	},
 
-	/*
-     *  getProfileId获取profileId参数
-     *  return:返回字符串形式的profileId
-     */
-	getProfileId(){
-		let profileId;
-		storage.getData('profileId')
-		.then((value)=>{
-			profileId = value;
-			if(!profileId){
-				return '';
-			}
-			return profileId;
-		})
+	getProfileId(value, params){
+		if(value){
+			params.profileId = value;
+		}else{
+			params.profileId = '';
+		}
+	},
+
+	getToken(value, params){
+		if(value){
+			params.token = value;
+		}else{
+			params.token = '';
+		}
+		return Storage.getData('profileId')
 	},
 
 	/*
@@ -49,22 +51,6 @@ var request = React.createClass({
      */
 	getTimestamp(){
 		return Math.round(new Date().getTime() / 1000);
-	},
-
-	/*
-     *  getToken获取用户保存的token
-     *  return:返回string类型token
-     */
-	getToken(){
-		let token;
-		storage.getData('token')
-		.then((value)=>{
-			token = value;
-			if(!token){
-				return '';
-			}
-			return token;
-		})
 	},
 
 	/*
@@ -126,30 +112,55 @@ var request = React.createClass({
      *  url:请求地址
      *  params:参数
      *  callback:回调函数
+     *  isLoading:是否显示加载状态
      */
-	PostService(url, params, callback){
-		this.setState({isShowLoading: true});
+	PostService(url, params, callback, isLoading){
+		if(isLoading){
+			this.setState({isShowLoading: true});
+		}
 		let URL = config.API + url;
-		params.profileId = this.getProfileId();
 		params.timestamp = this.getTimestamp();
-		params.token = this.getToken();
-		params.signstr = this.getSingnStr(params);
-		console.log(params);
-		//发送POST请求
-		fetch(URL, {
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-			},
-			body: this.toQueryString(params)
+		Storage.getData('token')
+		.then((value)=>{
+			if(value){
+				params.token = value;
+			}else{
+				params.token = '';
+			}
+			return Storage.getData('profileId')
 		})
-		//将返回数据转换为JSON格式	
+		.then((value)=>{
+			if(value){
+				params.profileId = value;
+			}else{
+				params.profileId = '';
+			}
+			params.signstr = this.getSingnStr(params);
+			console.log(params);
+			//发送POST请求
+			return fetch(URL, {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+				},
+				body: this.toQueryString(params)
+			})
+		})
 		.then((result) => result.json())
-		//将数据通过回调返回
 		.then((resultJSON) => {
-			this.setState({isShowLoading: false});
-			callback(resultJSON);
+			if(isLoading){
+				this.setState({isShowLoading: false});
+			}
+			if(resultJSON.error_code < 0){
+                Alert.alert('请求失败',resultJSON.error_message,[
+                    {
+                        text: '确定',
+                    }
+                ])
+			}else{
+				callback(resultJSON);
+			}
 		})
 		//捕获fetch错误异常
 		.catch((error) => {

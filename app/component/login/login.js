@@ -11,7 +11,7 @@ import {
     TouchableHighlight
 } from 'react-native';
 
-import storage from '../../utils/customStorage.js';
+import Storage from '../../utils/customStorage.js';
 import Request from '../../utils/request.js';
 var {width, height} = Dimensions.get('window');
 
@@ -24,10 +24,10 @@ var login = React.createClass({
     },
     componentDidMount(){
         let token, profileId;
-        storage.getData('token')
+        Storage.getData('token')
         .then((value)=>{ 
             token = value;
-            storage.getData('profileId')
+            Storage.getData('profileId')
             .then((value)=>{
                 profileId = value;
                 if(token && profileId){
@@ -97,9 +97,8 @@ var login = React.createClass({
                 userName: userName,
                 password: password
             },function(result){
-                console.log(result);
-                storage.setData("token",result.data.token);
-                storage.setData("profileId",result.data.profileId);
+                Storage.setData("token",result.data.token);
+                Storage.setData("profileId",result.data.profileId);
                 _this.props.navigation.navigate('Root');
             });
         }

@@ -6,7 +6,6 @@ import {
 
 let setData = function(key, value){
     return AsyncStorage.setItem(key, value);
-    return true;
 }
 
 let getData = function(key){

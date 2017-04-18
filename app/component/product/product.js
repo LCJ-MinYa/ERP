@@ -8,7 +8,9 @@ import {
   	Image,
     Alert
 } from 'react-native';
-import storage from '../../utils/customStorage.js';
+import Request from '../../utils/request.js';
+import ApiConfig from '../../config/apiConfig.js';
+import Storage from '../../utils/customStorage.js';
 import ProductHeader from '../common/productHeader.js';
 
 var product = React.createClass({
@@ -24,6 +26,8 @@ var product = React.createClass({
                 <ProductHeader
                     popGoLeft = {(url)=>{this.popToClassView(url)}}
                 />
+
+                <Request ref="request"/>
             </View>
     	);
   	},
@@ -32,27 +36,30 @@ var product = React.createClass({
     },
     componentDidMount(){
         let token, profileId;
-        storage.getData('token')
+        Storage.getData('token')
         .then((value)=>{ 
             token = value;
-            storage.getData('profileId')
-            .then((value)=>{
-                profileId = value;
-                if(token && profileId){
-                    this.setState({isLogin: true});
-                    //拉取global全局信息
-                }else{
-                    Alert.alert('您还未登录','点击登录',[
-                        {
-                            text: '去登录',
-                            onPress:()=>{
-                                this.props.navigation.navigate('Login');
-                            }
+            return Storage.getData('profileId')
+        })
+        .then((value)=>{
+            profileId = value;
+            if(token && profileId){
+                this.setState({isLogin: true});
+                //拉取global全局信息
+                this.refs.request.PostService(ApiConfig.GLOBAL_INFO, {}, function(result){
+                    console.log(result);
+                })
+            }else{
+                Alert.alert('您还未登录','点击登录',[
+                    {
+                        text: '去登录',
+                        onPress:()=>{
+                            this.props.navigation.navigate('Login');
                         }
-                    ])
-                }
-            })
-        })        
+                    }
+                ])
+            }
+        })
     }
 })
 
