@@ -13,7 +13,8 @@ import Request from '../../utils/request.js';
 import API from '../../config/apiConfig.js';
 import Storage from '../../utils/customStorage.js';
 import ProductHeader from '../common/productHeader.js';
-import ProductBanner from '../product/productBanner.js';
+import ProductBanner from './productBanner.js';
+import ProductTypeNav from './productTypeNav.js';
 
 var product = React.createClass({
     getInitialState: function() {
@@ -32,6 +33,7 @@ var product = React.createClass({
 
                 <ScrollView>
                     <ProductBanner ref="productBanner" bannerData={this.state.bannerData}/>
+                    <ProductTypeNav/>
                 </ScrollView>
 
                 <Request ref="request"/>
