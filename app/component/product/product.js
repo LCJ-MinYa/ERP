@@ -6,12 +6,14 @@ import {
   	View,
   	Text,
   	Image,
-    Alert
+    Alert,
+    ScrollView
 } from 'react-native';
 import Request from '../../utils/request.js';
-import ApiConfig from '../../config/apiConfig.js';
+import API from '../../config/apiConfig.js';
 import Storage from '../../utils/customStorage.js';
 import ProductHeader from '../common/productHeader.js';
+import ProductBanner from '../product/productBanner.js';
 
 var product = React.createClass({
     getInitialState: function() {
@@ -27,12 +29,19 @@ var product = React.createClass({
                     popGoLeft = {(url)=>{this.popToClassView(url)}}
                 />
 
+                <ScrollView>
+                    <ProductBanner/>
+                </ScrollView>
+
                 <Request ref="request"/>
             </View>
     	);
   	},
     popToClassView(url){
         this.props.navigation.navigate(url);
+    },
+    componentWillMount(){
+        this.getBannerData();
     },
     componentDidMount(){
         let token, profileId;
@@ -46,7 +55,7 @@ var product = React.createClass({
             if(token && profileId){
                 this.setState({isLogin: true});
                 //拉取global全局信息
-                this.refs.request.PostService(ApiConfig.GLOBAL_INFO, {}, function(result){
+                this.refs.request.PostService(API.GLOBAL_INFO, {}, function(result){
                     console.log(result);
                 })
             }else{
@@ -59,6 +68,11 @@ var product = React.createClass({
                     }
                 ])
             }
+        })
+    },
+    getBannerData(){
+        this.refs.request.PostService(API.BANNER_NOTICE, {}, function(result){
+            console.log(result);
         })
     }
 })
