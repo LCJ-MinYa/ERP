@@ -19,6 +19,7 @@ var product = React.createClass({
     getInitialState: function() {
         return {
             isLogin: false,
+            bannerData: []
         };
     },
   	render() {
@@ -30,7 +31,7 @@ var product = React.createClass({
                 />
 
                 <ScrollView>
-                    <ProductBanner/>
+                    <ProductBanner ref="productBanner" bannerData={this.state.bannerData}/>
                 </ScrollView>
 
                 <Request ref="request"/>
@@ -40,10 +41,8 @@ var product = React.createClass({
     popToClassView(url){
         this.props.navigation.navigate(url);
     },
-    componentWillMount(){
-        this.getBannerData();
-    },
     componentDidMount(){
+        this.getBannerNoticeData();
         let token, profileId;
         Storage.getData('token')
         .then((value)=>{ 
@@ -56,7 +55,7 @@ var product = React.createClass({
                 this.setState({isLogin: true});
                 //拉取global全局信息
                 this.refs.request.PostService(API.GLOBAL_INFO, {}, function(result){
-                    console.log(result);
+                    //console.log(result);
                 })
             }else{
                 Alert.alert('您还未登录','点击登录',[
@@ -70,9 +69,14 @@ var product = React.createClass({
             }
         })
     },
-    getBannerData(){
+    getBannerNoticeData(){
+        let _this = this;
         this.refs.request.PostService(API.BANNER_NOTICE, {}, function(result){
-            console.log(result);
+            if(result.banner.length === 0){
+                result.banner[0] = 'index_banner_1';
+                result.banner[1] = 'index_banner_2';
+            }
+            _this.setState({bannerData: result.banner});
         })
     }
 })

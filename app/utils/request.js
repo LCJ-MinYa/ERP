@@ -78,7 +78,6 @@ var request = React.createClass({
 	    if (parStr.length > 0) {
 	        parStr = parStr.substring(1);
 	    }
-	    console.log("parStr=====" + parStr);
 	    return parStr;     	
     },
 
@@ -136,7 +135,6 @@ var request = React.createClass({
 				params.profileId = '';
 			}
 			params.signstr = this.getSingnStr(params);
-			console.log(params);
 			//发送POST请求
 			return fetch(URL, {
 				method: 'POST',

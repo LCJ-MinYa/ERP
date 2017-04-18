@@ -13,5 +13,5 @@ export default {
 		copyright: 'Copyright © 2016 成都任我行网络技术有限公司',
 		shareTimelineImage: 'http://ydhmobi.zhangyuxia.com.cn/static/img/logo.png'
 	},
-	API: 'http://ydhapi.zhangyuxia.com.cn'//http://zxdhapi.cmgrasp.com
+	API: 'http://ydhapi.zhangyuxia.com.cn'
 };
