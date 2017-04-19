@@ -22,7 +22,8 @@ var product = React.createClass({
         return {
             isLogin: false,
             bannerData: [],
-            goodsLabelData: {}
+            goodsLabelData: {},
+            noticeData: []
         };
     },
   	render() {
@@ -36,7 +37,13 @@ var product = React.createClass({
                 <ScrollView>
                     <ProductBanner ref="productBanner" bannerData={this.state.bannerData}/>
                     <ProductTypeNav goodsLabelData={this.state.goodsLabelData}/>
-                    <ProductNotice/>
+                    <ProductNotice noticeData={this.state.noticeData}/>
+
+                    <View style={styles.listTitle}>
+                        <Text style={styles.leftText}>推荐商品</Text>
+                        <Text style={styles.rightIcon}>&#xe613;</Text>
+                    </View>
+
                 </ScrollView>
 
                 <Request ref="request"/>
@@ -94,6 +101,7 @@ var product = React.createClass({
             }
             _this.setState({bannerData: result.banner});
             _this.setState({goodsLabelData: result.goodsLabel});
+            _this.setState({noticeData: result.notice});
         })
     }
 })
@@ -103,6 +111,28 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#eee'
     },
+    listTitle:{
+        flex: 1,
+        flexDirection: 'row',
+        height: 30,
+        marginTop: 10,
+        backgroundColor: '#fff',
+        borderBottomWidth: 0.5,
+        borderBottomColor: '#e1e1e1',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    leftText:{
+        paddingLeft: 10,
+        color: '#f65a44',
+        fontSize: 14
+    },
+    rightIcon:{
+        fontFamily: 'iconfont',
+        color: '#f7a900',
+        paddingRight: 10,
+        fontSize: 18
+    }
 });
 
 export default product;

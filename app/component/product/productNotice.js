@@ -12,30 +12,49 @@ import {
 import Swiper from 'react-native-swiper';
 let {width, height} = Dimensions.get('window');
 let productNotice = React.createClass({
+	getInitialState: function() {
+		return {
+			notice: [],
+		};
+	},
+	componentWillReceiveProps(nextProps){
+		if(nextProps.noticeData.length !== 0){
+			this.setState({notice: nextProps.noticeData})
+		}
+	},
 	render() {
 		return (
 			<View style={styles.wrapper}>
-				<Text></Text>
+				<View style={styles.leftIconBox}>
+					<Text style={styles.leftIcon}>&#xe62b;</Text>
+				</View>
 				<Swiper
 					horizontal={false}
 					autoplay={true}
 					showsPagination={false}
 					scrollEnabled={false}
 					height={30}
-					width={width-20}
+					width={width-30}
+					onTouchEnd={this.goNewsView}
 				>
-			        <View style={styles.slide1}>
-			          	<Text style={styles.text}>Hello Swiper</Text>
-			        </View>
-			        <View style={styles.slide2}>
-			          	<Text style={styles.text}>Beautiful</Text>
-			        </View>
-			        <View style={styles.slide3}>
-			          	<Text style={styles.text}>And simple</Text>
-			        </View>
+			        {this.renderNoticeItemView()}
 			  	</Swiper>
 		  	</View>
 		);
+	},
+	renderNoticeItemView(){
+		let noticeItemArr = [];
+		for (var i = 0; i < this.state.notice.length; i++) {
+			noticeItemArr.push(
+		        <View style={styles.slide} key={i} onPress={this.goNewsView}>
+		          	<Text numberOfLines={1} style={styles.text}>【最新公告】{this.state.notice[i].name}</Text>
+		        </View>
+			)
+		}
+		return noticeItemArr;
+	},
+	goNewsView(e, state){
+		console.log(state.index);
 	}
 });
 
@@ -44,21 +63,28 @@ const styles = StyleSheet.create({
 		flex: 1,
 		height: 30,
 		flexDirection: 'row',
-		backgroundColor: '#fff'
+		justifyContent: 'center',
+		backgroundColor: '#fff',
 	},
-  	slide1: {
+	leftIconBox:{
+		width: 30,
+		height: 30,
+		justifyContent: 'center',
+		alignItems: 'flex-end'
+	},
+	leftIcon:{
+		fontFamily: 'iconfont',
+		fontSize: 18,
+		color: '#f65a44'
+	},
+  	slide: {
 	    height: 30,
-  	},
-  	slide2: {
-	    height: 30,
-  	},
- 	 slide3: {
-	    height: 30,
+	    justifyContent: 'center'
   	},
   	text: {
-	    color: 'yellow',
-	    fontSize: 12,
-	    fontWeight: 'bold',
+	    color: 'gray',
+	    fontSize: 14,
+	    paddingRight: 10
   	}
 });
 

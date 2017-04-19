@@ -90,14 +90,14 @@ const styles = StyleSheet.create({
 		height: 30,
 		borderRadius: 30,
 		alignItems: 'center',
-		marginBottom: 6
+		marginBottom: 6,
+		justifyContent: 'center'
 	},
 	navIcon:{
 		fontFamily: 'iconfont',
 		fontSize: 14,
 		color: '#fff',
-		backgroundColor: 'rgba(255, 255, 255, 0)',
-		lineHeight: 30
+		backgroundColor: 'rgba(255, 255, 255, 0)'
 	},
 	navText:{
 		color: '#4d4d4d',

@@ -15,12 +15,16 @@ let productHeader = React.createClass({
     	return (
       		<View style={styles.headerBox}>
       			<View style={styles.commonHeaderBox}>
-      				<Text style={styles.leftIcon} onPress={this.goLeft}>&#xe611;</Text>
+      				<View style={styles.leftIconBox}>
+      					<Text style={styles.leftIcon} onPress={this.goLeft}>&#xe611;</Text>
+      				</View>
       				<View style={styles.middleInput}>
       					<Text style={styles.searchIcon}>&#xe623;</Text>
       					<Text style={styles.searchMsg}>输入商品名称或编号进行搜索</Text>
       				</View>
-      				<Text style={[styles.leftIcon, styles.rightIcon]} onPress={this.goRight}>&#xe602;</Text>
+      				<View style={styles.leftIconBox}>
+      					<Text style={[styles.leftIcon, styles.rightIcon]} onPress={this.goRight}>&#xe602;</Text>
+      				</View>
       			</View>
       		</View>
 	  	);
@@ -44,14 +48,16 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'space-between'
 	},
+	leftIconBox:{
+		width: 44,
+		height: 44,
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
 	leftIcon:{
 		fontFamily: 'iconfont',
 		fontSize: 26,
 		color: '#fff',
-		width: 44,
-		height: 44,
-		textAlign: 'center',
-		lineHeight: 44
 	},
 	rightIcon:{
 		fontSize: 22
