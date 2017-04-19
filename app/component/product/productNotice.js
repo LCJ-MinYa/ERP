@@ -33,8 +33,8 @@ let productNotice = React.createClass({
 					autoplay={true}
 					showsPagination={false}
 					scrollEnabled={false}
-					height={30}
-					width={width-30}
+					height={36}
+					width={width-36}
 					onTouchEnd={this.goNewsView}
 				>
 			        {this.renderNoticeItemView()}
@@ -61,29 +61,29 @@ let productNotice = React.createClass({
 const styles = StyleSheet.create({
 	wrapper: {
 		flex: 1,
-		height: 30,
+		height: 36,
 		flexDirection: 'row',
 		justifyContent: 'center',
 		backgroundColor: '#fff',
 	},
 	leftIconBox:{
-		width: 30,
-		height: 30,
+		width: 36,
+		height: 36,
 		justifyContent: 'center',
 		alignItems: 'flex-end'
 	},
 	leftIcon:{
 		fontFamily: 'iconfont',
-		fontSize: 18,
+		fontSize: 24,
 		color: '#f65a44'
 	},
   	slide: {
-	    height: 30,
+	    height: 36,
 	    justifyContent: 'center'
   	},
   	text: {
 	    color: 'gray',
-	    fontSize: 14,
+	    fontSize: 16,
 	    paddingRight: 10
   	}
 });

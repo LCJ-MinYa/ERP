@@ -74,34 +74,35 @@ const styles = StyleSheet.create({
 	typeNavBox:{
 		flex: 1,
 		flexDirection: 'row',
-		height: 60,
+		height: 80,
 		backgroundColor: '#fff',
 		borderBottomWidth: 0.5,
 		borderBottomColor: '#ececec'
 	},
 	typeNavItem:{
 		flex: 1,
-		height: 60,
+		height: 80,
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
 	navColor:{
-		width: 30,
-		height: 30,
-		borderRadius: 30,
+		width: 36,
+		height: 36,
+		borderRadius: 36,
 		alignItems: 'center',
-		marginBottom: 6,
+		marginBottom: 10,
 		justifyContent: 'center'
 	},
 	navIcon:{
 		fontFamily: 'iconfont',
-		fontSize: 14,
+		fontSize: 18,
 		color: '#fff',
+		fontWeight: 'bold',
 		backgroundColor: 'rgba(255, 255, 255, 0)'
 	},
 	navText:{
 		color: '#4d4d4d',
-		fontSize: 12
+		fontSize: 14
 	}
 });
 

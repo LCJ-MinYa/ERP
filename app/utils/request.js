@@ -22,6 +22,7 @@ var request = React.createClass({
 	render(){
 		return(
 			<ActivityIndicator
+				style={{height: 0}}
 				animating={this.state.isShowLoading}
 				size={'large'}
 			/>

@@ -11,11 +11,13 @@ import {
 } from 'react-native';
 import Request from '../../utils/request.js';
 import API from '../../config/apiConfig.js';
+import Config from '../../config/config.js';
 import Storage from '../../utils/customStorage.js';
 import ProductHeader from '../common/productHeader.js';
 import ProductBanner from './productBanner.js';
 import ProductTypeNav from './productTypeNav.js';
 import ProductNotice from './productNotice.js';
+import ProductCommonList from '../common/productCommonList.js';
 
 var product = React.createClass({
     getInitialState: function() {
@@ -23,7 +25,8 @@ var product = React.createClass({
             isLogin: false,
             bannerData: [],
             goodsLabelData: {},
-            noticeData: []
+            noticeData: [],
+            productData: []
         };
     },
   	render() {
@@ -43,6 +46,7 @@ var product = React.createClass({
                         <Text style={styles.leftText}>推荐商品</Text>
                         <Text style={styles.rightIcon}>&#xe613;</Text>
                     </View>
+                    <ProductCommonList productData={this.state.productData}/>
 
                 </ScrollView>
 
@@ -78,6 +82,7 @@ var product = React.createClass({
                         ])
                     }else{
                         _this.getBannerNoticeData();
+                        _this.getProductData();
                     }
                 })
             }else{
@@ -103,6 +108,19 @@ var product = React.createClass({
             _this.setState({goodsLabelData: result.goodsLabel});
             _this.setState({noticeData: result.notice});
         })
+    },
+    getProductData(){
+        let _this = this;
+        this.refs.request.PostService(API.PRODUCT_LIST, {
+            isRecommend:1,
+            includeOOS:1,
+            pageIndex: 1,
+            pageSize: Config.PAGESIZE
+        }, function(result){
+            if(result.data.length !== 0){
+                _this.setState({productData: result.data});
+            }
+        })
     }
 })
 
@@ -114,7 +132,7 @@ const styles = StyleSheet.create({
     listTitle:{
         flex: 1,
         flexDirection: 'row',
-        height: 30,
+        height: 32,
         marginTop: 10,
         backgroundColor: '#fff',
         borderBottomWidth: 0.5,
@@ -125,13 +143,13 @@ const styles = StyleSheet.create({
     leftText:{
         paddingLeft: 10,
         color: '#f65a44',
-        fontSize: 14
+        fontSize: 16
     },
     rightIcon:{
         fontFamily: 'iconfont',
         color: '#f7a900',
         paddingRight: 10,
-        fontSize: 18
+        fontSize: 20
     }
 });
 
