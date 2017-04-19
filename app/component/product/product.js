@@ -15,12 +15,14 @@ import Storage from '../../utils/customStorage.js';
 import ProductHeader from '../common/productHeader.js';
 import ProductBanner from './productBanner.js';
 import ProductTypeNav from './productTypeNav.js';
+import ProductNotice from './productNotice.js';
 
 var product = React.createClass({
     getInitialState: function() {
         return {
             isLogin: false,
-            bannerData: []
+            bannerData: [],
+            goodsLabelData: {}
         };
     },
   	render() {
@@ -33,7 +35,8 @@ var product = React.createClass({
 
                 <ScrollView>
                     <ProductBanner ref="productBanner" bannerData={this.state.bannerData}/>
-                    <ProductTypeNav/>
+                    <ProductTypeNav goodsLabelData={this.state.goodsLabelData}/>
+                    <ProductNotice/>
                 </ScrollView>
 
                 <Request ref="request"/>
@@ -74,11 +77,12 @@ var product = React.createClass({
     getBannerNoticeData(){
         let _this = this;
         this.refs.request.PostService(API.BANNER_NOTICE, {}, function(result){
-            if(result.banner.length === 0){
+            if(result.hasOwnProperty('banner') && result.banner.length === 0){
                 result.banner[0] = 'index_banner_1';
                 result.banner[1] = 'index_banner_2';
             }
             _this.setState({bannerData: result.banner});
+            _this.setState({goodsLabelData: result.goodsLabel});
         })
     }
 })

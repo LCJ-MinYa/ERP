@@ -25,27 +25,35 @@ let productBanner = React.createClass({
 		};
 	},
 	componentWillReceiveProps(nextProps){
-		this.setState({activePageNumber: nextProps.bannerData.length})
-		this.setState({dataSource: this.state.dataSource.cloneWithRows(nextProps.bannerData)})
+		if(nextProps.bannerData.length !== 0){
+			this.setState({activePageNumber: nextProps.bannerData.length})
+			this.setState({dataSource: this.state.dataSource.cloneWithRows(nextProps.bannerData)})
+		}
 	},
   	render() {
-    	return (
+    	return(
     		<View>
-    			<ScrollView
-    			  horizontal={true}
-    			  pagingEnabled={true}
-    			  showsHorizontalScrollIndicator={false}
-    			  onMomentumScrollEnd={this.onScrollAnimationEnd}
-    			>
-	    			{this.renderScrollItem()}
-    			</ScrollView>
+	    		{
+	    			this.state.activePageNumber == 0 ? (null) : (
+			    		<View>
+			    			<ScrollView
+			    			  horizontal={true}
+			    			  pagingEnabled={true}
+			    			  showsHorizontalScrollIndicator={false}
+			    			  onMomentumScrollEnd={this.onScrollAnimationEnd}
+			    			>
+				    			{this.renderScrollItem()}
+			    			</ScrollView>
 
-    			<View style={styles.pageNumberStyle}>
-    				{this.pageNumber()}
-    			</View>
+			    			<View style={styles.pageNumberStyle}>
+			    				{this.pageNumber()}
+			    			</View>
 
+			      		</View>
+		      		)
+	      		}
       		</View>
-    	);
+      	)
   	},
   	//banner元素
   	renderScrollItem(){
