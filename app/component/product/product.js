@@ -47,7 +47,6 @@ var product = React.createClass({
         this.props.navigation.navigate(url);
     },
     componentDidMount(){
-        this.getBannerNoticeData();
         let token, profileId;
         Storage.getData('token')
         .then((value)=>{ 
@@ -59,8 +58,20 @@ var product = React.createClass({
             if(token && profileId){
                 this.setState({isLogin: true});
                 //拉取global全局信息
+                let _this = this;
                 this.refs.request.PostService(API.GLOBAL_INFO, {}, function(result){
-                    //console.log(result);
+                    if(result.error_code < 0){
+                        Alert.alert('登录已过期',result.error_message,[
+                            {
+                                text: '重新登录',
+                                onPress:()=>{
+                                    _this.props.navigation.navigate('Login');
+                                }
+                            }
+                        ])
+                    }else{
+                        _this.getBannerNoticeData();
+                    }
                 })
             }else{
                 Alert.alert('您还未登录','点击登录',[

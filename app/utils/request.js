@@ -150,7 +150,9 @@ var request = React.createClass({
 			if(isLoading){
 				this.setState({isShowLoading: false});
 			}
-			if(resultJSON.error_code < 0){
+			if(url == '/api/system/getGlobalInfo' && resultJSON.error_code < 0){
+				callback(resultJSON);
+			}else if(resultJSON.error_code < 0){
                 Alert.alert('请求失败',resultJSON.error_message,[
                     {
                         text: '确定',
