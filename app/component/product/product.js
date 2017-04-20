@@ -7,7 +7,8 @@ import {
   	Text,
   	Image,
     Alert,
-    ScrollView
+    ScrollView,
+    RefreshControl
 } from 'react-native';
 import Request from '../../utils/request.js';
 import API from '../../config/apiConfig.js';
@@ -19,13 +20,15 @@ import ProductTypeNav from './productTypeNav.js';
 import ProductNotice from './productNotice.js';
 import ProductCommonList from '../common/productCommonList.js';
 
-var product = React.createClass({
+let bannerNoticeReq = false;
+let productReq = false;
+let product = React.createClass({
     getInitialState: function() {
         return {
-            isLogin: false,
-            bannerData: [],
-            goodsLabelData: {},
-            noticeData: [],
+            isRefreshing: false,
+            isShowSmallProductList: {display: 'none'},
+            isShowBigProductList: {backgroundColor: '#000'},
+            bannerNoticeData: {},
             productData: []
         };
     },
@@ -37,16 +40,27 @@ var product = React.createClass({
                     popGoLeft = {(url)=>{this.popToClassView(url)}}
                 />
 
-                <ScrollView>
-                    <ProductBanner ref="productBanner" bannerData={this.state.bannerData}/>
-                    <ProductTypeNav goodsLabelData={this.state.goodsLabelData}/>
-                    <ProductNotice noticeData={this.state.noticeData}/>
+                <ScrollView
+                    style={styles.scrollView}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.isRefreshing}
+                            onRefresh={this.doRefresh}
+                            tintColor="#989898"
+                            colors={['#989898']}
+                            progressBackgroundColor="#eee"
+                        />
+                    }
+                >
+                    <ProductBanner ref="productBanner" bannerData={this.state.bannerNoticeData.banner}/>
+                    <ProductTypeNav goodsLabelData={this.state.bannerNoticeData.goodsLabel}/>
+                    <ProductNotice noticeData={this.state.bannerNoticeData.notice}/>
 
                     <View style={styles.listTitle}>
                         <Text style={styles.leftText}>推荐商品</Text>
-                        <Text style={styles.rightIcon}>&#xe613;</Text>
+                        <Text onPress={this.changeProductList} style={styles.rightIcon}>&#xe613;</Text>
                     </View>
-                    <ProductCommonList productData={this.state.productData}/>
+                    <ProductCommonList isShowSmallProductList={this.state.isShowSmallProductList} productData={this.state.productData}/>
                     <View style={styles.goProductList}>
                         <Text style={styles.goProductListText}>查看全部推荐商品</Text>
                     </View>
@@ -62,14 +76,13 @@ var product = React.createClass({
     componentDidMount(){
         let token, profileId;
         Storage.getData('token')
-        .then((value)=>{ 
+        .then((value)=>{
             token = value;
             return Storage.getData('profileId')
         })
         .then((value)=>{
             profileId = value;
             if(token && profileId){
-                this.setState({isLogin: true});
                 //拉取global全局信息
                 let _this = this;
                 this.refs.request.PostService(API.GLOBAL_INFO, {}, function(result){
@@ -101,18 +114,20 @@ var product = React.createClass({
     },
     getBannerNoticeData(){
         let _this = this;
+        bannerNoticeReq = true;
         this.refs.request.PostService(API.BANNER_NOTICE, {}, function(result){
             if(result.hasOwnProperty('banner') && result.banner.length === 0){
                 result.banner[0] = 'index_banner_1';
                 result.banner[1] = 'index_banner_2';
             }
-            _this.setState({bannerData: result.banner});
-            _this.setState({goodsLabelData: result.goodsLabel});
-            _this.setState({noticeData: result.notice});
+            _this.setState({bannerNoticeData: result});
+            bannerNoticeReq = false;
+            _this.isRequestFinish();
         })
     },
     getProductData(){
         let _this = this;
+        productReq = true;
         this.refs.request.PostService(API.PRODUCT_LIST, {
             isRecommend:1,
             includeOOS:1,
@@ -121,9 +136,28 @@ var product = React.createClass({
         }, function(result){
             if(result.data.length !== 0){
                 _this.setState({productData: result.data});
+                productReq = false;
+                _this.isRequestFinish();
             }
         })
-    }
+    },
+    doRefresh(){
+        this.setState({isRefreshing: true});
+        this.getBannerNoticeData();
+        this.getProductData();
+    },
+    isRequestFinish(){
+        if(!bannerNoticeReq && !productReq && this.state.isRefreshing){
+            this.setState({isRefreshing: false});
+        }
+    },
+    changeProductList(){
+        console.log(this);
+        let nowSmell = this.state.isShowSmallProductList;
+        let nowBig = this.state.isShowBigProductList;
+        this.setState({isShowSmallProductList: nowBig});
+        this.setState({isShowSmallProductList: nowSmell});
+    },
 })
 
 const styles = StyleSheet.create({
@@ -165,6 +199,9 @@ const styles = StyleSheet.create({
     goProductListText:{
         fontSize: 14,
         color: '#7b7b7b'
+    },
+    scrollView:{
+        flex: 1
     }
 });
 

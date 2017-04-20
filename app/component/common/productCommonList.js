@@ -17,7 +17,7 @@ let productCommonList = React.createClass({
 			rowHasChanged:(row1, row2) => row1 !== row2
 		})
 		return {
-			dataSource: ds
+			dataSource: ds,
 		};
 	},
 	componentWillReceiveProps(nextProps){
@@ -28,22 +28,24 @@ let productCommonList = React.createClass({
 	render() {
 		return (
 			<View>
-				{this.renderProductCommonCellView()}
+				<ListView
+					contentContainerStyle={styles.productListSmellBox, this.props.isShowSmallProductList}
+					dataSource={this.state.dataSource}
+					renderRow={this.renderSmellRow}
+					scrollEnabled={false}
+					enableEmptySections={true}
+				/>
+				<ListView
+					contentContainerStyle={styles.productListBigBox, this.props.isShowBigProductList}
+					dataSource={this.state.dataSource}
+					renderRow={this.renderBigRow}
+					scrollEnabled={false}
+					enableEmptySections={true}
+				/>
 			</View>
 		);
 	},
-	renderProductCommonCellView(){
-		return(
-			<ListView
-				contentContainerStyle={styles.productListBox}
-				dataSource={this.state.dataSource}
-				renderRow={this.renderRow}
-				scrollEnabled={false}
-				enableEmptySections={true}
-			/>			
-		)
-	},
-	renderRow(rowdata){
+	renderSmellRow(rowdata){
 		return(
 			<View style={styles.smallCellBox}>
 				<Image
@@ -64,19 +66,29 @@ let productCommonList = React.createClass({
 				</View>
 			</View>
 		)
+	},
+	renderBigRow(rowdata){
+		return(
+			<View>
+				<Text>{rowdata.fullName}</Text>
+			</View>
+		)
 	}
 });
 
 const styles = StyleSheet.create({
-	productListBox:{
-		flex: 1
+	productListSmellBox:{
+		flex: 1,
+	},
+	productListBigBox:{
+		flex: 1,
 	},
 	smallCellBox:{
 		flex: 1,
 		height: 100,
 		borderBottomWidth: 0.5,
 		borderBottomColor: '#e1e1e1',
-		backgroundColor: '#fff',
+		//backgroundColor: '#fff',
 		flexDirection: 'row',
 		justifyContent: 'flex-start',
 		alignItems: 'center'

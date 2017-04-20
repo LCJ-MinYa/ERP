@@ -1016,7 +1016,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.ERP-lcj";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.ERP-minya";
 				PRODUCT_NAME = ERP;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1035,7 +1035,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.ERP-lcj";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.ERP-minya";
 				PRODUCT_NAME = ERP;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
