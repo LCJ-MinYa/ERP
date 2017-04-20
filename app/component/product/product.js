@@ -47,7 +47,9 @@ var product = React.createClass({
                         <Text style={styles.rightIcon}>&#xe613;</Text>
                     </View>
                     <ProductCommonList productData={this.state.productData}/>
-
+                    <View style={styles.goProductList}>
+                        <Text style={styles.goProductListText}>查看全部推荐商品</Text>
+                    </View>
                 </ScrollView>
 
                 <Request ref="request"/>
@@ -150,6 +152,19 @@ const styles = StyleSheet.create({
         color: '#f7a900',
         paddingRight: 10,
         fontSize: 20
+    },
+    goProductList:{
+        flex: 1,
+        height: 32,
+        borderBottomWidth: 0.5,
+        borderBottomColor: '#e1e1e1',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff'
+    },
+    goProductListText:{
+        fontSize: 14,
+        color: '#7b7b7b'
     }
 });
 

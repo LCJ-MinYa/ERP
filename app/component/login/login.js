@@ -10,12 +10,19 @@ import {
     TextInput,
     TouchableHighlight
 } from 'react-native';
-
+import { NavigationActions } from 'react-navigation'
 import Storage from '../../utils/customStorage.js';
 import Request from '../../utils/request.js';
-var {width, height} = Dimensions.get('window');
+let {width, height} = Dimensions.get('window');
 
-var login = React.createClass({
+const resetAction = NavigationActions.reset({
+    index: 0,
+    actions: [
+        NavigationActions.navigate({ routeName: 'Root'}),
+    ]
+});
+
+let login = React.createClass({
     getInitialState: function() {
         return {
             userName: '',
@@ -99,7 +106,7 @@ var login = React.createClass({
             },function(result){
                 Storage.setData("token",result.data.token);
                 Storage.setData("profileId",result.data.profileId);
-                _this.props.navigation.navigate('Root');
+                _this.props.navigation.dispatch(resetAction);
             });
         }
     }

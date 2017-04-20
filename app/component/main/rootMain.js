@@ -106,7 +106,14 @@ const MainScreenNavigator = TabNavigator({
 //设置头部导航条是否作为根视图
 const rootMain = StackNavigator({
     Root: { screen: MainScreenNavigator },
-    Login: { screen: loginScreen },
+    Login: {
+        screen: loginScreen,
+        navigationOptions:{
+            cardStack:{
+                gesturesEnabled: false
+            }
+        }
+    },
     ProductList: { screen: productListScreen }
 },{
     headerMode: 'none',

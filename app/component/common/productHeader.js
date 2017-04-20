@@ -33,7 +33,7 @@ let productHeader = React.createClass({
   		this.props.popGoLeft('ProductList');
   	},
   	goRight(){
-  		alert('right');
+  		this.props.popGoLeft('Login');
   	}
 })
 
