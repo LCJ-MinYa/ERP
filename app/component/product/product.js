@@ -26,8 +26,7 @@ let product = React.createClass({
     getInitialState: function() {
         return {
             isRefreshing: false,
-            isShowSmallProductList: {display: 'none'},
-            isShowBigProductList: {backgroundColor: '#000'},
+            isShowSmallProductList: true,
             bannerNoticeData: {},
             productData: []
         };
@@ -152,11 +151,7 @@ let product = React.createClass({
         }
     },
     changeProductList(){
-        console.log(this);
-        let nowSmell = this.state.isShowSmallProductList;
-        let nowBig = this.state.isShowBigProductList;
-        this.setState({isShowSmallProductList: nowBig});
-        this.setState({isShowSmallProductList: nowSmell});
+        this.setState({isShowSmallProductList: !this.state.isShowSmallProductList});
     },
 })
 

@@ -28,22 +28,36 @@ let productCommonList = React.createClass({
 	render() {
 		return (
 			<View>
+				{this.a()}
+				{this.b()}
+			</View>
+		);
+	},
+	a(){
+		if(this.props.isShowSmallProductList){
+			return(
 				<ListView
-					contentContainerStyle={styles.productListSmellBox, this.props.isShowSmallProductList}
+					contentContainerStyle={styles.productListSmellBox}
 					dataSource={this.state.dataSource}
 					renderRow={this.renderSmellRow}
 					scrollEnabled={false}
 					enableEmptySections={true}
 				/>
+			)
+		}
+	},
+	b(){
+		if(!this.props.isShowSmallProductList){
+			return(
 				<ListView
-					contentContainerStyle={styles.productListBigBox, this.props.isShowBigProductList}
+					contentContainerStyle={styles.productListBigBox}
 					dataSource={this.state.dataSource}
 					renderRow={this.renderBigRow}
 					scrollEnabled={false}
 					enableEmptySections={true}
 				/>
-			</View>
-		);
+			)
+		}
 	},
 	renderSmellRow(rowdata){
 		return(
@@ -88,7 +102,7 @@ const styles = StyleSheet.create({
 		height: 100,
 		borderBottomWidth: 0.5,
 		borderBottomColor: '#e1e1e1',
-		//backgroundColor: '#fff',
+		backgroundColor: '#fff',
 		flexDirection: 'row',
 		justifyContent: 'flex-start',
 		alignItems: 'center'
