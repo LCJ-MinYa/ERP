@@ -27,7 +27,7 @@ let productCommonList = React.createClass({
 	},
 	render() {
 		return (
-			<View>
+			<View style={{flex: 1}}>
 				{this.renderSmallList()}
 				{this.renderBigList()}
 			</View>
@@ -103,7 +103,7 @@ let productCommonList = React.createClass({
 
 const styles = StyleSheet.create({
 	productListSmellBox:{
-		flex: 1,
+		flex: 1
 	},
 	productListBigBox:{
 		flex: 1,
@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
 		alignItems: 'flex-start',
 	},
 	smallCellBox:{
-		flex: 1,
 		height: 100,
 		borderBottomWidth: 0.5,
 		borderBottomColor: '#e1e1e1',

@@ -72,6 +72,7 @@ let productHeader = React.createClass({
 
 const styles = StyleSheet.create({
 	headerBox:{
+		width: width,
 		height: Platform.OS == 'ios' ? 64 : 44,
 		backgroundColor: '#f65a44',
 	},

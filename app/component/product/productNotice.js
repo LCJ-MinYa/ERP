@@ -18,7 +18,7 @@ let productNotice = React.createClass({
 		};
 	},
 	componentWillReceiveProps(nextProps){
-		if(nextProps.noticeData.length !== 0){
+		if(nextProps.noticeData instanceof Array && nextProps.noticeData.length !== 0){
 			this.setState({notice: nextProps.noticeData})
 		}
 	},

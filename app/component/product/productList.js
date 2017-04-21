@@ -6,18 +6,25 @@ import {
   StyleSheet,
   View,
   Text,
-  Dimensions
+  Dimensions,
+  ScrollView
 } from 'react-native';
 
+import Request from '../../utils/request.js';
+import API from '../../config/apiConfig.js';
+import Config from '../../config/config.js';
+
 import ProductHeader from '../common/productHeader.js';
+import ProductCommonList from '../common/productCommonList.js';
 
 let {width, height} = Dimensions.get('window');
 let productList = React.createClass({
-	getDefaultProps: function() {
-		return {
-			
-		};
-	},
+    getInitialState: function() {
+        return {
+        	isShowSmallProductList: true,
+            productData: []
+        };
+    },
 	render() {
 		return(
 			<View style={styles.container}>
@@ -52,8 +59,31 @@ let productList = React.createClass({
 					</View>
 				</View>
 
+				<ProductCommonList
+					isShowSmallProductList={this.state.isShowSmallProductList}
+					productData={this.state.productData}
+				/>
+
+				<Request ref="request"/>
 			</View>
 		)
+	},
+	componentDidMount(){
+		this.getProductData();
+	},
+	getProductData(){
+        let _this = this;
+        this.refs.request.PostService(API.PRODUCT_LIST, {
+            isRecommend:1,
+            includeOOS:1,
+            pageIndex: 1,
+            pageSize: Config.PAGESIZE
+        }, function(result){
+        	console.log(result);
+            if(result.data.length !== 0){
+                _this.setState({productData: result.data});
+            }
+        })
 	},
 	popToClassView(url){
 		if(!url){
@@ -66,10 +96,11 @@ let productList = React.createClass({
 
 const styles = StyleSheet.create({
 	container:{
-        flex: 1,
+		flex: 1,
         backgroundColor: '#eee'
 	},
 	navBox:{
+		width: width,
 		flexDirection: 'row',
 		height: 25,
 		borderBottomWidth: 0.5,

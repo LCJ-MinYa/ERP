@@ -25,9 +25,11 @@ let productBanner = React.createClass({
 		};
 	},
 	componentWillReceiveProps(nextProps){
-		if(nextProps.bannerData.length !== 0){
-			this.setState({activePageNumber: nextProps.bannerData.length})
-			this.setState({dataSource: this.state.dataSource.cloneWithRows(nextProps.bannerData)})
+		if(nextProps.bannerData instanceof Array){
+			if(nextProps.bannerData.length !== 0){
+				this.setState({activePageNumber: nextProps.bannerData.length})
+				this.setState({dataSource: this.state.dataSource.cloneWithRows(nextProps.bannerData)})
+			}
 		}
 	},
   	render() {

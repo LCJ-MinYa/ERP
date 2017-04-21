@@ -21,7 +21,7 @@ let productTypeNav = React.createClass({
 		};
 	},
 	componentWillReceiveProps(nextProps){
-		if(nextProps.goodsLabelData.hasOwnProperty('hotLabel')){
+		if(nextProps.hasOwnProperty('goodsLabel')){
 			this.setState({goodsLabel: nextProps.goodsLabelData})
 		}
 	},
