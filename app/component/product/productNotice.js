@@ -46,7 +46,7 @@ let productNotice = React.createClass({
 		let noticeItemArr = [];
 		for (var i = 0; i < this.state.notice.length; i++) {
 			noticeItemArr.push(
-		        <View style={styles.slide} key={i} onPress={this.goNewsView}>
+		        <View style={styles.slide} key={i}>
 		          	<Text numberOfLines={1} style={styles.text}>【最新公告】{this.state.notice[i].name}</Text>
 		        </View>
 			)

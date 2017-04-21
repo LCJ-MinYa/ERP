@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
 		fontFamily: 'iconfont',
 		fontSize: 18,
 		color: '#fff',
-		fontWeight: 'bold',
 		backgroundColor: 'rgba(255, 255, 255, 0)'
 	},
 	navText:{

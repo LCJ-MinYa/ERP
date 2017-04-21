@@ -99,7 +99,8 @@ const MainScreenNavigator = TabNavigator({
         },
         indicatorStyle: {
             height: 0
-        }
+        },
+        showIcon: true,
     }
 });
 
