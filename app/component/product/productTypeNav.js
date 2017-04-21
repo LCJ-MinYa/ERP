@@ -72,7 +72,7 @@ let productTypeNav = React.createClass({
   		)
   	},
   	goProductList(){
-  		this.props.popDoClick('ProductList');
+  		this.props.popDoClick('ProductList',{includeOOS: 1});
   	}
 });
 

@@ -51,7 +51,7 @@ let product = React.createClass({
                     }
                 >
                     <ProductBanner ref="productBanner" bannerData={this.state.bannerNoticeData.banner}/>
-                    <ProductTypeNav popDoClick={(url)=>{this.popToNewView(url)}} goodsLabelData={this.state.bannerNoticeData.goodsLabel}/>
+                    <ProductTypeNav popDoClick={(url, params)=>{this.popToNewView(url, params)}} goodsLabelData={this.state.bannerNoticeData.goodsLabel}/>
                     <ProductNotice noticeData={this.state.bannerNoticeData.notice}/>
 
                     <View style={styles.listTitle}>
@@ -79,7 +79,7 @@ let product = React.createClass({
     	);
   	},
     popToNewView(url, params){
-        this.props.navigation.navigate(url);
+        this.props.navigation.navigate(url, params);
     },
     componentDidMount(){
         let token, profileId;

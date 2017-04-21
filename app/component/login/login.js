@@ -55,6 +55,7 @@ let login = React.createClass({
                 <View style={styles.inputBox}>
                     <Text style={styles.userIcon}>&#xe61f;</Text>
                     <TextInput
+                        autoCapitalize={'none'}
                         style={styles.inputStyle}
                         placeholder='请输入登录账号'
                         underlineColorAndroid={'transparent'}
@@ -68,6 +69,7 @@ let login = React.createClass({
                 <View style={[styles.inputBox,styles.lastInputBox]}>
                     <Text style={styles.userIcon}>&#xe620;</Text>
                     <TextInput
+                        autoCapitalize={'none'}
                         style={styles.inputStyle}
                         placeholder='请输入登录密码'
                         password={true}
