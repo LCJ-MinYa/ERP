@@ -5,14 +5,13 @@ import React, { Component } from 'react';
 import {
   	StyleSheet,
   	View,
-  	Text,
+  	Text
 } from 'react-native';
 
-let productClass = React.createClass({
+let commonHeader = React.createClass({
 	render() {
 		return (
-		  	<View >
-		  	</View>
+	  		<View />
 		);
 	}
 });
@@ -21,4 +20,5 @@ const styles = StyleSheet.create({
 
 });
 
-export default productClass;
+
+export default commonHeader;
