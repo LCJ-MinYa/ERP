@@ -7,7 +7,8 @@ import {
   View,
   Text,
   Platform,
-  Dimensions
+  Dimensions,
+  TouchableWithoutFeedback
 } from 'react-native';
 let {width, height} = Dimensions.get('window');
 let productHeader = React.createClass({
@@ -15,16 +16,20 @@ let productHeader = React.createClass({
     	return (
       		<View style={styles.headerBox}>
       			<View style={styles.commonHeaderBox}>
-      				<View style={styles.leftIconBox}>
-      					<Text style={styles.leftIcon} onPress={this.goLeft}>&#xe611;</Text>
-      				</View>
+      				<TouchableWithoutFeedback onPressIn={this.goLeft}>
+	      				<View style={styles.leftIconBox}>
+	      					<Text style={styles.leftIcon}>&#xe611;</Text>
+	      				</View>
+      				</TouchableWithoutFeedback>
       				<View style={styles.middleInput}>
       					<Text style={styles.searchIcon}>&#xe623;</Text>
       					<Text style={styles.searchMsg}>输入商品名称或编号进行搜索</Text>
       				</View>
-      				<View style={styles.leftIconBox}>
-      					<Text style={[styles.leftIcon, styles.rightIcon]} onPress={this.goRight}>&#xe602;</Text>
-      				</View>
+      				<TouchableWithoutFeedback onPressIn={this.goLeft}>
+	      				<View style={styles.leftIconBox} onPress={this.goRight}>
+	      					<Text style={[styles.leftIcon, styles.rightIcon]}>&#xe602;</Text>
+	      				</View>
+      				</TouchableWithoutFeedback>
       			</View>
       		</View>
 	  	);

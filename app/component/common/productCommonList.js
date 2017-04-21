@@ -28,12 +28,12 @@ let productCommonList = React.createClass({
 	render() {
 		return (
 			<View>
-				{this.a()}
-				{this.b()}
+				{this.renderSmallList()}
+				{this.renderBigList()}
 			</View>
 		);
 	},
-	a(){
+	renderSmallList(){
 		if(this.props.isShowSmallProductList){
 			return(
 				<ListView
@@ -46,7 +46,7 @@ let productCommonList = React.createClass({
 			)
 		}
 	},
-	b(){
+	renderBigList(){
 		if(!this.props.isShowSmallProductList){
 			return(
 				<ListView
@@ -68,23 +68,34 @@ let productCommonList = React.createClass({
 				/>
 				<View style={styles.rightBox}>
 					<Text numberOfLines={2} style={styles.productName}>{rowdata.fullName}</Text>
-					<Text style={styles.productUnit}>库存：{rowdata.stockQty}{rowdata.unit}</Text>
-					<Text style={styles.productPrice}>
+					<Text numberOfLines={1} style={styles.productUnit}>库存：{rowdata.stockQty}{rowdata.unit}</Text>
+					<Text numberOfLines={1} style={styles.productPrice}>
 						¥
 						<Text style={{fontSize: 18}}>{rowdata.price}</Text>
 						<Text style={{fontSize: 14,color: '#323232'}}>／{rowdata.unit}</Text>
 					</Text>
-					<View style={styles.buyBtnBox}>
-						<Text style={styles.butBtn}>&#xe600;</Text>
-					</View>
+				</View>
+				<View style={styles.buyBtnBox}>
+					<Text style={styles.butBtn}>&#xe600;</Text>
 				</View>
 			</View>
 		)
 	},
-	renderBigRow(rowdata){
+	renderBigRow(rowdata, sectionID, rowID){
+		let marginRightStyle;
+		rowID%2 == 0 ? (marginRightStyle = {marginRight: 5}) : (marginRightStyle = {marginRight: 0});
 		return(
-			<View>
-				<Text>{rowdata.fullName}</Text>
+			<View style={[styles.bigCellBox, marginRightStyle]}>
+				<Image
+				  style={styles.bigimage}
+				  source={{uri: rowdata.picUrl}}
+				/>
+				<Text numberOfLines={2} style={[styles.productBigName, styles.allPadding]}>{rowdata.fullName}</Text>
+				<Text numberOfLines={1} style={[styles.productBigUnit, styles.allPadding]}>库存：{rowdata.stockQty}{rowdata.unit}</Text>
+				<Text numberOfLines={1} style={[styles.productBigPrice, styles.allPadding]}>¥<Text style={{fontSize: 18}}>{rowdata.price}</Text></Text>
+				<View style={styles.buyBtnBox}>
+					<Text style={styles.butBtn}>&#xe600;</Text>
+				</View>			
 			</View>
 		)
 	}
@@ -96,6 +107,10 @@ const styles = StyleSheet.create({
 	},
 	productListBigBox:{
 		flex: 1,
+		flexDirection: 'row',
+		backgroundColor: '#fff',
+		flexWrap: 'wrap',
+		alignItems: 'flex-start',
 	},
 	smallCellBox:{
 		flex: 1,
@@ -138,8 +153,8 @@ const styles = StyleSheet.create({
 		borderWidth: 0.5,
 		borderColor: '#f65a44',
 		position: 'absolute',
-		right: 0,
-		bottom: 5,
+		right: 10,
+		bottom: 10,
 		justifyContent: 'center',
 		alignItems: 'center'
 	},
@@ -148,6 +163,39 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		color: '#f65a44',
 		paddingTop: 1
+	},
+	bigCellBox:{
+		width: (width-5) * 0.5,
+		borderBottomWidth: 0.5,
+		borderBottomColor: '#e1e1e1',
+		backgroundColor: '#fff',
+		justifyContent: 'flex-start',
+		marginBottom: 5,	
+	},
+	bigimage:{
+		width: (width-5) * 0.5,
+		height: (width-5) * 0.5
+	},
+	productBigName:{
+		height: 35,
+		color: '#323232',
+		fontSize: 15,
+		marginTop: 10,
+	},
+	productBigUnit:{
+		color: '#727272',
+		fontSize: 12,
+		paddingTop: 5,
+		paddingBottom: 5
+	},
+	productBigPrice:{
+		color: '#f65a44',
+		fontSize: 12,
+		paddingBottom: 5
+	},
+	allPadding:{
+		paddingLeft: 10,
+		paddingRight: 10,		
 	}
 });
 

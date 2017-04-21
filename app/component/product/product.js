@@ -8,7 +8,8 @@ import {
   	Image,
     Alert,
     ScrollView,
-    RefreshControl
+    RefreshControl,
+    TouchableWithoutFeedback
 } from 'react-native';
 import Request from '../../utils/request.js';
 import API from '../../config/apiConfig.js';
@@ -57,7 +58,17 @@ let product = React.createClass({
 
                     <View style={styles.listTitle}>
                         <Text style={styles.leftText}>推荐商品</Text>
-                        <Text onPress={this.changeProductList} style={styles.rightIcon}>&#xe613;</Text>
+                        <TouchableWithoutFeedback onPressIn={this.changeProductList}>
+                            <View>
+                            {
+                                this.state.isShowSmallProductList ? (
+                                    <Text style={styles.rightIcon}>&#xe613;</Text>
+                                ) : (
+                                    <Text style={styles.rightIcon}>&#xe62e;</Text>
+                                )
+                            }
+                            </View>
+                        </TouchableWithoutFeedback>
                     </View>
                     <ProductCommonList isShowSmallProductList={this.state.isShowSmallProductList} productData={this.state.productData}/>
                     <View style={styles.goProductList}>
