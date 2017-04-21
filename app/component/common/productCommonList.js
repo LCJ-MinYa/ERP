@@ -40,7 +40,6 @@ let productCommonList = React.createClass({
 					contentContainerStyle={styles.productListSmellBox}
 					dataSource={this.state.dataSource}
 					renderRow={this.renderSmellRow}
-					scrollEnabled={false}
 					enableEmptySections={true}
 				/>
 			)
@@ -53,7 +52,6 @@ let productCommonList = React.createClass({
 					contentContainerStyle={styles.productListBigBox}
 					dataSource={this.state.dataSource}
 					renderRow={this.renderBigRow}
-					scrollEnabled={false}
 					enableEmptySections={true}
 				/>
 			)
@@ -103,10 +101,8 @@ let productCommonList = React.createClass({
 
 const styles = StyleSheet.create({
 	productListSmellBox:{
-		flex: 1
 	},
 	productListBigBox:{
-		flex: 1,
 		flexDirection: 'row',
 		backgroundColor: '#fff',
 		flexWrap: 'wrap',
