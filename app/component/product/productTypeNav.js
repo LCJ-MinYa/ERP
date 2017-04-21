@@ -5,7 +5,8 @@ import React, { Component } from 'react';
 import {
   	StyleSheet,
   	View,
-  	Text
+  	Text,
+  	TouchableWithoutFeedback
 } from 'react-native';
 
 let productTypeNav = React.createClass({
@@ -60,13 +61,18 @@ let productTypeNav = React.createClass({
   				break;
   		}
   		return(
-  			<View style={styles.typeNavItem}>
-	  			<View style={[styles.navColor,{backgroundColor: color}]}>
-	  				{navIconView}
+  			<TouchableWithoutFeedback onPressIn={this.goProductList}>
+	  			<View style={styles.typeNavItem}>
+		  			<View style={[styles.navColor,{backgroundColor: color}]}>
+		  				{navIconView}
+		  			</View>
+		  			<Text style={styles.navText}>{navIconText}</Text>
 	  			</View>
-	  			<Text style={styles.navText}>{navIconText}</Text>
-  			</View>
+  			</TouchableWithoutFeedback>
   		)
+  	},
+  	goProductList(){
+  		this.props.popDoClick('ProductList');
   	}
 });
 

@@ -36,9 +36,7 @@ let product = React.createClass({
   		const { navigate } = this.props.navigation;
     	return (
       		<View style={styles.container}>
-                <ProductHeader
-                    popGoLeft = {(url)=>{this.popToClassView(url)}}
-                />
+                <ProductHeader popDoClick={(url)=>{this.popToNewView(url)}} />
 
                 <ScrollView
                     style={styles.scrollView}
@@ -53,7 +51,7 @@ let product = React.createClass({
                     }
                 >
                     <ProductBanner ref="productBanner" bannerData={this.state.bannerNoticeData.banner}/>
-                    <ProductTypeNav goodsLabelData={this.state.bannerNoticeData.goodsLabel}/>
+                    <ProductTypeNav popDoClick={(url)=>{this.popToNewView(url)}} goodsLabelData={this.state.bannerNoticeData.goodsLabel}/>
                     <ProductNotice noticeData={this.state.bannerNoticeData.notice}/>
 
                     <View style={styles.listTitle}>
@@ -80,7 +78,7 @@ let product = React.createClass({
             </View>
     	);
   	},
-    popToClassView(url){
+    popToNewView(url, params){
         this.props.navigation.navigate(url);
     },
     componentDidMount(){

@@ -8,60 +8,31 @@ import {
   Text,
   Dimensions
 } from 'react-native';
-import Swiper from 'react-native-swiper';
+
+import ProductHeader from '../common/productHeader.js';
+
 let {width, height} = Dimensions.get('window');
-class productList extends Component {
-  render() {
-  	console.log(1);
-    return (
-      <Swiper
-		horizontal={false}
-		autoplay={true}
-		showsPagination={false}
-		scrollEnabled={false}
-		height={36}
-		width={width-36}
-      >
-        <View style={styles.slide1}>
-          <Text style={styles.text}>Hello Swiper</Text>
-        </View>
-        <View style={styles.slide2}>
-          <Text style={styles.text}>Beautiful</Text>
-        </View>
-        <View style={styles.slide3}>
-          <Text style={styles.text}>And simple</Text>
-        </View>
-      </Swiper>
-    );
-  }
-}
+let productList = React.createClass({
+	render() {
+		return(
+			<ProductHeader
+				showProductClass={false}
+				showSaoYiSao={false}
+				popDoClick = {(url)=>{this.popToClassView(url)}} 
+			/>
+		)
+	},
+	popToClassView(url){
+		if(!url){
+			this.props.navigation.goBack(url);
+		}else{
+			this.props.navigation.navigate(url);
+		}
+	}
+});
 
 const styles = StyleSheet.create({
-wrapper: {
-  },
-  slide1: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#9DD6EB',
-  },
-  slide2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#97CAE5',
-  },
-  slide3: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#92BBD9',
-  },
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold',
-  }
+
 });
 
 
