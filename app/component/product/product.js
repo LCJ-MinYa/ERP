@@ -20,12 +20,14 @@ import ProductBanner from './productBanner.js';
 import ProductTypeNav from './productTypeNav.js';
 import ProductNotice from './productNotice.js';
 import ProductCommonList from '../common/productCommonList.js';
+import Loading from '../../utils/loading.js';
 
 let bannerNoticeReq = false;
 let productReq = false;
 let product = React.createClass({
     getInitialState: function() {
         return {
+            isShowLoading: true,
             isRefreshing: false,
             isShowSmallProductList: true,
             bannerNoticeData: {},
@@ -33,7 +35,7 @@ let product = React.createClass({
         };
     },
   	render() {
-  		const { navigate } = this.props.navigation;
+  		console.log('加载一次');
     	return (
       		<View style={styles.container}>
                 <ProductHeader popDoClick={(url)=>{this.popToNewView(url)}} />
@@ -69,12 +71,15 @@ let product = React.createClass({
                         </TouchableWithoutFeedback>
                     </View>
                     <ProductCommonList isShowSmallProductList={this.state.isShowSmallProductList} productData={this.state.productData}/>
-                    <View style={styles.goProductList}>
-                        <Text style={styles.goProductListText}>查看全部推荐商品</Text>
-                    </View>
+                    <TouchableWithoutFeedback>
+                        <View style={styles.goProductList}>
+                            <Text style={styles.goProductListText}>查看全部推荐商品</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
                 </ScrollView>
 
                 <Request ref="request"/>
+                <Loading isShowLoading={this.state.isShowLoading} />
             </View>
     	);
   	},
@@ -155,8 +160,11 @@ let product = React.createClass({
         this.getProductData();
     },
     isRequestFinish(){
-        if(!bannerNoticeReq && !productReq && this.state.isRefreshing){
-            this.setState({isRefreshing: false});
+        if(!bannerNoticeReq && !productReq){
+            if(this.state.isRefreshing){
+                this.setState({isRefreshing: false});
+            }
+            this.setState({isShowLoading: false});
         }
     },
     changeProductList(){

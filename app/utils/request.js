@@ -5,26 +5,33 @@ import React, { Component } from 'react';
 import {
   	StyleSheet,
   	View,
-  	ActivityIndicator,
   	Alert
 } from 'react-native';
 
 import Storage from './customStorage.js';
 import config from '../config/config.js';
 import sha1 from './sha1.js';
+import Loading from './loading.js';
 
 var request = React.createClass({
-    getInitialState: function() {
-        return {
-            isShowLoading: false
-        };
-    },
+	getInitialState: function() {
+		return {
+			isShowLoading: false 
+		};
+	},
+	propTypes:{
+		loadingText: React.PropTypes.string.isRequired,
+	},
+	getDefaultProps: function() {
+		return {
+			loadingText: '加载中...'
+		};
+	},
 	render(){
 		return(
-			<ActivityIndicator
-				style={{height: 0}}
-				animating={this.state.isShowLoading}
-				size={'large'}
+			<Loading 
+				isShowLoading={this.state.isShowLoading}
+				loadingText={this.props.loadingText}
 			/>
 		);
 	},

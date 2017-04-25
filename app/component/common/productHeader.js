@@ -66,7 +66,7 @@ let productHeader = React.createClass({
   		}
   	},
   	goRight(){
-  		this.props.popDoClick('Root');
+  		this.props.popDoClick('Login');
   	}
 })
 

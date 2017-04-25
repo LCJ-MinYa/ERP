@@ -26,7 +26,8 @@ let login = React.createClass({
     getInitialState: function() {
         return {
             userName: '',
-            password: ''
+            password: '',
+            isShowLoading: false
         };
     },
     componentDidMount(){
@@ -89,7 +90,10 @@ let login = React.createClass({
                     <Text style={styles.btnText}>登录</Text> 
                 </TouchableHighlight>
 
-                <Request ref="request"/>
+                <Request
+                    ref="request"
+                    loadingText={'登录中...'}
+                />
             </View>
     	);
   	},
@@ -109,7 +113,7 @@ let login = React.createClass({
                 Storage.setData("token",result.data.token);
                 Storage.setData("profileId",result.data.profileId);
                 _this.props.navigation.dispatch(resetAction);
-            });
+            }, true);
         }
     }
 })
