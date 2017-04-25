@@ -16,7 +16,7 @@ import Loading from './loading.js';
 var request = React.createClass({
 	getInitialState: function() {
 		return {
-			isShowLoading: false 
+			isShowLoading: false
 		};
 	},
 	propTypes:{

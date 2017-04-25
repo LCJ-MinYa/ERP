@@ -48,7 +48,7 @@ let productHeader = React.createClass({
   		if(this.props.showProductClass){
   			return (<Text style={styles.leftIcon}>&#xe611;</Text>);
   		}else{
-  			return (<Text style={[styles.leftIcon,{paddingTop: 2}]}>&#xe640;</Text>);
+  			return (<Text style={[styles.leftIcon,{paddingTop: 2,fontSize: 20}]}>&#xe640;</Text>);
   		}
   	},
   	renderRightIcon(){

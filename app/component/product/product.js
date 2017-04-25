@@ -35,9 +35,9 @@ let product = React.createClass({
         };
     },
   	render() {
-  		console.log('加载一次');
     	return (
       		<View style={styles.container}>
+                <Loading isShowLoading={this.state.isShowLoading} />
                 <ProductHeader popDoClick={(url)=>{this.popToNewView(url)}} />
 
                 <ScrollView
@@ -79,7 +79,6 @@ let product = React.createClass({
                 </ScrollView>
 
                 <Request ref="request"/>
-                <Loading isShowLoading={this.state.isShowLoading} />
             </View>
     	);
   	},
@@ -96,10 +95,30 @@ let product = React.createClass({
         .then((value)=>{
             profileId = value;
             if(token && profileId){
-                //拉取global全局信息
-                let _this = this;
-                this.refs.request.PostService(API.GLOBAL_INFO, {}, function(result){
-                    if(result.error_code < 0){
+                this.getInitMsg();
+            }else{
+                _this.setState({isShowLoading: false},function(){
+                    setTimeout(()=>{
+                        Alert.alert('您还未登录','点击登录',[
+                            {
+                                text: '去登录',
+                                onPress:()=>{
+                                    this.props.navigation.navigate('Login');
+                                }
+                            }
+                        ])
+                    }, 1000);
+                })
+            }
+        })
+    },
+    getInitMsg(){
+        //拉取global全局信息
+        let _this = this;
+        this.refs.request.PostService(API.GLOBAL_INFO, {}, function(result){
+            if(result.error_code < 0){
+                _this.setState({isShowLoading: false},function(){
+                    setTimeout(()=>{
                         Alert.alert('登录已过期',result.error_message,[
                             {
                                 text: '重新登录',
@@ -108,20 +127,11 @@ let product = React.createClass({
                                 }
                             }
                         ])
-                    }else{
-                        _this.getBannerNoticeData();
-                        _this.getProductData();
-                    }
+                    }, 1000);
                 })
             }else{
-                Alert.alert('您还未登录','点击登录',[
-                    {
-                        text: '去登录',
-                        onPress:()=>{
-                            this.props.navigation.navigate('Login');
-                        }
-                    }
-                ])
+                _this.getBannerNoticeData();
+                _this.getProductData();
             }
         })
     },
