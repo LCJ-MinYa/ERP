@@ -92,6 +92,7 @@ let login = React.createClass({
 
                 <Request
                     ref="request"
+                    isShowLoading={this.state.isShowLoading}
                     loadingText={'登录中...'}
                 />
             </View>
@@ -106,14 +107,16 @@ let login = React.createClass({
         }else if(!password){
             alert("请输入登录密码");
         }else{
+            this.setState({isShowLoading: true});
             this.refs.request.PostService('/api/user/login', {
                 userName: userName,
                 password: password
             },function(result){
+                _this.setState({isShowLoading: false});
                 Storage.setData("token",result.data.token);
                 Storage.setData("profileId",result.data.profileId);
                 _this.props.navigation.dispatch(resetAction);
-            }, true);
+            });
         }
     }
 })
