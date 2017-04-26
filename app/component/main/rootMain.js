@@ -21,60 +21,6 @@ import productClass from '../product/productClass.js';
 import tabBar from '../common/tabBar.js';
 import storage from '../../utils/customStorage.js';
 
-// //商品导航
-// const productStack = StackNavigator({
-//     Product: {
-//         screen: productScreen,
-//         path: '/'
-//     },
-//     ProductList: {
-//         screen: productListScreen,
-//         path: '/list'
-//     }
-// },{
-//     headerMode: 'none',
-// })
-
-// //购物车导航
-// const cartStack = StackNavigator({
-//     Cart: {
-//         screen: cartScreen,
-//         path: '/'
-//     },
-// },{
-//     headerMode: 'none',
-// })
-
-// //订单导航
-// const orderStack = StackNavigator({
-//     Order: {
-//         screen: orderScreen,
-//         path: '/'
-//     },
-// },{
-//     headerMode: 'none',
-// })
-
-// //信息导航
-// const msgStack = StackNavigator({
-//     Msg: {
-//         screen: msgScreen,
-//         path: '/'
-//     },
-// },{
-//     headerMode: 'none',
-// })
-
-// //我的导航
-// const mineStack = StackNavigator({
-//     Mine: {
-//         screen: mineScreen,
-//         path: '/'
-//     },
-// },{
-//     headerMode: 'none',
-// })
-
 tabBar.setNavigationOptions(productScreen, '商品首页', '商品', 'shopping');
 tabBar.setNavigationOptions(cartScreen, '购物车页面', '购物车', 'cart');
 tabBar.setNavigationOptions(orderScreen, '订单页面', '订单', 'order');
@@ -120,7 +66,7 @@ const rootMain = StackNavigator({
     ProductClass: { screen: productClass }
 },{
     headerMode: 'none',
-    initialRouteName: 'Root',
+    initialRouteName: 'ProductClass',
     onTransitionStart: ()=>{
         console.log('导航栏切换开始');
     },

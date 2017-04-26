@@ -14,23 +14,20 @@ import sha1 from './sha1.js';
 import Loading from './loading.js';
 
 var request = React.createClass({
-	getInitialState: function() {
-		return {
-			isShowLoading: false
-		};
-	},
 	propTypes:{
 		loadingText: React.PropTypes.string.isRequired,
+		isShowLoading: React.PropTypes.bool.isRequired,
 	},
 	getDefaultProps: function() {
 		return {
-			loadingText: '加载中...'
+			loadingText: '加载中...',
+			isShowLoading: false
 		};
 	},
 	render(){
 		return(
 			<Loading 
-				isShowLoading={this.state.isShowLoading}
+				isShowLoading={this.props.isShowLoading}
 				loadingText={this.props.loadingText}
 			/>
 		);
@@ -121,10 +118,7 @@ var request = React.createClass({
      *  callback:回调函数
      *  isLoading:是否显示加载状态
      */
-	PostService(url, params, callback, isLoading){
-		if(isLoading){
-			this.setState({isShowLoading: true});
-		}
+	PostService(url, params, callback){
 		let URL = config.API + url;
 		params.timestamp = this.getTimestamp();
 		Storage.getData('token')
@@ -155,9 +149,6 @@ var request = React.createClass({
 		})
 		.then((result) => result.json())
 		.then((resultJSON) => {
-			if(isLoading){
-				this.setState({isShowLoading: false});
-			}
 			if(url == '/api/system/getGlobalInfo' && resultJSON.error_code < 0){
 				callback(resultJSON);
 			}else if(resultJSON.error_code < 0){
