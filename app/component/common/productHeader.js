@@ -26,7 +26,7 @@ let productHeader = React.createClass({
     	return (
       		<View style={styles.headerBox}>
       			<View style={styles.commonHeaderBox}>
-      				<TouchableWithoutFeedback onPressIn={this.goLeft}>
+      				<TouchableWithoutFeedback onPress={this.goLeft}>
 	      				<View style={styles.leftIconBox}>
 	      					{this.renderLeftIcon()}
 	      				</View>
@@ -35,7 +35,7 @@ let productHeader = React.createClass({
       					<Text style={styles.searchIcon}>&#xe623;</Text>
       					<Text style={styles.searchMsg}>输入商品名称或编号进行搜索</Text>
       				</View>
-      				<TouchableWithoutFeedback onPressIn={this.goRight}>
+      				<TouchableWithoutFeedback onPress={this.goRight}>
 	      				<View style={styles.leftIconBox}>
 	      					{this.renderRightIcon()}
 	      				</View>

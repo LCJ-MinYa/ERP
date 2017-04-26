@@ -58,7 +58,7 @@ let product = React.createClass({
 
                     <View style={styles.listTitle}>
                         <Text style={styles.leftText}>推荐商品</Text>
-                        <TouchableWithoutFeedback onPressIn={this.changeProductList}>
+                        <TouchableWithoutFeedback onPress={this.changeProductList}>
                             <View>
                             {
                                 this.state.isShowSmallProductList ? (

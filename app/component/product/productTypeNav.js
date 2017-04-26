@@ -61,7 +61,7 @@ let productTypeNav = React.createClass({
   				break;
   		}
   		return(
-  			<TouchableWithoutFeedback onPressIn={this.goProductList}>
+  			<TouchableWithoutFeedback onPress={this.goProductList}>
 	  			<View style={styles.typeNavItem}>
 		  			<View style={[styles.navColor,{backgroundColor: color}]}>
 		  				{navIconView}

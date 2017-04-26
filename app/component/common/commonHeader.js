@@ -17,7 +17,7 @@ let commonHeader = React.createClass({
 		return (
 	  		<View style={styles.headerBox}>
 	  			<View style={styles.commonHeaderBox}>
-      				<TouchableWithoutFeedback onPressIn={this.goBack}>
+      				<TouchableWithoutFeedback onPress={this.goBack}>
 	      				<View style={styles.leftIconBox}>
 	      					<Text style={styles.leftIcon}>&#xe640;</Text>
 	      				</View>
