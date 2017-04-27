@@ -66,7 +66,7 @@ const rootMain = StackNavigator({
     ProductClass: { screen: productClass }
 },{
     headerMode: 'none',
-    initialRouteName: 'ProductClass',
+    initialRouteName: 'Root',
     onTransitionStart: ()=>{
         console.log('导航栏切换开始');
     },

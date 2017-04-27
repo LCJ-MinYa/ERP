@@ -6,8 +6,7 @@ import {
   StyleSheet,
   View,
   Text,
-  Dimensions,
-  ScrollView
+  Dimensions
 } from 'react-native';
 
 import Request from '../../utils/request.js';
@@ -21,8 +20,12 @@ let {width, height} = Dimensions.get('window');
 let productList = React.createClass({
     getInitialState: function() {
         return {
+        	params: {},//记录参数用，不刷新视图
+        	pageIndex: 1,
         	isShowSmallProductList: true,
-            productData: []
+            productData: [],
+            isRefreshing: false,
+            isShowLoading: true,
         };
     },
 	render() {
@@ -62,26 +65,49 @@ let productList = React.createClass({
 				<ProductCommonList
 					isShowSmallProductList={this.state.isShowSmallProductList}
 					productData={this.state.productData}
+					isShowRefresh={true}
+					isRefreshing={this.state.isRefreshing}
+					doRefresh={()=>this.doRefresh()}
+					loadMoreData={()=>this.loadMoreData()}
+					isShowFooter={true}
 				/>
 
-				<Request ref="request"/>
+				<Request
+					ref="request"
+					isShowLoading={this.state.isShowLoading}
+				/>
 			</View>
 		)
 	},
 	componentDidMount(){
-		this.getProductData();
+		this.getProductData(false, true);
 	},
-	getProductData(){
-        let _this = this;
-        this.refs.request.PostService(API.PRODUCT_LIST, {
-            isRecommend:1,
-            includeOOS:1,
-            pageIndex: 1,
-            pageSize: Config.PAGESIZE
-        }, function(result){
+	getProductData(isRefresh, isFirst){
+		let _this = this;
+		this.state.params = this.props.navigation.state.params;
+		let params = JSON.parse(JSON.stringify(this.state.params));
+		params.pageSize = Config.PAGESIZE;
+		if(isRefresh){
+			this.state.pageIndex = 1;
+			params.pageIndex = this.state.pageIndex;
+		}else{
+			params.pageIndex = this.state.pageIndex;
+		}
+        this.refs.request.PostService(API.PRODUCT_LIST, params, function(result){
         	console.log(result);
+        	if(isFirst){
+        		_this.setState({isShowLoading: false});
+        	}
+        	if(isRefresh){
+        		_this.setState({isRefreshing: false});
+        	}
             if(result.data.length !== 0){
-                _this.setState({productData: result.data});
+            	if(_this.state.pageIndex == 1){
+            		_this.setState({productData: result.data});
+            	}else{
+            		_this.setState({productData: _this.state.productData.concat(result.data)});
+            	}
+                _this.state.pageIndex += 1;
             }
         })
 	},
@@ -91,6 +117,15 @@ let productList = React.createClass({
 		}else{
 			this.props.navigation.navigate(url);
 		}
+	},
+	doRefresh(){
+		this.setState({isRefreshing: true,});
+		this.getProductData(true);
+
+	},
+	loadMoreData(){
+		console.log(123);
+		this.getProductData();
 	}
 });
 

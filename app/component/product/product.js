@@ -20,7 +20,6 @@ import ProductBanner from './productBanner.js';
 import ProductTypeNav from './productTypeNav.js';
 import ProductNotice from './productNotice.js';
 import ProductCommonList from '../common/productCommonList.js';
-import Loading from '../../utils/loading.js';
 
 let bannerNoticeReq = false;
 let productReq = false;
@@ -37,7 +36,6 @@ let product = React.createClass({
   	render() {
     	return (
       		<View style={styles.container}>
-                <Loading isShowLoading={this.state.isShowLoading} />
                 <ProductHeader popDoClick={(url)=>{this.popToNewView(url)}} />
 
                 <ScrollView
@@ -78,7 +76,10 @@ let product = React.createClass({
                     </TouchableWithoutFeedback>
                 </ScrollView>
 
-                <Request ref="request"/>
+                <Request
+                    ref="request"
+                    isShowLoading={this.state.isShowLoading}
+                />
             </View>
     	);
   	},
@@ -157,6 +158,7 @@ let product = React.createClass({
             pageIndex: 1,
             pageSize: Config.PAGESIZE
         }, function(result){
+            console.log(result);
             if(result.data.length !== 0){
                 _this.setState({productData: result.data});
                 productReq = false;

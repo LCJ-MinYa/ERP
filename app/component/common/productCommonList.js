@@ -8,10 +8,19 @@ import {
   	ListView,
   	Text,
   	Image,
-  	Dimensions
+  	Dimensions,
+  	RefreshControl
 } from 'react-native';
 let {width, height} = Dimensions.get('window');
 let productCommonList = React.createClass({
+	propTypes:{
+		isShowRefresh: React.PropTypes.bool.isRequired,
+	},
+	getDefaultProps: function() {
+		return {
+			isShowRefresh: false
+		};
+	},
 	getInitialState: function() {
 		let ds = new ListView.DataSource({
 			rowHasChanged:(row1, row2) => row1 !== row2
@@ -41,6 +50,10 @@ let productCommonList = React.createClass({
 					dataSource={this.state.dataSource}
 					renderRow={this.renderSmellRow}
 					enableEmptySections={true}
+                    refreshControl={this.shoudeShowRefresh()}
+                    onEndReached={this.props.loadMoreData}
+                    onEndReachedThreshold={0}
+                    renderFooter={this.renderFooterView}
 				/>
 			)
 		}
@@ -53,8 +66,36 @@ let productCommonList = React.createClass({
 					dataSource={this.state.dataSource}
 					renderRow={this.renderBigRow}
 					enableEmptySections={true}
+                    refreshControl={this.shoudeShowRefresh()}
+                    onEndReached={this.props.loadMoreData}
+                    onEndReachedThreshold={0}
+                    renderFooter={this.renderFooterView}
 				/>
 			)
+		}
+	},
+	shoudeShowRefresh(){
+		if(this.props.isShowRefresh){
+			return(
+                <RefreshControl
+                    refreshing={this.props.isRefreshing}
+                    onRefresh={this.props.doRefresh}
+                    tintColor="#989898"
+                    colors={['#989898']}
+                    progressBackgroundColor="#eee"
+                />
+			)
+		}else{
+			return null;
+		}
+	},
+	renderFooterView(){
+		if(this.props.isShowFooter){
+			return(
+				<Text>加载更多...</Text>
+			)
+		}else{
+			return null;
 		}
 	},
 	renderSmellRow(rowdata){

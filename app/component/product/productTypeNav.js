@@ -36,9 +36,9 @@ let productTypeNav = React.createClass({
       		</View>
     	);
   	},
-  	productItemView(color, icon){
+  	productItemView(color, type){
   		let navIconView, navIconText;
-  		switch(icon){
+  		switch(type){
   			case 1:
   				navIconView = <Text style={styles.navIcon}>&#xe629;</Text>;
   				navIconText = '全部';
@@ -61,7 +61,7 @@ let productTypeNav = React.createClass({
   				break;
   		}
   		return(
-  			<TouchableWithoutFeedback onPress={this.goProductList}>
+  			<TouchableWithoutFeedback onPress={()=>{this.goProductList(type)}}>
 	  			<View style={styles.typeNavItem}>
 		  			<View style={[styles.navColor,{backgroundColor: color}]}>
 		  				{navIconView}
@@ -71,8 +71,33 @@ let productTypeNav = React.createClass({
   			</TouchableWithoutFeedback>
   		)
   	},
-  	goProductList(){
-  		this.props.popDoClick('ProductList',{includeOOS: 1});
+  	goProductList(type){
+  		switch(type){
+  			case 1:
+  				this.props.popDoClick('ProductList',{includeOOS: 1});
+  				break;
+  			case 2:
+  				this.props.popDoClick('ProductList',{
+  					includeOOS: 1,
+  					isPromotion: 1
+  				});
+  				break;
+  			case 3:
+  				this.props.popDoClick('ProductList',{
+  					includeOOS: 1,
+  					isNew: 1
+  				});
+  				break;
+  			case 4:
+  				this.props.popDoClick('ProductList',{
+  					includeOOS: 1,
+  					isHot: 1
+  				});
+  				break;
+  			case 5:
+  				this.props.popDoClick('Collect');
+  				break;
+  		}
   	}
 });
 
