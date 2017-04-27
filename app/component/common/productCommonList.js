@@ -18,7 +18,8 @@ let productCommonList = React.createClass({
 	},
 	getDefaultProps: function() {
 		return {
-			isShowRefresh: false
+			isShowRefresh: false,
+			isShowFooter: 0,
 		};
 	},
 	getInitialState: function() {
@@ -90,12 +91,16 @@ let productCommonList = React.createClass({
 		}
 	},
 	renderFooterView(){
-		if(this.props.isShowFooter){
+		if(this.props.isShowFooter == 0){
+			return null;
+		}else if(this.props.isShowFooter == 1){
 			return(
 				<Text>加载更多...</Text>
 			)
-		}else{
-			return null;
+		}else if(this.props.isShowFooter == 2){
+			return(
+				<Text>没有更多数据...</Text>
+			)
 		}
 	},
 	renderSmellRow(rowdata){

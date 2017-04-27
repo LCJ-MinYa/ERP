@@ -26,6 +26,8 @@ let productList = React.createClass({
             productData: [],
             isRefreshing: false,
             isShowLoading: true,
+            isShowFooter: 0,//0不显示 1.加载中... 2.没有更多数据了
+            isLoadMore: false,
         };
     },
 	render() {
@@ -69,7 +71,7 @@ let productList = React.createClass({
 					isRefreshing={this.state.isRefreshing}
 					doRefresh={()=>this.doRefresh()}
 					loadMoreData={()=>this.loadMoreData()}
-					isShowFooter={true}
+					isShowFooter={this.state.isShowFooter}
 				/>
 
 				<Request
@@ -95,12 +97,21 @@ let productList = React.createClass({
 		}
         this.refs.request.PostService(API.PRODUCT_LIST, params, function(result){
         	console.log(result);
+        	//判断是否首次加载
         	if(isFirst){
         		_this.setState({isShowLoading: false});
         	}
+        	//判断是否是下啦刷新加载
         	if(isRefresh){
         		_this.setState({isRefreshing: false});
         	}
+        	//判断是非还有更多数据
+        	if(_this.state.pageIndex < result.pageCount){
+        		_this.setState({isShowFooter: 0});
+        	}else{
+        		_this.setState({isShowFooter: 2});
+        	}
+
             if(result.data.length !== 0){
             	if(_this.state.pageIndex == 1){
             		_this.setState({productData: result.data});
@@ -108,6 +119,7 @@ let productList = React.createClass({
             		_this.setState({productData: _this.state.productData.concat(result.data)});
             	}
                 _this.state.pageIndex += 1;
+                _this.state.isLoadMore = false;
             }
         })
 	},
@@ -124,7 +136,11 @@ let productList = React.createClass({
 
 	},
 	loadMoreData(){
-		console.log(123);
+		if(this.state.isLoadMore || this.state.isShowFooter == 2){
+			return
+		}
+		this.state.isLoadMore = true;
+		this.setState({isShowFooter: 1});
 		this.getProductData();
 	}
 });
