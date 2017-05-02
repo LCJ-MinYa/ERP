@@ -16,8 +16,9 @@ var setNavigationOptions = function(obj, title, label, icon){
 				  style={[styles.icon, {tintColor: tintColor}]}
 				  source={{uri: icon}}
 				/>
-			)
-		}
+			),
+			//visible: false,
+		},
 	}
 }
 
