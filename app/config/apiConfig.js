@@ -9,4 +9,7 @@ export default {
 	PRODUCT_LIST: '/api/product/getProductList',
 	FIRST_LEVEL_CLASS: '/api/product/getFirstLevelClass',
 	OTHER_LEVEL_CLASS: '/api/product/getOtherLevelClass',
+	PRODUCT_DETAIL: '/api/product/getProductDetail',
+	RELEVANCE_PRODUCT: '/api/product/getRelevanceProduct',
+	ADD_BROWSING_RECORD: '/api/personalcenter/addBrowsingRecord'
 };

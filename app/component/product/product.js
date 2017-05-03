@@ -68,7 +68,11 @@ let product = React.createClass({
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
-                    <ProductCommonList isShowSmallProductList={this.state.isShowSmallProductList} productData={this.state.productData}/>
+                    <ProductCommonList
+                        isShowSmallProductList={this.state.isShowSmallProductList}
+                        productData={this.state.productData}
+                        popDoClick={(url, params)=>{this.popToNewView(url, params)}}
+                    />
                     <TouchableWithoutFeedback>
                         <View style={styles.goProductList}>
                             <Text style={styles.goProductListText}>查看全部推荐商品</Text>
@@ -158,7 +162,6 @@ let product = React.createClass({
             pageIndex: 1,
             pageSize: Config.PAGESIZE
         }, function(result){
-            console.log(result);
             if(result.data.length !== 0){
                 _this.setState({productData: result.data});
                 productReq = false;

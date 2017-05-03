@@ -37,7 +37,7 @@ let productList = React.createClass({
 				<ProductHeader
 					showProductClass={false}
 					showSaoYiSao={false}
-					popDoClick = {(url)=>{this.popToClassView(url)}} 
+					popDoClick = {(url, params)=>{this.popToNewView(url, params)}} 
 				/>
 
 				{/*---- 商品列表nav ----*/}
@@ -72,6 +72,7 @@ let productList = React.createClass({
 					doRefresh={()=>this.doRefresh()}
 					loadMoreData={()=>this.loadMoreData()}
 					isShowFooter={this.state.isShowFooter}
+					popDoClick={(url, params)=>{this.popToNewView(url, params)}}
 				/>
 
 				<Request
@@ -123,11 +124,11 @@ let productList = React.createClass({
             }
         })
 	},
-	popToClassView(url){
+	popToNewView(url, params){
 		if(!url){
 			this.props.navigation.goBack(url);
 		}else{
-			this.props.navigation.navigate(url);
+			this.props.navigation.navigate(url, params);
 		}
 	},
 	doRefresh(){

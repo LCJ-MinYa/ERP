@@ -9,7 +9,8 @@ import {
   	Text,
   	Image,
   	Dimensions,
-  	RefreshControl
+  	RefreshControl,
+  	TouchableWithoutFeedback
 } from 'react-native';
 let {width, height} = Dimensions.get('window');
 let productCommonList = React.createClass({
@@ -108,43 +109,51 @@ let productCommonList = React.createClass({
 	},
 	renderSmellRow(rowdata){
 		return(
-			<View style={styles.smallCellBox}>
-				<Image
-				  	style={styles.productImage}
-				  	source={{uri: rowdata.picUrl}}
-				/>
-				<View style={styles.rightBox}>
-					<Text numberOfLines={2} style={styles.productName}>{rowdata.fullName}</Text>
-					<Text numberOfLines={1} style={styles.productUnit}>库存：{rowdata.stockQty}{rowdata.unit}</Text>
-					<Text numberOfLines={1} style={styles.productPrice}>
-						¥
-						<Text style={{fontSize: 18}}>{rowdata.price}</Text>
-						<Text style={{fontSize: 14,color: '#323232'}}>／{rowdata.unit}</Text>
-					</Text>
+			<TouchableWithoutFeedback onPress={()=>{this.goProductDetail(rowdata.id)}}>
+				<View style={styles.smallCellBox}>
+					<Image
+					  	style={styles.productImage}
+					  	source={{uri: rowdata.picUrl}}
+					/>
+					<View style={styles.rightBox}>
+						<Text numberOfLines={2} style={styles.productName}>{rowdata.fullName}</Text>
+						<Text numberOfLines={1} style={styles.productUnit}>库存：{rowdata.stockQty}{rowdata.unit}</Text>
+						<Text numberOfLines={1} style={styles.productPrice}>
+							¥
+							<Text style={{fontSize: 18}}>{rowdata.price}</Text>
+							<Text style={{fontSize: 14,color: '#323232'}}>／{rowdata.unit}</Text>
+						</Text>
+					</View>
+					<View style={styles.buyBtnBox}>
+						<Text style={styles.butBtn}>&#xe600;</Text>
+					</View>
 				</View>
-				<View style={styles.buyBtnBox}>
-					<Text style={styles.butBtn}>&#xe600;</Text>
-				</View>
-			</View>
+			</TouchableWithoutFeedback>
 		)
 	},
 	renderBigRow(rowdata, sectionID, rowID){
 		let marginRightStyle;
 		rowID%2 == 0 ? (marginRightStyle = {marginRight: 5}) : (marginRightStyle = {marginRight: 0});
 		return(
-			<View style={[styles.bigCellBox, marginRightStyle]}>
-				<Image
-				  style={styles.bigimage}
-				  source={{uri: rowdata.picUrl}}
-				/>
-				<Text numberOfLines={2} style={[styles.productBigName, styles.allPadding]}>{rowdata.fullName}</Text>
-				<Text numberOfLines={1} style={[styles.productBigUnit, styles.allPadding]}>库存：{rowdata.stockQty}{rowdata.unit}</Text>
-				<Text numberOfLines={1} style={[styles.productBigPrice, styles.allPadding]}>¥<Text style={{fontSize: 18}}>{rowdata.price}</Text></Text>
-				<View style={styles.buyBtnBox}>
-					<Text style={styles.butBtn}>&#xe600;</Text>
-				</View>			
-			</View>
+			<TouchableWithoutFeedback onPress={()=>{this.goProductDetail(rowdata.id)}}>
+				<View style={[styles.bigCellBox, marginRightStyle]}>
+					<Image
+					  style={styles.bigimage}
+					  source={{uri: rowdata.picUrl}}
+					/>
+					<Text numberOfLines={2} style={[styles.productBigName, styles.allPadding]}>{rowdata.fullName}</Text>
+					<Text numberOfLines={1} style={[styles.productBigUnit, styles.allPadding]}>库存：{rowdata.stockQty}{rowdata.unit}</Text>
+					<Text numberOfLines={1} style={[styles.productBigPrice, styles.allPadding]}>¥<Text style={{fontSize: 18}}>{rowdata.price}</Text></Text>
+					<View style={styles.buyBtnBox}>
+						<Text style={styles.butBtn}>&#xe600;</Text>
+					</View>			
+				</View>
+			</TouchableWithoutFeedback>
 		)
+	},
+	goProductDetail(id){
+		console.log(111);
+		this.props.popDoClick('ProductDetail',{productId: id});
 	}
 });
 

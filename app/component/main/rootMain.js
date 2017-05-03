@@ -16,7 +16,8 @@ import mineScreen from '../mine/mine.js';
 //navigator导航
 import loginScreen from '../login/login.js';
 import productListScreen from '../product/productList.js';
-import productClass from '../product/productClass.js';
+import productClassScreen from '../product/productClass.js';
+import productDetailScreen from '../product/productDetail.js';
 
 import tabBar from '../common/tabBar.js';
 import storage from '../../utils/customStorage.js';
@@ -63,7 +64,8 @@ const rootMain = StackNavigator({
         }
     },
     ProductList: { screen: productListScreen },
-    ProductClass: { screen: productClass }
+    ProductClass: { screen: productClassScreen },
+    ProductDetail: { screen: productDetailScreen }
 },{
     headerMode: 'none',
     initialRouteName: 'Root',
