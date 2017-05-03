@@ -24,22 +24,28 @@ let productNotice = React.createClass({
 	},
 	render() {
 		return (
-			<View style={styles.wrapper}>
-				<View style={styles.leftIconBox}>
-					<Text style={styles.leftIcon}>&#xe62b;</Text>
-				</View>
-				<Swiper
-					horizontal={false}
-					autoplay={true}
-					showsPagination={false}
-					scrollEnabled={false}
-					height={36}
-					width={width-36}
-					onTouchEnd={this.goNewsView}
-				>
-			        {this.renderNoticeItemView()}
-			  	</Swiper>
-		  	</View>
+			<View>
+				{	
+					this.state.notice.length !== 0 ? (
+						<View style={styles.wrapper}>
+							<View style={styles.leftIconBox}>
+								<Text style={styles.leftIcon}>&#xe62b;</Text>
+							</View>
+							<Swiper
+								horizontal={false}
+								autoplay={true}
+								showsPagination={false}
+								scrollEnabled={false}
+								height={36}
+								width={width-36}
+								onTouchEnd={this.goNewsView}
+							>
+						        {this.renderNoticeItemView()}
+						  	</Swiper>
+					  	</View>
+				  	) : (null)
+				}
+			</View>
 		);
 	},
 	renderNoticeItemView(){

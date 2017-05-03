@@ -94,14 +94,17 @@ let productCommonList = React.createClass({
 		if(this.props.isShowFooter == 0){
 			return null;
 		}else if(this.props.isShowFooter == 1){
-			return(
-				<Text>加载更多...</Text>
-			)
+			return this.footerView("加载更多...");
 		}else if(this.props.isShowFooter == 2){
-			return(
-				<Text>没有更多数据...</Text>
-			)
+			return this.footerView("没有更多数据...");
 		}
+	},
+	footerView(footerText){
+		return(
+			<View style={styles.footerBoxView}>
+				<Text>{footerText}</Text>
+			</View>
+		)
 	},
 	renderSmellRow(rowdata){
 		return(
@@ -237,6 +240,12 @@ const styles = StyleSheet.create({
 	allPadding:{
 		paddingLeft: 10,
 		paddingRight: 10,		
+	},
+	footerBoxView:{
+		height: 40,
+		backgroundColor: '#fff',
+		alignItems: 'center',
+		justifyContent: 'center'
 	}
 });
 
