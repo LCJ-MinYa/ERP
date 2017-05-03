@@ -7,7 +7,8 @@ import {
   	View,
   	Dimensions,
   	Text,
-  	Image
+  	Image,
+  	ScrollView
 } from 'react-native';
 
 import Request from '../../utils/request.js';
@@ -19,13 +20,57 @@ class productDetail extends Component {
     constructor(props){
         super(props);
         this.state = {
-            isShowLoading: true
+            isShowLoading: true,
+            picData: []
         };
+    }
+    renderSwiperView(){
+    	if(this.state.picData.length !== 0){
+	    	return(
+	    		<View style={styles.wrapper}>
+					<Swiper
+						showsPagination={true}
+						height={width}
+						width={width}
+					>
+				        {this.renderImageItemView()}
+				  	</Swiper>
+	    		</View>
+	    	)
+    	}else{
+    		return null;
+    	}
+    }
+    renderImageItemView(){
+		let imageItemArr = [];
+		for (var i = 0; i < this.state.picData.length; i++) {
+			imageItemArr.push(
+		        <View style={styles.slide} key={i}>
+		          	<Image
+		          	  style={styles.slideImage}
+		          	  source={{uri: this.state.picData[i]}}
+		          	/>
+		        </View>
+			)
+		}
+		return imageItemArr;   	
     }
   	render() {
     	return (
-    		<View>
-	      		<Text>123</Text>
+    		<View style={styles.container}>
+    			<ScrollView style={styles.scrollViewStyle}>
+	      			{this.renderSwiperView()}
+	      		</ScrollView>
+
+	      		<View style={styles.footerView}>
+	      			<View style={styles.footerLeftView}>
+	      				<Text style={styles.footerLeftIcon}>&#xe64c;</Text>
+	      				<Text style={styles.footerLeftText}>收藏</Text>
+	      			</View>
+	      			<View style={[styles.footerLeftView, styles.footerRightView]}>
+	      				<Text style={styles.footerRightText}>加入购物车</Text>
+	      			</View>
+	      		</View>
 	            <Request
 	                ref="request"
 	                isShowLoading={this.state.isShowLoading}
@@ -49,7 +94,8 @@ class productDetail extends Component {
   		}, function(result){
   			console.log(result);
   			_this.setState({
-  				isShowLoading: false
+  				isShowLoading: false,
+  				picData: result.data.picData
   			})
   		})
   	}
@@ -68,7 +114,61 @@ class productDetail extends Component {
 }
 
 const styles = StyleSheet.create({
-
+	container: {
+		flex: 1,
+		backgroundColor: '#eee'
+	},
+	scrollViewStyle:{
+		flex: 1
+	},
+	wrapper: {
+		flex: 1,
+		height: width,
+		flexDirection: 'row',
+		justifyContent: 'center',
+		backgroundColor: '#fff',
+	},
+	slide: {
+	    height: width,
+	    justifyContent: 'center'
+  	},
+  	slideImage: {
+  		width: width,
+  		height: width
+  	},
+  	footerView: {
+  		width: width,
+  		height: 44,
+  		flexDirection: 'row',
+  		position: 'absolute',
+  		bottom: 0,
+  		left: 0
+  	},
+  	footerLeftView:{
+  		flex: 1,
+  		height: 44,
+  		backgroundColor: '#e6e6e6',
+  		flexDirection: 'row',
+  		justifyContent: 'center',
+  		alignItems: 'center'
+  	},
+  	footerLeftIcon:{
+  		fontFamily: 'iconfont',
+  		fontSize: 18,
+  		color: '#f65a44',
+  		paddingRight: 2
+  	},
+  	footerLeftText:{
+  		color: '#323232',
+  		fontSize: 14
+  	},
+  	footerRightView:{
+  		backgroundColor: '#f65a44'
+  	},
+  	footerRightText:{
+  		fontSize: 14,
+  		color: '#fff'
+  	}
 });
 
 export default productDetail;

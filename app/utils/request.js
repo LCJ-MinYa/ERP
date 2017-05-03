@@ -158,7 +158,10 @@ var request = React.createClass({
                     }
                 ])
 			}else{
-				callback(resultJSON);
+				console.log(callback);
+				if(callback != undefined){
+					callback(resultJSON);
+				}
 			}
 		})
 		//捕获fetch错误异常
