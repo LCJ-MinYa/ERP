@@ -7,6 +7,6 @@
 import {
   AppRegistry,
 } from 'react-native';
-import rootMain from './app/component/main/rootMain.js';
+import App from './app/App.js';
 
-AppRegistry.registerComponent('ERP', () => rootMain);
+AppRegistry.registerComponent('ERP', () => App);

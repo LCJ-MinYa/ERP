@@ -102,7 +102,7 @@ let product = React.createClass({
             if(token && profileId){
                 this.getInitMsg();
             }else{
-                _this.setState({isShowLoading: false},function(){
+                this.setState({isShowLoading: false},function(){
                     setTimeout(()=>{
                         Alert.alert('您还未登录','点击登录',[
                             {

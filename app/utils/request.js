@@ -13,7 +13,7 @@ import config from '../config/config.js';
 import sha1 from './sha1.js';
 import Loading from './loading.js';
 
-var request = React.createClass({
+let request = React.createClass({
 	propTypes:{
 		loadingText: React.PropTypes.string.isRequired,
 		isShowLoading: React.PropTypes.bool.isRequired,
@@ -158,7 +158,6 @@ var request = React.createClass({
                     }
                 ])
 			}else{
-				console.log(callback);
 				if(callback != undefined){
 					callback(resultJSON);
 				}

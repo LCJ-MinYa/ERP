@@ -7,21 +7,19 @@ import {
   	Text,
   	Image
 } from 'react-native';
-import storage from '../../utils/customStorage.js';
+
+import { connect,Provider } from 'react-redux'  
+import { addCart } from '../../action'
 
 var mine = React.createClass({
   	render() {
+        const {dispatch, cart} = this.props;
     	return (
     		<View>
-    			<Text style={{marginTop: 100}} onPress={this.clearLogin}>我的首页</Text>
-    		</View>
+    			<Text style={{marginTop: 100}} onPress={()=>{dispatch(addCart(cart))}}>我的首页</Text>
+                <Text>{cart}</Text>
+            </View>
     	);
-  	},
-  	clearLogin(){
-  		storage.getData('token')
-  		.then((value)=>{
-  			console.log(value);
-  		})
   	}
 })
 
@@ -29,4 +27,10 @@ const styles = StyleSheet.create({
 
 });
 
-export default mine;
+function selector(state) {  
+    return {  
+        cart: state.cart,
+    }  
+}
+
+export default connect(selector)(mine);
