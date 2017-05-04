@@ -8,7 +8,8 @@ import {
   	Dimensions,
   	Text,
   	Image,
-  	ScrollView
+  	ScrollView,
+  	TouchableWithoutFeedback
 } from 'react-native';
 
 import Request from '../../utils/request.js';
@@ -35,6 +36,13 @@ class productDetail extends Component {
 					>
 				        {this.renderImageItemView()}
 				  	</Swiper>
+				  	<TouchableWithoutFeedback onPress={()=>{
+				  		this.props.navigation.navigate('Root')
+				  	}}>
+				  		<View>
+				  			<Text style={styles.goCartView}>购物车</Text>
+				  		</View>
+	    			</TouchableWithoutFeedback>
 	    		</View>
 	    	)
     	}else{
@@ -168,6 +176,11 @@ const styles = StyleSheet.create({
   	footerRightText:{
   		fontSize: 14,
   		color: '#fff'
+  	},
+  	goCartView:{
+  		position: 'absolute',
+  		top: 10,
+  		right: 20
   	}
 });
 

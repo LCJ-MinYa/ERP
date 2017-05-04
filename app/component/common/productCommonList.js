@@ -152,7 +152,6 @@ let productCommonList = React.createClass({
 		)
 	},
 	goProductDetail(id){
-		console.log(111);
 		this.props.popDoClick('ProductDetail',{productId: id});
 	}
 });
