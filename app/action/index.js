@@ -1,6 +1,6 @@
-export const addCart = (num) => {  
+export const addCart = (cart) => {  
 	return {  
 		type: 'ADD_CART',
-		num,
+		cart,
 	}
 }

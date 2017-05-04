@@ -9,10 +9,16 @@ import {
   	Image
 } from 'react-native';
 
+import { connect,Provider } from 'react-redux';
+
 var cart = React.createClass({
   	render() {
+  		const {dispatch, cart} = this.props;
     	return (
-      		<Text>购物车首页</Text>
+    		<View>
+      			<Text>购物车首页</Text>
+      			<Text>{cart}</Text>
+      		</View>
     	);
   	}
 })
@@ -21,4 +27,10 @@ const styles = StyleSheet.create({
 
 });
 
-export default cart;
+function selector(state) {
+    return {  
+        cart: state.cart,
+    }  
+}
+
+export default connect(selector)(cart);

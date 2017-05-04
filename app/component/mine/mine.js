@@ -8,7 +8,7 @@ import {
   	Image
 } from 'react-native';
 
-import { connect,Provider } from 'react-redux'  
+import { connect } from 'react-redux'
 import { addCart } from '../../action'
 
 var mine = React.createClass({
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 
 });
 
-function selector(state) {  
+function selector(state) {
     return {  
         cart: state.cart,
     }  
