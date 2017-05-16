@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 
 import {
   StyleSheet,
-  Image
+  Image,
+  Text,
+  View
 } from 'react-native';
 
 var setNavigationOptions = function(obj, title, label, icon, pathName){
@@ -14,10 +16,13 @@ var setNavigationOptions = function(obj, title, label, icon, pathName){
 		tabBarLabel: label,
 		//tabBarVisible: false,
 		tabBarIcon: ({tintColor}) =>(
-			<Image
-			  style={[styles.icon, {tintColor: tintColor}]}
-			  source={{uri: icon}}
-			/>
+			<View>
+				<Image
+				  style={[styles.icon, {tintColor: tintColor}]}
+				  source={{uri: icon}}
+				/>
+				<Text>66</Text>
+			</View>
 		),
 	}
 }
