@@ -11,11 +11,16 @@ import {
   	ScrollView,
   	TouchableWithoutFeedback
 } from 'react-native';
-
+import { NavigationActions } from 'react-navigation'
 import Request from '../../utils/request.js';
 import API from '../../config/apiConfig.js';
 import Swiper from 'react-native-swiper';
-
+const resetCartTabAction = NavigationActions.reset({
+    index: 0,
+    actions: [
+        NavigationActions.navigate({ routeName: 'CartTab'}),
+    ]
+});
 let {width, height} = Dimensions.get('window');
 
 class productDetail extends Component {
@@ -91,8 +96,7 @@ class productDetail extends Component {
     	);
   	}
     goCart(){
-        console.log(this.props);
-        this.props.navigation.navigate('CartTab');
+        this.props.navigation.dispatch(resetCartTabAction);
     }
   	componentDidMount(){
   		let id = this.props.navigation.state.params.productId;

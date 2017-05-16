@@ -18,7 +18,7 @@ let {width, height} = Dimensions.get('window');
 const resetAction = NavigationActions.reset({
     index: 0,
     actions: [
-        NavigationActions.navigate({ routeName: 'Root'}),
+        NavigationActions.navigate({ routeName: 'TabRoot'}),
     ]
 });
 
@@ -39,7 +39,7 @@ let login = React.createClass({
             .then((value)=>{
                 profileId = value;
                 if(token && profileId){
-                    //this.props.navigation.navigate('Root');
+                    //this.props.navigation.navigate('TabRoot');
                 }
             })
         })

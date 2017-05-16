@@ -14,7 +14,6 @@ import {
 import Request from '../../utils/request.js';
 import API from '../../config/apiConfig.js';
 import Config from '../../config/config.js';
-import Storage from '../../utils/customStorage.js';
 import ProductHeader from '../common/productHeader.js';
 import ProductBanner from './productBanner.js';
 import ProductTypeNav from './productTypeNav.js';
@@ -26,7 +25,7 @@ let productReq = false;
 let product = React.createClass({
     getInitialState: function() {
         return {
-            isShowLoading: true,
+            isShowLoading: false,
             isRefreshing: false,
             isShowSmallProductList: true,
             bannerNoticeData: {},
@@ -91,50 +90,16 @@ let product = React.createClass({
         this.props.navigation.navigate(url, params);
     },
     componentDidMount(){
-        let token, profileId;
-        Storage.getData('token')
-        .then((value)=>{
-            token = value;
-            return Storage.getData('profileId')
-        })
-        .then((value)=>{
-            profileId = value;
-            if(token && profileId){
-                this.getInitMsg();
-            }else{
-                this.setState({isShowLoading: false},function(){
-                    setTimeout(()=>{
-                        Alert.alert('您还未登录','点击登录',[
-                            {
-                                text: '去登录',
-                                onPress:()=>{
-                                    this.props.navigation.navigate('Login');
-                                }
-                            }
-                        ])
-                    }, 1000);
-                })
-            }
-        })
+        this.getInitMsg();
     },
     getInitMsg(){
         //拉取global全局信息
         let _this = this;
         this.refs.request.PostService(API.GLOBAL_INFO, {}, function(result){
             if(result.error_code < 0){
-                _this.setState({isShowLoading: false},function(){
-                    setTimeout(()=>{
-                        Alert.alert('登录已过期',result.error_message,[
-                            {
-                                text: '重新登录',
-                                onPress:()=>{
-                                    _this.props.navigation.navigate('Login');
-                                }
-                            }
-                        ])
-                    }, 1000);
-                })
+                _this.props.navigation.navigate('Login');
             }else{
+                _this.setState({isShowLoading: true});
                 _this.getBannerNoticeData();
                 _this.getProductData();
             }

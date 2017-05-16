@@ -8,6 +8,7 @@ import {
 
 var setNavigationOptions = function(obj, title, label, icon, pathName){
 	obj.navigationOptions = {
+		//gesturesEnabled: false,
 		path: pathName,
 		title: title,
 		tabBarLabel: label,

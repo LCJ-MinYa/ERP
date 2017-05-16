@@ -14,6 +14,7 @@ import msgScreen from '../msg/msg.js';
 import mineScreen from '../mine/mine.js';
 
 //navigator导航
+import launchScreen from '../launch/launch.js';
 import loginScreen from '../login/login.js';
 import productListScreen from '../product/productList.js';
 import productClassScreen from '../product/productClass.js';
@@ -35,6 +36,7 @@ const TabScreenNavigator = TabNavigator({
     MsgTab: { screen: msgScreen },
     MineTab: { screen: mineScreen }
 },{
+    lazy: true,
     tabBarPosition: 'bottom',
     tabBarOptions:{
         activeTintColor: '#f65a44',
@@ -54,22 +56,23 @@ const TabScreenNavigator = TabNavigator({
 
 //设置头部导航条是否作为根视图
 const Navigator = StackNavigator({
-    Root: { screen: TabScreenNavigator },
+    Launch: { screen: launchScreen },
+    TabRoot: { screen: TabScreenNavigator },
     Login: {
         screen: loginScreen,
         navigationOptions:{
-            cardStack:{
-                gesturesEnabled: false
-            }
+            gesturesEnabled: false
         }
     },
     ProductList: { screen: productListScreen },
     ProductClass: { screen: productClassScreen },
     ProductDetail: { screen: productDetailScreen },
 },{
+    lazy: true,
     headerMode: 'none',
-    initialRouteName: 'Root',
-    onTransitionStart: ()=>{
+    initialRouteName: 'Launch',
+    onTransitionStart: (nav)=>{
+        console.log(nav);
         console.log('导航栏切换开始');
     },
     onTransitionEnd: ()=>{
@@ -80,8 +83,6 @@ const Navigator = StackNavigator({
 const defaultGetStateForAction = Navigator.router.getStateForAction;
 
 Navigator.router.getStateForAction = (action, state) => {
-    console.log(action);
-    console.log(state);
     return defaultGetStateForAction(action, state);
 };
 
@@ -91,15 +92,12 @@ class rootMain extends Component {
             <Navigator
                 onNavigationStateChange={
                     (prevState, currentState) => {
-                        console.log(prevState);
-                        console.log(currentState);
+                        //console.log(prevState);
+                        //console.log(currentState);
                     }
                 }
             />
         );
-    }
-    componentDidMount(){
-
     }
 }
 
