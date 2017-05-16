@@ -1,10 +1,10 @@
 'use strict';
-
+import React, { Component } from 'react';
 import { 
   StackNavigator,
   TabNavigator,
   Platform
-} from 'react-navigation'; 
+} from 'react-navigation';
 
 //tabbar导航
 import productScreen from '../product/product.js';
@@ -22,13 +22,13 @@ import productDetailScreen from '../product/productDetail.js';
 import tabBar from '../common/tabBar.js';
 import storage from '../../utils/customStorage.js';
 
-tabBar.setNavigationOptions(productScreen, '商品首页', '商品', 'shopping');
-tabBar.setNavigationOptions(cartScreen, '购物车页面', '购物车', 'cart');
-tabBar.setNavigationOptions(orderScreen, '订单页面', '订单', 'order');
-tabBar.setNavigationOptions(msgScreen, '消息页面', '消息', 'msg');
-tabBar.setNavigationOptions(mineScreen, '我的页面', '我的', 'mine');
+tabBar.setNavigationOptions(productScreen, '商品首页', '商品', 'shopping', 'app/');
+tabBar.setNavigationOptions(cartScreen, '购物车页面', '购物车', 'cart', 'app/cart');
+tabBar.setNavigationOptions(orderScreen, '订单页面', '订单', 'order', 'app/order');
+tabBar.setNavigationOptions(msgScreen, '消息页面', '消息', 'msg', 'app/msg');
+tabBar.setNavigationOptions(mineScreen, '我的页面', '我的', 'mine', 'app/mine');
 
-const MainScreenNavigator = TabNavigator({
+const TabScreenNavigator = TabNavigator({
     ProductTab: { screen: productScreen },
     CartTab: { screen: cartScreen },
     OrderTab: { screen: orderScreen },
@@ -53,8 +53,8 @@ const MainScreenNavigator = TabNavigator({
 });
 
 //设置头部导航条是否作为根视图
-const rootMain = StackNavigator({
-    Root: { screen: MainScreenNavigator },
+const Navigator = StackNavigator({
+    Root: { screen: TabScreenNavigator },
     Login: {
         screen: loginScreen,
         navigationOptions:{
@@ -65,7 +65,7 @@ const rootMain = StackNavigator({
     },
     ProductList: { screen: productListScreen },
     ProductClass: { screen: productClassScreen },
-    ProductDetail: { screen: productDetailScreen }
+    ProductDetail: { screen: productDetailScreen },
 },{
     headerMode: 'none',
     initialRouteName: 'Root',
@@ -76,5 +76,31 @@ const rootMain = StackNavigator({
         console.log('导航栏切换结束');
     }
 });
+
+const defaultGetStateForAction = Navigator.router.getStateForAction;
+
+Navigator.router.getStateForAction = (action, state) => {
+    console.log(action);
+    console.log(state);
+    return defaultGetStateForAction(action, state);
+};
+
+class rootMain extends Component {
+    render() {
+        return (
+            <Navigator
+                onNavigationStateChange={
+                    (prevState, currentState) => {
+                        console.log(prevState);
+                        console.log(currentState);
+                    }
+                }
+            />
+        );
+    }
+    componentDidMount(){
+
+    }
+}
 
 export default rootMain;

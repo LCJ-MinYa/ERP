@@ -17,7 +17,7 @@ class App extends React.Component{
 	render(){
 		return(
       		<Provider store={this.store}>
-        		<RootMain />
+        		<RootMain ref="RootMain"/>
       		</Provider>
 		);
 	}

@@ -6,19 +6,18 @@ import {
   Image
 } from 'react-native';
 
-var setNavigationOptions = function(obj, title, label, icon){
+var setNavigationOptions = function(obj, title, label, icon, pathName){
 	obj.navigationOptions = {
+		path: pathName,
 		title: title,
-		tabBar:{
-			label: label,
-			icon: ({tintColor}) =>(
-				<Image
-				  style={[styles.icon, {tintColor: tintColor}]}
-				  source={{uri: icon}}
-				/>
-			),
-			//visible: false,
-		},
+		tabBarLabel: label,
+		//tabBarVisible: false,
+		tabBarIcon: ({tintColor}) =>(
+			<Image
+			  style={[styles.icon, {tintColor: tintColor}]}
+			  source={{uri: icon}}
+			/>
+		),
 	}
 }
 

@@ -17,6 +17,7 @@ import API from '../../config/apiConfig.js';
 import Swiper from 'react-native-swiper';
 
 let {width, height} = Dimensions.get('window');
+
 class productDetail extends Component {
     constructor(props){
         super(props);
@@ -37,8 +38,9 @@ class productDetail extends Component {
 				        {this.renderImageItemView()}
 				  	</Swiper>
 				  	<TouchableWithoutFeedback onPress={()=>{
-				  		this.props.navigation.navigate('Root')
-				  	}}>
+                        console.log(this.props);
+                        this.props.navigation.navigate('CartTab');
+                    }}>
 				  		<View>
 				  			<Text style={styles.goCartView}>购物车</Text>
 				  		</View>
@@ -65,27 +67,33 @@ class productDetail extends Component {
     }
   	render() {
     	return (
-    		<View style={styles.container}>
-    			<ScrollView style={styles.scrollViewStyle}>
-	      			{this.renderSwiperView()}
-	      		</ScrollView>
+            <View style={styles.container}>
+                <ScrollView style={styles.scrollViewStyle}>
+                    {this.renderSwiperView()}
+                </ScrollView>
 
-	      		<View style={styles.footerView}>
-	      			<View style={styles.footerLeftView}>
-	      				<Text style={styles.footerLeftIcon}>&#xe64c;</Text>
-	      				<Text style={styles.footerLeftText}>收藏</Text>
-	      			</View>
-	      			<View style={[styles.footerLeftView, styles.footerRightView]}>
-	      				<Text style={styles.footerRightText}>加入购物车</Text>
-	      			</View>
-	      		</View>
-	            <Request
-	                ref="request"
-	                isShowLoading={this.state.isShowLoading}
-	            />
+                <View style={styles.footerView} onPress={()=>{
+                    navigation.navigate('CartTab');
+                }}>
+                    <View style={styles.footerLeftView}>
+                        <Text style={styles.footerLeftIcon}>&#xe64c;</Text>
+                        <Text style={styles.footerLeftText}>收藏</Text>
+                    </View>
+                    <View style={[styles.footerLeftView, styles.footerRightView]}>
+                        <Text style={styles.footerRightText}>加入购物车</Text>
+                    </View>
+                </View>
+                <Request
+                    ref="request"
+                    isShowLoading={this.state.isShowLoading}
+                />
             </View>
     	);
   	}
+    goCart(){
+        console.log(this.props);
+        this.props.navigation.navigate('CartTab');
+    }
   	componentDidMount(){
   		let id = this.props.navigation.state.params.productId;
   		this.doReqProductDetail(id);
@@ -100,7 +108,7 @@ class productDetail extends Component {
   		this.refs.request.PostService(API.PRODUCT_DETAIL, {
   			productId: id
   		}, function(result){
-  			console.log(result);
+  			//console.log(result);
   			_this.setState({
   				isShowLoading: false,
   				picData: result.data.picData
@@ -112,7 +120,7 @@ class productDetail extends Component {
   		this.refs.request.PostService(API.RELEVANCE_PRODUCT, {
   			productId: id
   		}, function(result){
-  			console.log(result);
+  			//console.log(result);
   		})
   	}
   	doAddBrowsingRecord(id){
