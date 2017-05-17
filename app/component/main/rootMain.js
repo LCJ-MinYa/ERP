@@ -72,11 +72,10 @@ const Navigator = StackNavigator({
     headerMode: 'none',
     initialRouteName: 'Launch',
     onTransitionStart: (nav)=>{
-        console.log(nav);
-        console.log('导航栏切换开始');
+        //console.log('导航栏切换开始');
     },
     onTransitionEnd: ()=>{
-        console.log('导航栏切换结束');
+        //console.log('导航栏切换结束');
     }
 });
 
@@ -98,6 +97,9 @@ class rootMain extends Component {
                 }
             />
         );
+    }
+    componentDidMount(){
+        console.log(this.render);
     }
 }
 

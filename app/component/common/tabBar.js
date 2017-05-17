@@ -8,8 +8,8 @@ import {
   View
 } from 'react-native';
 
-var setNavigationOptions = function(obj, title, label, icon, pathName){
-	obj.navigationOptions = {
+var setNavigationOptions = function(obj, title, label, icon, pathName, num){
+	obj.navigationOptions = ({navigation}) =>({
 		//gesturesEnabled: false,
 		//tabBarVisible: false,
 		path: pathName,
@@ -24,7 +24,7 @@ var setNavigationOptions = function(obj, title, label, icon, pathName){
 						  source={{uri: icon}}
 						/>
 						<View style={styles.badgeView}>
-							<Text style={styles.badgeText}>1</Text>
+							<Text style={styles.badgeText}>{num}</Text>
 						</View>
 					</View>
 				)
@@ -44,7 +44,7 @@ var setNavigationOptions = function(obj, title, label, icon, pathName){
 				)
 			}
 		},
-	}
+	})
 }
 
 const styles = StyleSheet.create({
