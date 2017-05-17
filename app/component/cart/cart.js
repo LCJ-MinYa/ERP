@@ -38,6 +38,9 @@ class cart extends Component {
       		</View>
     	);
   	}
+    componentDidMount(){
+        console.log(this);
+    }
 }
 
 const styles = StyleSheet.create({

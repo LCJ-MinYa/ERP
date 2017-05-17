@@ -99,7 +99,7 @@ class rootMain extends Component {
         );
     }
     componentDidMount(){
-        console.log(this.render);
+
     }
 }
 

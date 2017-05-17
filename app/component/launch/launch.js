@@ -32,7 +32,6 @@ class launch extends Component {
     	);
   	}
   	componentDidMount(){
-        console.log(this);
 		let token, profileId;
         Storage.getData('token')
         .then((value)=>{
