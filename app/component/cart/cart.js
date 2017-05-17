@@ -36,7 +36,7 @@ class cart extends Component {
   		const {dispatch, cart} = this.props;
     	return (
     		<View>
-      			<Text>购物车首页</Text>
+      			<Text style={{marginTop: 100}} onPress={()=>{dispatch(addCart(cart))}}>购物车首页</Text>
       			<Text>{cart}</Text>
       		</View>
     	);
