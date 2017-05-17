@@ -6,12 +6,32 @@ import {
   	StyleSheet,
   	View,
   	Text,
-  	Image
+  	Image,
+    TouchableWithoutFeedback
 } from 'react-native';
 
 import { connect,Provider } from 'react-redux';
 
-var cart = React.createClass({
+let _this = null;
+class cart extends Component {
+    // static navigationOptions = ({ navigation }) => ({
+    //     title: 'aa',
+    //     tabBarIcon: ({tintColor}) =>{
+    //         if(_this){
+    //             return(
+    //                 <View>
+    //                     <Image
+    //                       style={[styles.icon, {tintColor: tintColor}]}
+    //                       source={{uri: 'cart'}}
+    //                     />
+    //                     <Text>{_this.props.cart}</Text>
+    //                 </View>
+    //             )
+    //         }else{
+    //             return null;
+    //         }
+    //     },
+    // })
   	render() {
   		const {dispatch, cart} = this.props;
     	return (
@@ -21,7 +41,10 @@ var cart = React.createClass({
       		</View>
     	);
   	}
-})
+    componentDidMount(){
+        _this = this;
+    }
+}
 
 const styles = StyleSheet.create({
 
