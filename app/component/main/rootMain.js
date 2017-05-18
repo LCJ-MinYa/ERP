@@ -1,7 +1,9 @@
 'use strict';
 import React, { Component } from 'react';
 import {
-    NetInfo
+    NetInfo,
+    View,
+    Text
 } from 'react-native';
 import { 
   StackNavigator,
@@ -88,23 +90,45 @@ Navigator.router.getStateForAction = (action, state) => {
     return defaultGetStateForAction(action, state);
 };
 
-class rootMain extends Component {
+class rootMain extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            connectionInfo: ''
+        };
+    }
+    renderNetInfo(){
+        if(this.state.connectionInfo == 'none'){
+            return(
+                <Text style={{position: 'absolute', top: 100}}>{this.state.connectionInfo}</Text>
+            );
+        }else{
+            return null;
+        }
+    }
     render() {
         return (
-            <Navigator
-                onNavigationStateChange={
-                    (prevState, currentState) => {
-                        //console.log(prevState);
-                        //console.log(currentState);
+            <View style={{flex: 1}}>
+                <Navigator
+                    onNavigationStateChange={
+                        (prevState, currentState) => {
+                            //console.log(prevState);
+                            //console.log(currentState);
+                        }
                     }
-                }
-            />
+                />
+                {this.renderNetInfo()}
+            </View>
         );
     }
     componentDidMount(){
-        NetInfo.fetch().done((reach) => {
-          alert('Initial: ' + reach);
-        });
+        NetInfo.addEventListener(
+            'change',
+            this.handleConnectionInfoChange.bind(this)
+        );
+    }
+    handleConnectionInfoChange(connectionInfo) {
+        this.setState({connectionInfo: connectionInfo});
     }
 }
 
