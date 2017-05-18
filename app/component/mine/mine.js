@@ -26,11 +26,11 @@ class mine extends Component{
             <View style={styles.headerImageView}>
                 <Image
                   style={styles.headerBgStyle}
-                  source={{uri: 'mine-header-back'}}
+                  source={{uri: 'mine_header_back'}}
                 />
                 <Image
                   style={styles.headerImageStyle}
-                  source={{uri: this.state.userInfo.headPortraitUrl ? this.state.userInfo.headPortraitUrl : 'my-picture'}}
+                  source={{uri: this.state.userInfo.headPortraitUrl ? this.state.userInfo.headPortraitUrl : 'my_picture'}}
                 />
                 <Text style={styles.headerUserStyle}>{this.state.userInfo.name}</Text>
             </View>
@@ -197,7 +197,6 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#f87563',
         borderRadius: 40,
-        backgroundColor: '#fff',
         marginTop: Platform.OS == 'ios' ? 1030 : 30,
     },
     headerUserStyle:{

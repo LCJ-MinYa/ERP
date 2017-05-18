@@ -1,9 +1,12 @@
 'use strict';
 import React, { Component } from 'react';
+import {
+    NetInfo
+} from 'react-native';
 import { 
   StackNavigator,
   TabNavigator,
-  Platform
+  Platform,
 } from 'react-navigation';
 
 //tabbar导航
@@ -99,7 +102,9 @@ class rootMain extends Component {
         );
     }
     componentDidMount(){
-
+        NetInfo.fetch().done((reach) => {
+          alert('Initial: ' + reach);
+        });
     }
 }
 

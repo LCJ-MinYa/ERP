@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import {
   	StyleSheet,
   	View,
-  	Text
+  	Text,
 } from 'react-native';
 import { NavigationActions } from 'react-navigation'
 import Storage from '../../utils/customStorage.js';
