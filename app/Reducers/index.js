@@ -10,7 +10,7 @@ import tabBar from '../component/common/tabBar.js';
 
 
 //定义初始化购物车数据
-const initialCartState = 0;
+const initialCartState = 1;
 
 function cart(state = initialCartState, action){
 	switch(action.type){

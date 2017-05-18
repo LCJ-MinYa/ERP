@@ -23,9 +23,9 @@ var setNavigationOptions = function(obj, title, label, icon, pathName, num){
 						  style={[styles.icon, {tintColor: tintColor}]}
 						  source={{uri: icon}}
 						/>
-						<View style={styles.badgeView}>
+						{/*<View style={styles.badgeView}>
 							<Text style={styles.badgeText}>{num}</Text>
-						</View>
+						</View>*/}
 					</View>
 				)
 			}else if(label == "消息"){

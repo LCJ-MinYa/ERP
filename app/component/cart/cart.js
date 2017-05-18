@@ -39,7 +39,7 @@ class cart extends Component {
     	);
   	}
     componentDidMount(){
-        console.log(this);
+
     }
 }
 
