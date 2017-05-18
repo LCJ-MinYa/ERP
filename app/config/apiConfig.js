@@ -11,5 +11,8 @@ export default {
 	OTHER_LEVEL_CLASS: '/api/product/getOtherLevelClass',
 	PRODUCT_DETAIL: '/api/product/getProductDetail',
 	RELEVANCE_PRODUCT: '/api/product/getRelevanceProduct',
-	ADD_BROWSING_RECORD: '/api/personalcenter/addBrowsingRecord'
+	ADD_BROWSING_RECORD: '/api/personalcenter/addBrowsingRecord',
+
+	//mine我的接口
+	USER_INFO: '/api/personalcenter/getUserInfo'
 };

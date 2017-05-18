@@ -10,9 +10,17 @@ import {
     Platform,
 } from 'react-native';
 
+import Request from '../../utils/request.js';
+import API from '../../config/apiConfig.js';
 import UISize from '../../utils/uiSize';
 
 class mine extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            userInfo: {}
+        };
+    }
     renderMineHeader(){
         return(
             <View style={styles.headerImageView}>
@@ -22,9 +30,9 @@ class mine extends Component{
                 />
                 <Image
                   style={styles.headerImageStyle}
-                  source={{uri: 'my-picture'}}
+                  source={{uri: this.state.userInfo.headPortraitUrl ? this.state.userInfo.headPortraitUrl : 'my-picture'}}
                 />
-                <Text style={styles.headerUserStyle}>用户名称</Text>
+                <Text style={styles.headerUserStyle}>{this.state.userInfo.name}</Text>
             </View>
         )
     }
@@ -75,6 +83,30 @@ class mine extends Component{
                 <View style={styles.aboutMineTitleView}>
                     <Text style={styles.aboutMineTitleText}>关于我们</Text>
                 </View>
+                <View style={styles.aboutMineContent}>
+                    <View style={styles.telBox}>
+                        <View style={styles.telLeftView}>
+                            <Text style={styles.telLeftIcon}>&#xe63d;</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.telTitle}>电话客服</Text>
+                            <Text style={styles.telDec}>{this.state.userInfo.mobile ? this.state.userInfo.mobile : '028-88886666'}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.telBox}>
+                        <View style={styles.telLeftView}>
+                            <Text style={styles.telLeftIcon}>&#xe63c;</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.telTitle}>QQ客服</Text>
+                            <Text style={styles.telDec}>{this.state.userInfo.qq ? this.state.userInfo.qq : '1049468118'}</Text>
+                        </View>
+                    </View>
+                </View>
+                <View style={styles.aboutERPView}>
+                    <Text style={styles.aboutERPText}>关于章鱼侠云订货</Text>
+                    <Text style={styles.aboutERPIcon}>&#xe60b;</Text>
+                </View>
             </View>
         )
     }
@@ -94,13 +126,32 @@ class mine extends Component{
 
                     {/*关于我们*/}
                     {this.renderAboutMine()}
+
+                    <View style={styles.loginOutBtn}>
+                        <Text style={styles.loginOutBtnText}>退出登录</Text>
+                    </View>
                 </ScrollView>
+
                 <View style={styles.setBtn}>
                     <Text style={styles.setBtnIcon}>&#xe63f;</Text>
                 </View>
+
+                <Request
+                    ref="request"
+                    isShowLoading={false}
+                />
             </View>
     	);
   	}
+    componentDidMount(){
+        this.getUserInfo()
+    }
+    getUserInfo(){
+        let _this = this;
+        this.refs.request.PostService(API.USER_INFO, {}, function(result){
+            _this.setState({userInfo: result.data});
+        })
+    }
 }
 
 const styles = StyleSheet.create({
@@ -202,6 +253,73 @@ const styles = StyleSheet.create({
     aboutMineTitleText:{
         color: '#fff',
         fontSize: 14
+    },
+    aboutMineContent:{
+        height: UISize.p2d(140),
+        flexDirection: 'row',
+    },
+    telBox:{
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    telLeftView:{
+        width: 32,
+        height: 32,
+        borderWidth: 0.5,
+        borderColor: '#ababab',
+        borderRadius: 16,
+        overflow: 'hidden',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 10
+    },
+    telLeftIcon:{
+        fontFamily: 'iconfont',
+        fontSize: 28,
+        color: '#aeaeae'
+    },
+    telTitle:{
+        fontSize: 16,
+        color: '#464646',
+        paddingBottom: 5
+    },
+    telDec:{
+        fontSize: 12,
+        color: '#8a8a8a',
+    },
+    aboutERPView:{
+        height: UISize.p2d(90),
+        borderColor: '#e1e1e1',
+        borderTopWidth: 0.5,
+        justifyContent:'center',
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
+    aboutERPText:{
+        color: '#474747',
+        fontSize: 16
+    },
+    aboutERPIcon:{
+        position: 'absolute',
+        right: 15,
+        fontFamily: 'iconfont',
+        fontSize: 18,
+        color: '#aeaeae'
+    },
+    loginOutBtn:{
+        marginTop: UISize.p2d(40),
+        marginBottom: UISize.p2d(20),
+        height: UISize.p2d(96),
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff'
+    },
+    loginOutBtnText:{
+        fontSize: 16,
+        color: '#ff8004'
     }
 });
 
