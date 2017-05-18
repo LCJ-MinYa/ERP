@@ -10,7 +10,7 @@ import {
     Platform,
 } from 'react-native';
 
-import UiSize from '../../utils/uiSize';
+import UISize from '../../utils/uiSize';
 
 class mine extends Component{
     renderMineHeader(){
@@ -31,7 +31,50 @@ class mine extends Component{
     renderMineMiddle(){
         return(
             <View style={styles.middleViewStyle}>
-
+                {this.renderMiddleList('我的资金', 1)}
+                {this.renderMiddleList('我的退货', 2)}
+                {this.renderMiddleList('订过商品', 3)}
+                {this.renderMiddleList('收藏商品', 4)}
+                {this.renderMiddleList('收货地址', 5)}
+                {this.renderMiddleList('浏览历史', 6)}
+            </View>
+        )
+    }
+    renderMiddleList(text, type){
+        let middleListIcon;
+        switch(type){
+            case 1:
+                middleListIcon = <Text style={[styles.middleListIconStyle,{color:'#ffa403'}]}>&#xe637;</Text>;
+                break;
+            case 2:
+                middleListIcon = <Text style={[styles.middleListIconStyle,{color:'#4cc977'}]}>&#xe634;</Text>;
+                break;
+            case 3:
+                middleListIcon = <Text style={[styles.middleListIconStyle,{color:'#5ca0e7', borderRightWidth: 0}]}>&#xe636;</Text>;
+                break;
+            case 4:
+                middleListIcon = <Text style={[styles.middleListIconStyle,{color:'#ff6996'}]}>&#xe635;</Text>;
+                break;
+            case 5:
+                middleListIcon = <Text style={[styles.middleListIconStyle,{color:'#46a4f4'}]}>&#xe632;</Text>;
+                break;
+            case 6:
+                middleListIcon = <Text style={[styles.middleListIconStyle,{color:'#fe6505', borderRightWidth: 0}]}>&#xe633;</Text>;
+                break;
+        }
+        return(
+            <View style={styles.middleListViewStyle}>
+                {middleListIcon}
+                <Text style={styles.middleListTitleStyle}>{text}</Text>
+            </View>
+        )
+    }
+    renderAboutMine(){
+        return(
+            <View style={styles.aboutMineView}>
+                <View style={styles.aboutMineTitleView}>
+                    <Text style={styles.aboutMineTitleText}>关于我们</Text>
+                </View>
             </View>
         )
     }
@@ -48,6 +91,9 @@ class mine extends Component{
 
                     {/*我的中间部分*/}
                     {this.renderMineMiddle()}
+
+                    {/*关于我们*/}
+                    {this.renderAboutMine()}
                 </ScrollView>
                 <View style={styles.setBtn}>
                     <Text style={styles.setBtnIcon}>&#xe63f;</Text>
@@ -91,7 +137,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         left: 0,
-        width: UiSize.width(),
+        width: UISize.width(),
         height: 80
     },
     headerImageStyle:{
@@ -109,11 +155,53 @@ const styles = StyleSheet.create({
         lineHeight: 50
     },
     middleViewStyle:{
-        width: UiSize.width(),
-        height: UiSize.p2d(400),
+        width: UISize.width(),
+        height: UISize.p2d(400),
         backgroundColor: '#fff',
-        marginTop: UiSize.p2d(10),
-        marginBottom: UiSize.p2d(40)
+        marginTop: UISize.p2d(10),
+        marginBottom: UISize.p2d(40),
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems: 'flex-start',
+        borderColor: '#e1e1e1',
+        borderBottomWidth: 0.5,
+    },
+    middleListViewStyle:{
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: UISize.p2d(200),
+        width: UISize.width() / 3,
+        borderTopWidth: 0.5,
+        borderRightWidth: 0.5,
+        borderColor: '#e1e1e1'
+    },
+    middleListIconStyle:{
+        fontSize: 36,
+        fontFamily: 'iconfont'
+    },
+    middleListTitleStyle:{
+        color: '#323232',
+        fontSize: 14,
+        paddingTop: 5
+    },
+    aboutMineView:{
+        flex: 1,
+        height: UISize.p2d(300),
+        marginLeft: UISize.p2d(20),
+        marginRight: UISize.p2d(20),
+        borderRadius: 5,
+        backgroundColor: '#fff',
+        overflow: 'hidden'
+    },
+    aboutMineTitleView:{
+        height: UISize.p2d(70),
+        backgroundColor: '#ff8004',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    aboutMineTitleText:{
+        color: '#fff',
+        fontSize: 14
     }
 });
 
