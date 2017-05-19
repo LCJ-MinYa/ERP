@@ -7,32 +7,38 @@ import {
   	Text,
   	Image
 } from 'react-native';
+import UISize from '../../utils/uiSize';
+import Request from '../../utils/request.js';
+import API from '../../config/apiConfig.js';
+import CommonHeader from '../common/commonHeader.js';
 
-import { connect,Provider } from 'react-redux';
-import { addCart } from '../../action'
-
-var msg = React.createClass({
+let msg = React.createClass({
+    getInitialState: function() {
+        return {
+            headerTitle: "消息"
+        };
+    },
   	render() {
-  		const {dispatch, cart} = this.props;
     	return (
-    		<View>
-      			<Text style={{marginTop: 100}} onPress={()=>{
-                    dispatch(addCart(cart));
-                }}>消息首页</Text>
-      			<Text>{cart}</Text>
+    		<View style={styles.container}>
+                <CommonHeader
+                    isShowBack={false}
+                    headerTitle={this.state.headerTitle}
+                />
+
+                <Request
+                    ref="request"
+                    isShowLoading={false}
+                />
       		</View>
     	);
   	}
 })
 
 const styles = StyleSheet.create({
-
+    container: {
+        flex: 1
+    }
 });
 
-function selector(state) {
-    return {  
-        cart: state.cart,
-    }  
-}
-
-export default connect(selector)(msg);
+export default msg;

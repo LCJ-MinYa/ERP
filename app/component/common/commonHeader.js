@@ -13,15 +13,32 @@ import {
 
 let {width, height} = Dimensions.get('window');
 let commonHeader = React.createClass({
+	propTypes:{
+		isShowBack: React.PropTypes.bool.isRequired,
+	},
+	getDefaultProps: function() {
+		return {
+			isShowBack: true,
+		};
+	},
+	renderGoback(){
+		if(this.props.isShowBack){
+			return(
+				<TouchableWithoutFeedback onPress={this.goBack}>
+					<View style={styles.leftIconBox}>
+						<Text style={styles.leftIcon}>&#xe640;</Text>
+					</View>
+				</TouchableWithoutFeedback>
+			)
+		}else{
+			return null;
+		}
+	},
 	render() {
 		return (
 	  		<View style={styles.headerBox}>
 	  			<View style={styles.commonHeaderBox}>
-      				<TouchableWithoutFeedback onPress={this.goBack}>
-	      				<View style={styles.leftIconBox}>
-	      					<Text style={styles.leftIcon}>&#xe640;</Text>
-	      				</View>
-      				</TouchableWithoutFeedback>
+	  				{this.renderGoback()}
       				<View style={styles.titleView}>
       					<Text style={styles.title}>{this.props.headerTitle}</Text>
       				</View>

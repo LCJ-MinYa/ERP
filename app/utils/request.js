@@ -167,9 +167,9 @@ let request = React.createClass({
 				if(url == '/api/system/getGlobalInfo'){
 					callback("请求全局信息超时");
 				}else if(err.message === 'Network request failed'){
-	                console.log('网络出错');
+	                alert('网络出错');
 	            }else if(err === 'Network request timeout'){
-	                console.log('请求超时');
+	                alert('请求超时');
 	            }
 			})
 		})
@@ -190,6 +190,8 @@ let request = React.createClass({
 		var abortable_promise = Promise.race([fetch_promise, abort_promise]);
 		if(timeout){
 			setTimeout(function(){abort_fn();}, timeout);
+		}else{
+			setTimeout(function(){abort_fn();}, 5000);
 		}
     	return abortable_promise;
     },
@@ -197,7 +199,7 @@ let request = React.createClass({
 	/*
      * 封装_fetch方法，使其可以设置timeout
      * @param timeout 过期时间
-     * @return
+     * @return Promise(成功的回调和超时失败的回调)
      */
     fetch_promise(URL, params) {
     	return new Promise((resolve, reject) => {
