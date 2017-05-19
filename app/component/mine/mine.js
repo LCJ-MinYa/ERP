@@ -10,8 +10,8 @@ import {
     Platform,
 } from 'react-native';
 
-import Request from '../../utils/request.js';
-import API from '../../config/apiConfig.js';
+import Request from '../../utils/request';
+import API from '../../config/apiConfig';
 import UISize from '../../utils/uiSize';
 
 class mine extends Component{

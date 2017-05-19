@@ -8,10 +8,17 @@ import {
   	Alert
 } from 'react-native';
 
-import Storage from './customStorage.js';
-import config from '../config/config.js';
-import sha1 from './sha1.js';
-import Loading from './loading.js';
+import Storage from './customStorage';
+import config from '../config/config';
+import sha1 from './sha1';
+import Loading from './loading';
+import { NavigationActions } from 'react-navigation';
+const resetLoginAction = NavigationActions.reset({
+    index: 0,
+    actions: [
+        NavigationActions.navigate({ routeName: 'Login'}),
+    ]
+});
 
 let request = React.createClass({
 	propTypes:{
@@ -140,14 +147,16 @@ let request = React.createClass({
 			//发送POST请求
 			this._fetch(this.fetch_promise(URL, params), timeout)
 			.then((resultJSON) =>{
-				if(url == '/api/system/getGlobalInfo' && resultJSON.error_code < 0){
-					callback(resultJSON);
-				}else if(resultJSON.error_code < 0){
-	                Alert.alert('请求失败',resultJSON.error_message,[
-	                    {
-	                        text: '确定',
-	                    }
-	                ])
+				if(resultJSON.error_code < 0){
+					if(resultJSON.error_code == -12 || resultJSON.error_code == -15){
+						this.props.navigation.dispatch(resetLoginAction);
+					}else{
+		                Alert.alert('请求失败',resultJSON.error_message,[
+		                    {
+		                        text: '确定',
+		                    }
+		                ])
+					}
 				}else{
 					if(callback != undefined){
 						callback(resultJSON);
@@ -155,9 +164,11 @@ let request = React.createClass({
 				}
 			})
 			.catch((err) => {
-				if (err.message === 'Network request failed'){
+				if(url == '/api/system/getGlobalInfo'){
+					callback("请求全局信息超时");
+				}else if(err.message === 'Network request failed'){
 	                console.log('网络出错');
-	            } else if (err === 'Network request timeout'){
+	            }else if(err === 'Network request timeout'){
 	                console.log('请求超时');
 	            }
 			})

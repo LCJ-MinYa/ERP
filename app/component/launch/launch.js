@@ -8,7 +8,9 @@ import {
   	Text,
 } from 'react-native';
 import { NavigationActions } from 'react-navigation'
-import Storage from '../../utils/customStorage.js';
+import Storage from '../../utils/customStorage';
+import Request from '../../utils/request';
+import API from '../../config/apiConfig';
 
 const resetTabRootAction = NavigationActions.reset({
     index: 0,
@@ -28,10 +30,15 @@ class launch extends Component {
     	return (
       		<View style={styles.container}>
       			<Text>这是加载页面</Text>
+                <Request
+                    ref="request"
+                    isShowLoading={false}
+                />
       		</View>
     	);
   	}
   	componentDidMount(){
+        let _this = this;
 		let token, profileId;
         Storage.getData('token')
         .then((value)=>{
@@ -41,9 +48,14 @@ class launch extends Component {
         .then((value)=>{
             profileId = value;
             if(token && profileId){
-            	setTimeout(()=>{
-            		this.props.navigation.dispatch(resetTabRootAction);
-            	},2000);
+                this.refs.request.PostService(API.GLOBAL_INFO, {}, function(result){
+                    if(result == "请求全局信息超时"){
+                        alert("网络差");
+                    }else{
+                        //请求全局信息成功之后的处理
+                        _this.props.navigation.dispatch(resetTabRootAction);
+                    }
+                }, 2000);
             }else{
             	setTimeout(()=>{
             		this.props.navigation.dispatch(resetLoginAction);

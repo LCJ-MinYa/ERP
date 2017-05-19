@@ -12,21 +12,22 @@ import {
 } from 'react-navigation';
 
 //tabbar导航
-import productScreen from '../product/product.js';
-import cartScreen from '../cart/cart.js';
-import orderScreen from '../order/order.js';
-import msgScreen from '../msg/msg.js';
-import mineScreen from '../mine/mine.js';
+import productScreen from '../product/product';
+import cartScreen from '../cart/cart';
+import orderScreen from '../order/order';
+import msgScreen from '../msg/msg';
+import mineScreen from '../mine/mine';
 
 //navigator导航
-import launchScreen from '../launch/launch.js';
-import loginScreen from '../login/login.js';
-import productListScreen from '../product/productList.js';
-import productClassScreen from '../product/productClass.js';
-import productDetailScreen from '../product/productDetail.js';
+import launchScreen from '../launch/launch';
+import loginScreen from '../login/login';
+import productListScreen from '../product/productList';
+import productClassScreen from '../product/productClass';
+import productDetailScreen from '../product/productDetail';
+import RequestScreen from '../../utils/request';
 
-import tabBar from '../common/tabBar.js';
-import storage from '../../utils/customStorage.js';
+import tabBar from '../common/tabBar';
+import storage from '../../utils/customStorage';
 
 tabBar.setNavigationOptions(productScreen, '商品首页', '商品', 'shopping', 'app/');
 tabBar.setNavigationOptions(cartScreen, '购物车页面', '购物车', 'cart', 'app/cart');
@@ -72,6 +73,7 @@ const Navigator = StackNavigator({
     ProductList: { screen: productListScreen },
     ProductClass: { screen: productClassScreen },
     ProductDetail: { screen: productDetailScreen },
+    Request: { screen: RequestScreen }
 },{
     lazy: true,
     headerMode: 'none',

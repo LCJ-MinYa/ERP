@@ -11,21 +11,21 @@ import {
     RefreshControl,
     TouchableWithoutFeedback
 } from 'react-native';
-import Request from '../../utils/request.js';
-import API from '../../config/apiConfig.js';
-import Config from '../../config/config.js';
-import ProductHeader from '../common/productHeader.js';
-import ProductBanner from './productBanner.js';
-import ProductTypeNav from './productTypeNav.js';
-import ProductNotice from './productNotice.js';
-import ProductCommonList from '../common/productCommonList.js';
+import Request from '../../utils/request';
+import API from '../../config/apiConfig';
+import Config from '../../config/config';
+import ProductHeader from '../common/productHeader';
+import ProductBanner from './productBanner';
+import ProductTypeNav from './productTypeNav';
+import ProductNotice from './productNotice';
+import ProductCommonList from '../common/productCommonList';
 
 let bannerNoticeReq = false;
 let productReq = false;
 let product = React.createClass({
     getInitialState: function() {
         return {
-            isShowLoading: false,
+            isShowLoading: true,
             isRefreshing: false,
             isShowSmallProductList: true,
             bannerNoticeData: {},
@@ -95,15 +95,16 @@ let product = React.createClass({
     getInitMsg(){
         //拉取global全局信息
         let _this = this;
-        this.refs.request.PostService(API.GLOBAL_INFO, {}, function(result){
-            if(result.error_code < 0){
-                _this.props.navigation.navigate('Login');
-            }else{
-                _this.setState({isShowLoading: true});
-                _this.getBannerNoticeData();
-                _this.getProductData();
-            }
-        })
+        _this.getBannerNoticeData();
+        _this.getProductData();
+        // this.refs.request.PostService(API.GLOBAL_INFO, {}, function(result){
+        //     if(result.error_code < 0){
+        //         _this.props.navigation.navigate('Login');
+        //     }else{
+        //         _this.getBannerNoticeData();
+        //         _this.getProductData();
+        //     }
+        // })
     },
     getBannerNoticeData(){
         let _this = this;
