@@ -18,6 +18,9 @@ let msg = React.createClass({
             headerTitle: "消息"
         };
     },
+    renderContent(){
+        
+    },
   	render() {
     	return (
     		<View style={styles.container}>
@@ -25,6 +28,8 @@ let msg = React.createClass({
                     isShowBack={false}
                     headerTitle={this.state.headerTitle}
                 />
+
+                {this.renderContent()}
 
                 <Request
                     ref="request"
