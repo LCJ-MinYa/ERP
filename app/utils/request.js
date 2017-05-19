@@ -138,12 +138,28 @@ let request = React.createClass({
 			}
 			params.signstr = this.getSingnStr(params);
 			//发送POST请求
-			this._fetch(this.fetch_promise(url, URL, params, callback), 2000)
-			.then((data) =>{
-				callback(data);
+			this._fetch(this.fetch_promise(URL, params), timeout)
+			.then((resultJSON) =>{
+				if(url == '/api/system/getGlobalInfo' && resultJSON.error_code < 0){
+					callback(resultJSON);
+				}else if(resultJSON.error_code < 0){
+	                Alert.alert('请求失败',resultJSON.error_message,[
+	                    {
+	                        text: '确定',
+	                    }
+	                ])
+				}else{
+					if(callback != undefined){
+						callback(resultJSON);
+					}
+				}
 			})
 			.catch((err) => {
-				console.log('请求超时失败');
+				if (err.message === 'Network request failed'){
+	                console.log('网络出错');
+	            } else if (err === 'Network request timeout'){
+	                console.log('请求超时');
+	            }
 			})
 		})
 	},
@@ -151,19 +167,19 @@ let request = React.createClass({
 	/*
      * 封装_fetch方法，使其可以设置timeout
      * @param timeout 过期时间
-     * @return
+     * @return Promise(成功的回调和超时失败的回调)
      */
      _fetch(fetch_promise, timeout){
-     	console.log(11);
 		var abort_fn = null;
     	var abort_promise = new Promise((resolve, reject) => {
         	abort_fn = function() {
-        		console.log('请求准备超时');
-            	reject('abort promise');
+            	reject('Network request timeout');
         	};
     	});
 		var abortable_promise = Promise.race([fetch_promise, abort_promise]);
-    	setTimeout(function(){abort_fn();}, timeout);
+		if(timeout){
+			setTimeout(function(){abort_fn();}, timeout);
+		}
     	return abortable_promise;
     },
 
@@ -172,8 +188,7 @@ let request = React.createClass({
      * @param timeout 过期时间
      * @return
      */
-    fetch_promise(url, URL, params, callback) {
-    	console.log("开始请求");
+    fetch_promise(URL, params) {
     	return new Promise((resolve, reject) => {
 			fetch(URL, {
 				method: 'POST',
@@ -187,28 +202,11 @@ let request = React.createClass({
 				return result.json();
 			})
 			.then((resultJSON) => {
-				if(url == '/api/system/getGlobalInfo' && resultJSON.error_code < 0){
-					resolve(resultJSON);
-				}else if(resultJSON.error_code < 0){
-	                Alert.alert('请求失败',resultJSON.error_message,[
-	                    {
-	                        text: '确定',
-	                    }
-	                ])
-				}else{
-					if(callback != undefined){
-						resolve(resultJSON);
-					}
-				}
+				resolve(resultJSON);
 			})
 			//捕获fetch错误异常
 	        .catch((err) => {
 	        	reject(err);
-	            if (err.message === 'Network request failed'){
-	                console.log('网络出错');
-	            } else if (err === 'abort promise'){
-	                console.log('请求超时');
-	            }
 	        })
 	    })
 	}
