@@ -20,12 +20,14 @@ import ProductTypeNav from './productTypeNav';
 import ProductNotice from './productNotice';
 import ProductCommonList from '../common/productCommonList';
 
+import { connect } from 'react-redux';
+import { showLoading,hideLoading } from '../../action'
+
 let bannerNoticeReq = false;
 let productReq = false;
 let product = React.createClass({
     getInitialState: function() {
         return {
-            isShowLoading: true,
             isRefreshing: false,
             isShowSmallProductList: true,
             bannerNoticeData: {},
@@ -41,7 +43,7 @@ let product = React.createClass({
                     style={styles.scrollView}
                     refreshControl={
                         <RefreshControl
-                            refreshing={this.state.isRefreshing}
+                            refreshing={this.props.isLoading}
                             onRefresh={this.doRefresh}
                             tintColor="#989898"
                             colors={['#989898']}
@@ -81,7 +83,7 @@ let product = React.createClass({
 
                 <Request
                     ref="request"
-                    isShowLoading={this.state.isShowLoading}
+                    isShowLoading={false}
                 />
             </View>
     	);
@@ -93,18 +95,9 @@ let product = React.createClass({
         this.getInitMsg();
     },
     getInitMsg(){
-        //拉取global全局信息
-        let _this = this;
-        _this.getBannerNoticeData();
-        _this.getProductData();
-        // this.refs.request.PostService(API.GLOBAL_INFO, {}, function(result){
-        //     if(result.error_code < 0){
-        //         _this.props.navigation.navigate('Login');
-        //     }else{
-        //         _this.getBannerNoticeData();
-        //         _this.getProductData();
-        //     }
-        // })
+        this.props.dispatch(showLoading(this.props.isLoading));
+        this.getBannerNoticeData();
+        this.getProductData();
     },
     getBannerNoticeData(){
         let _this = this;
@@ -144,13 +137,11 @@ let product = React.createClass({
         })
     },
     doRefresh(){
-        this.setState({isRefreshing: true});
-        this.getBannerNoticeData();
-        this.getProductData();
+        this.getInitMsg();
     },
     isRequestFinish(){
         if(!bannerNoticeReq && !productReq){
-            this.setState({isShowLoading: false});
+            this.props.dispatch(hideLoading(this.props.isLoading));
         }
     },
     changeProductList(){
@@ -203,4 +194,10 @@ const styles = StyleSheet.create({
     }
 });
 
-export default product;
+function selector(state) {
+    return {  
+        isLoading: state.isLoading
+    }  
+}
+
+export default connect(selector)(product);

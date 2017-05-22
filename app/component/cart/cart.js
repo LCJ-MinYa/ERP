@@ -34,12 +34,6 @@ class cart extends Component {
                     dispatch(addCart(cart));
                     //this.props.navigation.setParams({cart: this.props.cart});
                 }}>购物车首页</Text>
-                <Text onPress={()=>{
-                    dispatch(showLoading(isLoading));
-                }}>打开加载</Text>
-                <Text onPress={()=>{
-                    dispatch(hideLoading(isLoading));
-                }}>关闭加载</Text>
       			<Text>{cart}</Text>
       		</View>
     	);
