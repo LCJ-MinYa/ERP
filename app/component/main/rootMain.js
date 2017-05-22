@@ -11,8 +11,7 @@ import {
   Platform,
 } from 'react-navigation';
 
-import { connect,Provider } from 'react-redux';
-import { addCart } from '../../action'
+import { connect } from 'react-redux';
 
 //tabbar导航
 import productScreen from '../product/product';
