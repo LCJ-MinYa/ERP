@@ -92,6 +92,7 @@ let product = React.createClass({
         this.props.navigation.navigate(url, params);
     },
     componentDidMount(){
+        console.log(this);
         this.getInitMsg();
     },
     getInitMsg(){

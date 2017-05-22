@@ -110,7 +110,7 @@ class rootMain extends Component{
         }
     }
     render() {
-        const {dispatch, isLoading} = this.props;
+        const {dispatch, isLoading, cart} = this.props;
         return (
             <View style={{flex: 1}}>
                 <Navigator
@@ -120,6 +120,7 @@ class rootMain extends Component{
                             //console.log(currentState);
                         }
                     }
+                    screenProps={cart}
                 />
                 {this.renderNetInfo()}
 
@@ -144,6 +145,7 @@ class rootMain extends Component{
 function selector(state) {
     return {  
         isLoading: state.isLoading,
+        cart: state.cart
     }  
 }
 
