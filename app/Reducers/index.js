@@ -11,6 +11,7 @@ import tabBar from '../component/common/tabBar.js';
 
 //定义初始化购物车数据
 const initialCartState = 1;
+const initialLoadingState = false;
 
 function cart(state = initialCartState, action){
 	switch(action.type){
@@ -25,9 +26,23 @@ function cart(state = initialCartState, action){
 	}
 }
 
+function isLoading(state = initialLoadingState, action){
+	switch(action.type){
+		case 'SHOW_LOADING':
+			const showLoadingState = true;
+			return showLoadingState;
+		case 'HIDE_LOADING':
+			const hideLoadingState = false;
+			return hideLoadingState;
+		default:
+			return state;
+	}
+}
+
 //这里合并各个子Reducer函数
 const AppReducer = combineReducers({
-	cart
+	cart,
+	isLoading
 });
 
 export default AppReducer;

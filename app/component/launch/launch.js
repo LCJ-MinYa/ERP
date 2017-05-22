@@ -49,13 +49,18 @@ class launch extends Component {
             profileId = value;
             if(token && profileId){
                 this.refs.request.PostService(API.GLOBAL_INFO, {}, function(result){
-                    if(result == "请求全局信息超时"){
-                        alert("网络差");
-                    }else{
-                        //请求全局信息成功之后的处理
+                    if(result == "请求超时"){
+                        console.log("网络差");
                         _this.props.navigation.dispatch(resetTabRootAction);
+                    }else{
+                        if(result.error_code == -12 || result.error_code == -15){
+                            _this.props.navigation.dispatch(resetLoginAction);
+                        }else{
+                            //请求全局信息成功之后的处理
+                            _this.props.navigation.dispatch(resetTabRootAction);
+                        }
                     }
-                }, 2000);
+                });
             }else{
             	setTimeout(()=>{
             		this.props.navigation.dispatch(resetLoginAction);

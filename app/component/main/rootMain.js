@@ -11,6 +11,9 @@ import {
   Platform,
 } from 'react-navigation';
 
+import { connect,Provider } from 'react-redux';
+import { addCart } from '../../action'
+
 //tabbar导航
 import productScreen from '../product/product';
 import cartScreen from '../cart/cart';
@@ -24,8 +27,8 @@ import loginScreen from '../login/login';
 import productListScreen from '../product/productList';
 import productClassScreen from '../product/productClass';
 import productDetailScreen from '../product/productDetail';
-import RequestScreen from '../../utils/request';
 
+import Request from '../../utils/request';
 import tabBar from '../common/tabBar';
 import storage from '../../utils/customStorage';
 
@@ -72,8 +75,7 @@ const Navigator = StackNavigator({
     },
     ProductList: { screen: productListScreen },
     ProductClass: { screen: productClassScreen },
-    ProductDetail: { screen: productDetailScreen },
-    Request: { screen: RequestScreen }
+    ProductDetail: { screen: productDetailScreen }
 },{
     lazy: true,
     headerMode: 'none',
@@ -109,6 +111,7 @@ class rootMain extends Component{
         }
     }
     render() {
+        const {dispatch, isLoading} = this.props;
         return (
             <View style={{flex: 1}}>
                 <Navigator
@@ -120,6 +123,11 @@ class rootMain extends Component{
                     }
                 />
                 {this.renderNetInfo()}
+
+                <Request
+                    ref="request"
+                    isShowLoading={isLoading}
+                />
             </View>
         );
     }
@@ -134,4 +142,10 @@ class rootMain extends Component{
     }
 }
 
-export default rootMain;
+function selector(state) {
+    return {  
+        isLoading: state.isLoading,
+    }  
+}
+
+export default connect(selector)(rootMain);

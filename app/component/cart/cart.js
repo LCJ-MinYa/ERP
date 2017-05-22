@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import { connect,Provider } from 'react-redux';
-import { addCart } from '../../action'
+import { addCart,showLoading,hideLoading } from '../../action'
 
 class cart extends Component {
     // static navigationOptions = ({ navigation }) => ({
@@ -27,19 +27,25 @@ class cart extends Component {
     //     ),
     // })
   	render() {
-  		const {dispatch, cart} = this.props;
+  		const {dispatch, cart, isLoading} = this.props;
     	return (
     		<View>
       			<Text style={{marginTop: 100}} onPress={()=>{
                     dispatch(addCart(cart));
                     //this.props.navigation.setParams({cart: this.props.cart});
                 }}>购物车首页</Text>
+                <Text onPress={()=>{
+                    dispatch(showLoading(isLoading));
+                }}>打开加载</Text>
+                <Text onPress={()=>{
+                    dispatch(hideLoading(isLoading));
+                }}>关闭加载</Text>
       			<Text>{cart}</Text>
       		</View>
     	);
   	}
     componentDidMount(){
-
+        console.log(this);
     }
 }
 
@@ -50,6 +56,7 @@ const styles = StyleSheet.create({
 function selector(state) {
     return {  
         cart: state.cart,
+        isLoading: state.isLoading
     }  
 }
 

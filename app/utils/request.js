@@ -12,13 +12,6 @@ import Storage from './customStorage';
 import config from '../config/config';
 import sha1 from './sha1';
 import Loading from './loading';
-import { NavigationActions } from 'react-navigation';
-const resetLoginAction = NavigationActions.reset({
-    index: 0,
-    actions: [
-        NavigationActions.navigate({ routeName: 'Login'}),
-    ]
-});
 
 let request = React.createClass({
 	propTypes:{
@@ -149,7 +142,7 @@ let request = React.createClass({
 			.then((resultJSON) =>{
 				if(resultJSON.error_code < 0){
 					if(resultJSON.error_code == -12 || resultJSON.error_code == -15){
-						this.props.navigation.dispatch(resetLoginAction);
+						callback(resultJSON);
 					}else{
 		                Alert.alert('请求失败',resultJSON.error_message,[
 		                    {
@@ -164,12 +157,10 @@ let request = React.createClass({
 				}
 			})
 			.catch((err) => {
-				if(url == '/api/system/getGlobalInfo'){
-					callback("请求全局信息超时");
-				}else if(err.message === 'Network request failed'){
-	                alert('网络出错');
+				if(err.message === 'Network request failed'){
+	                callback('网络出错');
 	            }else if(err === 'Network request timeout'){
-	                alert('请求超时');
+	                callback('请求超时');
 	            }
 			})
 		})

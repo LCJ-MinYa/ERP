@@ -19,7 +19,7 @@ let msg = React.createClass({
         };
     },
     renderContent(){
-        
+
     },
   	render() {
     	return (
