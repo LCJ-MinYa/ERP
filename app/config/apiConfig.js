@@ -14,5 +14,8 @@ export default {
 	ADD_BROWSING_RECORD: '/api/personalcenter/addBrowsingRecord',
 
 	//mine我的接口
-	USER_INFO: '/api/personalcenter/getUserInfo'
+	USER_INFO: '/api/personalcenter/getUserInfo',
+
+	//msg消息接口
+	NOREAD_MESSAGE_COUNT: '/api/message/getNoReadMessageCount'
 };

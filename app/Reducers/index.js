@@ -5,19 +5,16 @@
  * 2.调用combineReducers合并成一个大的Reducer
  */
 import { combineReducers } from 'redux';
-import cartScreen from '../component/cart/cart.js';
-import tabBar from '../component/common/tabBar.js';
 
 
 //定义初始化购物车数据
 const initialCartState = 1;
 const initialLoadingState = false;
+const initialMessageState = 0;
 
 function cart(state = initialCartState, action){
 	switch(action.type){
 		case 'ADD_CART':
-			tabBar.setNavigationOptions(cartScreen, '购物车页面', '购物车', 'cart', 'app/cart', state + 1);
-			//cartScreen.props.navigation.setParams({cart: state + 1});
 			return state + 1;
 		case 'DEL_CART':
 			return state;
@@ -29,11 +26,25 @@ function cart(state = initialCartState, action){
 function isLoading(state = initialLoadingState, action){
 	switch(action.type){
 		case 'SHOW_LOADING':
-			const showLoadingState = true;
-			return showLoadingState;
+			state = true;
+			return state;
 		case 'HIDE_LOADING':
-			const hideLoadingState = false;
-			return hideLoadingState;
+			state = false;
+			return state;
+		default:
+			return state;
+	}
+}
+
+function message(state = initialMessageState, action){
+	switch(action.type){
+		case 'GET_MESSAGE_COUNT':
+			return state;
+		case 'SET_MESSAGE_COUNT':
+			state = action.count;
+			return state;
+		case 'DEL_MESSAGE_COUNT':
+			return state;
 		default:
 			return state;
 	}
@@ -42,7 +53,8 @@ function isLoading(state = initialLoadingState, action){
 //这里合并各个子Reducer函数
 const AppReducer = combineReducers({
 	cart,
-	isLoading
+	isLoading,
+	message,
 });
 
 export default AppReducer;

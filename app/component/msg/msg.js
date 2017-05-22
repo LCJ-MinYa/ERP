@@ -5,12 +5,16 @@ import {
   	StyleSheet,
   	View,
   	Text,
-  	Image
+  	Image,
+    ScrollView
 } from 'react-native';
 import UISize from '../../utils/uiSize';
-import Request from '../../utils/request.js';
-import API from '../../config/apiConfig.js';
-import CommonHeader from '../common/commonHeader.js';
+import Request from '../../utils/request';
+import API from '../../config/apiConfig';
+import CommonHeader from '../common/commonHeader';
+
+import { connect } from 'react-redux';
+import { setMessageCount } from '../../action/message';
 
 let msg = React.createClass({
     getInitialState: function() {
@@ -18,7 +22,7 @@ let msg = React.createClass({
             headerTitle: "消息"
         };
     },
-    renderContent(bgColor, type, isShowBadge, title, dec){
+    renderContent(bgColor, type, badgeCount, title, dec){
         let icon;
         if(type == 'order'){
             icon = <Text style={styles.orderMsgIcon}>&#xe605;</Text>;
@@ -30,7 +34,7 @@ let msg = React.createClass({
                 <View style={styles.orderMsgBox}>
                     <View style={[styles.orderMsgIconView,{backgroundColor: bgColor}]}>
                         {icon}
-                        {this.renderBadge(isShowBadge)}
+                        {this.renderBadge(badgeCount)}
                     </View>
                     <View>
                         <Text style={styles.orderMsgTitle}>{title}</Text>
@@ -40,33 +44,43 @@ let msg = React.createClass({
             </View>
         )
     },
-    renderBadge(isShowBadge){
-        if(isShowBadge){
+    renderBadge(badgeCount){
+        if(badgeCount){
             return(
                 <View style={styles.orderMsgBadgeView}>
-                    <Text style={styles.orderMsgBadge}>1</Text>
+                    <Text style={styles.orderMsgBadge}>{badgeCount}</Text>
                 </View>
             )
         }
     },
   	render() {
+        const { message } = this.props;
     	return (
     		<View style={styles.container}>
                 <CommonHeader
                     isShowBack={false}
                     headerTitle={this.state.headerTitle}
                 />
-
-                {this.renderContent('#f79e16', 'order', true, '订单消息', '关于订单审核、发货状态变化的及时通知')}
-                {this.renderContent('#0095d7', 'notice', false, '通知公告', '供货商公告，比如促销信息，放假通知等')}
-
+                <ScrollView>
+                    {this.renderContent('#f79e16', 'order', message, '订单消息', '关于订单审核、发货状态变化的及时通知')}
+                    {this.renderContent('#0095d7', 'notice', false, '通知公告', '供货商公告，比如促销信息，放假通知等')}
+                </ScrollView>
                 <Request
                     ref="request"
                     isShowLoading={false}
                 />
       		</View>
     	);
-  	}
+  	},
+    componentDidMount(){
+        this.getInitMsg();
+    },
+    getInitMsg(){
+        let _this = this;
+        this.refs.request.PostService(API.NOREAD_MESSAGE_COUNT, {}, function(result){
+            _this.props.dispatch(setMessageCount(_this.props.message, result.data));
+        })
+    }
 })
 
 const styles = StyleSheet.create({
@@ -121,4 +135,10 @@ const styles = StyleSheet.create({
     }
 });
 
-export default msg;
+function selector(state) {
+    return {  
+        message: state.message
+    }  
+}
+
+export default connect(selector)(msg);

@@ -115,8 +115,8 @@ class mine extends Component{
     		<View style={styles.container}>
                 <ScrollView
                     style={styles.scrollViewBox}
-                    contentInset={{top: -1000}}
-                    contentOffset={{y: 1000}}
+                    contentInset={{top: -500}}
+                    contentOffset={{y: 500}}
                 >
                     {/*我的头部个人信息*/}
                     {this.renderMineHeader()}
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     },
     headerImageView:{
         backgroundColor: '#f65a44',
-        height: Platform.OS == 'ios' ? 1170 : 170,
+        height: Platform.OS == 'ios' ? 670 : 170,
         alignItems: 'center'
     },
     setBtn:{
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#f87563',
         borderRadius: 40,
-        marginTop: Platform.OS == 'ios' ? 1030 : 30,
+        marginTop: Platform.OS == 'ios' ? 530 : 30,
     },
     headerUserStyle:{
         fontSize: 16,
