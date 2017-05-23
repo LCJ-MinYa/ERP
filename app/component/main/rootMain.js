@@ -32,7 +32,7 @@ import tabBar from '../common/tabBar';
 import storage from '../../utils/customStorage';
 
 tabBar.setNavigationOptions(productScreen, '商品首页', '商品', 'shopping', 'app/');
-tabBar.setNavigationOptions(cartScreen, '购物车页面', '购物车', 'cart', 'app/cart');
+//tabBar.setNavigationOptions(cartScreen, '购物车页面', '购物车', 'cart', 'app/cart');
 tabBar.setNavigationOptions(orderScreen, '订单页面', '订单', 'order', 'app/order');
 tabBar.setNavigationOptions(msgScreen, '消息页面', '消息', 'msg', 'app/msg');
 tabBar.setNavigationOptions(mineScreen, '我的页面', '我的', 'mine', 'app/mine');

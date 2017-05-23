@@ -15,6 +15,9 @@ import Storage from '../../utils/customStorage.js';
 import Request from '../../utils/request.js';
 let {width, height} = Dimensions.get('window');
 
+import { connect } from 'react-redux';
+import { showLoading,hideLoading } from '../../action'
+
 const resetAction = NavigationActions.reset({
     index: 0,
     actions: [
@@ -27,7 +30,6 @@ let login = React.createClass({
         return {
             userName: '',
             password: '',
-            isShowLoading: false
         };
     },
     componentDidMount(){
@@ -92,7 +94,7 @@ let login = React.createClass({
 
                 <Request
                     ref="request"
-                    isShowLoading={this.state.isShowLoading}
+                    isShowLoading={false}
                     loadingText={'登录中...'}
                 />
             </View>
@@ -107,12 +109,12 @@ let login = React.createClass({
         }else if(!password){
             alert("请输入登录密码");
         }else{
-            this.setState({isShowLoading: true});
+            this.props.dispatch(showLoading(this.props.isLoading));
             this.refs.request.PostService('/api/user/login', {
                 userName: userName,
                 password: password
             },function(result){
-                _this.setState({isShowLoading: false});
+                _this.props.dispatch(hideLoading(_this.props.isLoading));
                 Storage.setData("token",result.data.token);
                 Storage.setData("profileId",result.data.profileId);
                 _this.props.navigation.dispatch(resetAction);
@@ -178,5 +180,10 @@ const styles = StyleSheet.create({
     }
 });
 
+function selector(state) {
+    return {  
+        isLoading: state.isLoading
+    }  
+}
 
-export default login;
+export default connect(selector)(login);

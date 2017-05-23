@@ -15,18 +15,28 @@ import { addCart,showLoading,hideLoading } from '../../action'
 
 class cart extends Component {
     // static navigationOptions = ({ navigation }) => ({
-    //     title: 'CartTab',
-    //     tabBarIcon: ({tintColor}) =>(
-    //         <View>
-    //             <Image
-    //               style={[styles.icon, {tintColor: tintColor}]}
-    //               source={{uri: 'cart'}}
-    //             />
-    //             <Text>{navigation.state.params && navigation.state.params.cart}</Text>
-    //         </View>
-    //     ),
+    //     title: '购物车',
+    //     tabBarIcon: ({tintColor}) =>{
+    //         return(
+    //             <TouchableWithoutFeedback onPress={()=>{
+    //                 navigation.navigate("CartTab");
+    //                 setTimeout(function(){
+    //                     _this.a();
+    //                 }, 200);
+    //             }}>
+    //                 <View>
+    //                     <Image
+    //                       style={[styles.icon, {tintColor: tintColor}]}
+    //                       source={{uri: 'cart'}}
+    //                     />
+    //                     <Text>{navigation.state.params && navigation.state.params.cart}</Text>
+    //                 </View>
+    //             </TouchableWithoutFeedback>
+    //         )
+    //     },
     // })
   	render() {
+        console.log('render');
   		const {dispatch, cart, isLoading} = this.props;
     	return (
     		<View>
@@ -39,11 +49,15 @@ class cart extends Component {
     	);
   	}
     componentDidMount(){
+
     }
 }
 
 const styles = StyleSheet.create({
-
+    icon:{
+        width: 24,
+        height: 24
+    }
 });
 
 function selector(state) {
