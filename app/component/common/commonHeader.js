@@ -15,10 +15,14 @@ let {width, height} = Dimensions.get('window');
 let commonHeader = React.createClass({
 	propTypes:{
 		isShowBack: React.PropTypes.bool.isRequired,
+		isShowRight: React.PropTypes.bool.isRequired,
+		rightText: React.PropTypes.string.isRequired,
 	},
 	getDefaultProps: function() {
 		return {
 			isShowBack: true,
+			isShowRight: false,
+			rightText: ''
 		};
 	},
 	renderGoback(){
@@ -30,8 +34,15 @@ let commonHeader = React.createClass({
 					</View>
 				</TouchableWithoutFeedback>
 			)
-		}else{
-			return null;
+		}
+	},
+	renderRight(){
+		if(this.props.isShowRight){
+			return(
+				<View style={styles.rightBox}>
+					<Text style={styles.rightText}>{this.props.rightText}</Text>
+				</View>
+			)
 		}
 	},
 	render() {
@@ -42,6 +53,7 @@ let commonHeader = React.createClass({
       				<View style={styles.titleView}>
       					<Text style={styles.title}>{this.props.headerTitle}</Text>
       				</View>
+      				{this.renderRight()}
 	  			</View>
 	  		</View>
 		);
@@ -86,6 +98,19 @@ const styles = StyleSheet.create({
 	title:{
 		color: '#fff',
 		fontSize: 20
+	},
+	rightBox:{
+		position: 'absolute',
+		right: 0,
+		top: 0,
+		height: 44,
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	rightText:{
+		fontSize: 14,
+		color: '#fff',
+		paddingRight: 10
 	}
 });
 
