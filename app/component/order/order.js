@@ -94,7 +94,7 @@ let order = React.createClass({
             pageIndex: this.state.pageIndex,
         }, function(result){
         	console.log(result);
-            _this.props.dispatch(hideLoading(this.props.isLoading));
+            _this.props.dispatch(hideLoading(_this.props.isLoading));
         })
   	}
 })
