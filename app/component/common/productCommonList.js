@@ -56,6 +56,7 @@ let productCommonList = React.createClass({
                     onEndReached={this.props.loadMoreData}
                     onEndReachedThreshold={0}
                     renderFooter={this.renderFooterView}
+                    removeClippedSubviews={false}
 				/>
 			)
 		}
@@ -72,6 +73,7 @@ let productCommonList = React.createClass({
                     onEndReached={this.props.loadMoreData}
                     onEndReachedThreshold={0}
                     renderFooter={this.renderFooterView}
+                    removeClippedSubviews={false}
 				/>
 			)
 		}

@@ -66,6 +66,7 @@ let productBanner = React.createClass({
 				renderRow={this.renderRow}
 				scrollEnabled={false}
 				enableEmptySections={true}
+				removeClippedSubviews={false}
 			/>
   		);
   	},
