@@ -27,7 +27,6 @@ class productDetail extends Component {
     constructor(props){
         super(props);
         this.state = {
-            isShowLoading: true,
             picData: []
         };
     }
@@ -90,7 +89,6 @@ class productDetail extends Component {
                 </View>
                 <Request
                     ref="request"
-                    isShowLoading={this.state.isShowLoading}
                 />
             </View>
     	);
@@ -114,7 +112,6 @@ class productDetail extends Component {
   		}, function(result){
   			//console.log(result);
   			_this.setState({
-  				isShowLoading: false,
   				picData: result.data.picData
   			})
   		})
@@ -125,11 +122,13 @@ class productDetail extends Component {
   			productId: id
   		}, function(result){
   			//console.log(result);
-  		})
+  		}, true);
   	}
   	doAddBrowsingRecord(id){
   		let _this = this;
-  		this.refs.request.PostService(API.ADD_BROWSING_RECORD, {productId: id}) 		
+  		this.refs.request.PostService(API.ADD_BROWSING_RECORD, {productId: id}, function(){
+            //console.log(result);
+        }, true);
   	}
 }
 

@@ -11,13 +11,10 @@ import {
   	RefreshControl
 } from 'react-native';
 import UISize from '../../utils/uiSize';
-import HttpRequest from '../../utils/httpRequest';
+import Request from '../../utils/request';
 import API from '../../config/apiConfig';
 import Config from '../../config/config';
 import CommonHeader from '../common/commonHeader';
-
-import { connect } from 'react-redux';
-import { showLoading,hideLoading } from '../../action'
 
 let order = React.createClass({
     getInitialState: function() {
@@ -70,6 +67,10 @@ let order = React.createClass({
 
             	{/*订单nav*/}
             	{this.renderOrderNav()}
+
+                <Request
+                    ref="request"
+                />
       		</View>
     	);
   	},
@@ -78,8 +79,7 @@ let order = React.createClass({
   	},
   	getOrderListMsg(){
   		let _this = this;
-  		this.props.dispatch(showLoading());
-        HttpRequest.PostService(API.ORDER_LIST, {
+        this.refs.request.PostService(API.ORDER_LIST, {
         	period: this.state.period,
         	status: this.state.orderState,
         	startDate: this.state.startDate,
@@ -89,7 +89,6 @@ let order = React.createClass({
             pageIndex: this.state.pageIndex,
         }, function(result){
         	console.log(result);
-            _this.props.dispatch(hideLoading());
         })
   	}
 })
@@ -124,10 +123,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-function selector(state) {
-    return {  
-        isLoading: state.isLoading
-    }  
-}
-
-export default connect(selector)(order);
+export default order;

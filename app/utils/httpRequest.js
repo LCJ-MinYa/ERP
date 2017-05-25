@@ -1,3 +1,13 @@
+/*
+ * ===========================
+ *
+ * HttpRequest => 纯函数请求封装
+ * @author   : LiChaoJun
+ * @datetime : 2017/5/25
+ * 请求不作为组件，loading与请求分别独立(不需要显示loading使用)
+ *
+ * ===========================
+ */
 'use strict';
 
 import {

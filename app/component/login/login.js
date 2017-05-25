@@ -13,11 +13,8 @@ import {
 import { NavigationActions } from 'react-navigation'
 
 import Storage from '../../utils/customStorage';
-import HttpRequest from '../../utils/httpRequest';
+import Request from '../../utils/request';
 import API from '../../config/apiConfig';
-
-import { connect } from 'react-redux';
-import { showLoading,hideLoading } from '../../action'
 
 let {width, height} = Dimensions.get('window');
 const resetAction = NavigationActions.reset({
@@ -79,6 +76,11 @@ let login = React.createClass({
                 >
                     <Text style={styles.btnText}>登录</Text> 
                 </TouchableHighlight>
+
+                <Request
+                    ref="request"
+                    loadingText={'登录中...'}
+                />
             </View>
     	);
   	},
@@ -91,12 +93,10 @@ let login = React.createClass({
         }else if(!password){
             alert("请输入登录密码");
         }else{
-            this.props.dispatch(showLoading());
-            HttpRequest.PostService(API.LOGIN, {
+            this.refs.request.PostService(API.LOGIN, {
                 userName: userName,
                 password: password
             },function(result){
-                _this.props.dispatch(hideLoading());
                 Storage.setData("token",result.data.token);
                 Storage.setData("profileId",result.data.profileId);
                 _this.props.navigation.dispatch(resetAction);
@@ -162,10 +162,4 @@ const styles = StyleSheet.create({
     }
 });
 
-function selector(state) {
-    return {  
-        isLoading: state.isLoading
-    }  
-}
-
-export default connect(selector)(login);
+export default login;

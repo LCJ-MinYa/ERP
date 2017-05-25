@@ -11,7 +11,7 @@ import {
     RefreshControl,
     TouchableWithoutFeedback
 } from 'react-native';
-import HttpRequest from '../../utils/httpRequest';
+import Request from '../../utils/request';
 import API from '../../config/apiConfig';
 import Config from '../../config/config';
 import ProductHeader from '../common/productHeader';
@@ -20,14 +20,12 @@ import ProductTypeNav from './productTypeNav';
 import ProductNotice from './productNotice';
 import ProductCommonList from '../common/productCommonList';
 
-import { connect } from 'react-redux';
-import { showLoading,hideLoading } from '../../action'
-
 let bannerNoticeReq = false;
 let productReq = false;
 let product = React.createClass({
     getInitialState: function() {
         return {
+            isShowLoading: false,
             isShowSmallProductList: true,
             bannerNoticeData: {},
             productData: []
@@ -42,7 +40,7 @@ let product = React.createClass({
                     style={styles.scrollView}
                     refreshControl={
                         <RefreshControl
-                            refreshing={this.props.isLoading}
+                            refreshing={this.state.isShowLoading}
                             onRefresh={this.doRefresh}
                             tintColor="#989898"
                             colors={['#989898']}
@@ -79,6 +77,11 @@ let product = React.createClass({
                         </View>
                     </TouchableWithoutFeedback>
                 </ScrollView>
+
+                <Request
+                    ref="request"
+                    isShowLoading={this.state.isShowLoading}
+                />
             </View>
     	);
   	},
@@ -89,14 +92,15 @@ let product = React.createClass({
         this.getInitMsg();
     },
     getInitMsg(){
-        this.props.dispatch(showLoading());
-        this.getBannerNoticeData();
-        this.getProductData();
+        this.setState({isShowLoading: true}, ()=>{
+            this.getBannerNoticeData();
+            this.getProductData();
+        });
     },
     getBannerNoticeData(){
         let _this = this;
         bannerNoticeReq = true;
-        HttpRequest.PostService(API.BANNER_NOTICE, {}, function(result){
+        this.refs.request.PostService(API.BANNER_NOTICE, {}, function(result){
             bannerNoticeReq = false;
             _this.isRequestFinish();
             if(result == '请求超时'){
@@ -108,12 +112,12 @@ let product = React.createClass({
                 result.banner[1] = 'index_banner_2';
             }
             _this.setState({bannerNoticeData: result});
-        })
+        }, true);
     },
     getProductData(){
         let _this = this;
         productReq = true;
-        HttpRequest.PostService(API.PRODUCT_LIST, {
+        this.refs.request.PostService(API.PRODUCT_LIST, {
             isRecommend:1,
             includeOOS:1,
             pageIndex: 1,
@@ -128,16 +132,14 @@ let product = React.createClass({
             if(result.data.length !== 0){
                 _this.setState({productData: result.data});
             }
-        })
+        }, true);
     },
     doRefresh(){
         this.getInitMsg();
     },
     isRequestFinish(){
         if(!bannerNoticeReq && !productReq){
-            setTimeout(()=>{
-                this.props.dispatch(hideLoading());
-            },200);
+            this.setState({isShowLoading: false});
         }
     },
     changeProductList(){
@@ -190,10 +192,4 @@ const styles = StyleSheet.create({
     }
 });
 
-function selector(state) {
-    return {  
-        isLoading: state.isLoading
-    }  
-}
-
-export default connect(selector)(product);
+export default product;

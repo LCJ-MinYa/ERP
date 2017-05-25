@@ -1,3 +1,13 @@
+/*
+ * ===========================
+ *
+ * Request => 组件式请求封装
+ * @author   : LiChaoJun
+ * @datetime : 2017/5/25
+ * 请求作为页面子组件，loading与请求合并(需要显示loading使用)
+ *
+ * ===========================
+ */
 'use strict';
 
 import React, { Component } from 'react';
@@ -24,15 +34,22 @@ let request = React.createClass({
 			isShowLoading: false
 		};
 	},
+	getInitialState: function() {
+		return {
+			isShowLoadingState: this.props.isShowLoading
+		};
+	},
+	componentWillReceiveProps(nextProps){
+		this.setState({isShowLoadingState: nextProps.isShowLoading});
+	},
 	render(){
 		return(
 			<Loading 
-				isShowLoading={this.props.isShowLoading}
+				isShowLoading={this.state.isShowLoadingState}
 				loadingText={this.props.loadingText}
 			/>
 		);
 	},
-
 	getProfileId(value, params){
 		if(value){
 			params.profileId = value;
@@ -142,7 +159,10 @@ let request = React.createClass({
      *  callback:回调函数
      *  isLoading:是否显示加载状态
      */
-	PostService(url, params, callback, timeout){
+	PostService(url, params, callback, isNotBaseLoading, timeout){
+		if(!isNotBaseLoading){
+			this.setState({isShowLoadingState: true});
+		}
 		let URL = config.API + url;
 		params.timestamp = this.getTimestamp();
 		Storage.getData('token')
@@ -164,15 +184,20 @@ let request = React.createClass({
 			//发送POST请求
 			this._fetch(this.fetch_promise(URL, params), timeout)
 			.then((resultJSON) =>{
+				if(!isNotBaseLoading){
+					this.setState({isShowLoadingState: false});
+				}
 				if(resultJSON.error_code < 0){
 					if(resultJSON.error_code == -12 || resultJSON.error_code == -15){
 						callback(resultJSON);
 					}else{
-		                Alert.alert('请求失败',resultJSON.error_message,[
-		                    {
-		                        text: '确定',
-		                    }
-		                ])
+						setTimeout(()=>{
+			                Alert.alert('请求失败',resultJSON.error_message,[
+			                    {
+			                        text: '确定',
+			                    }
+			                ])
+						}, 500);
 					}
 				}else{
 					if(callback != undefined){
@@ -181,6 +206,9 @@ let request = React.createClass({
 				}
 			})
 			.catch((err) => {
+				if(!isNotBaseLoading){
+					this.setState({isShowLoadingState: false});
+				}
 				if(err.message === 'Network request failed'){
 	                callback('网络出错');
 	            }else if(err === 'Network request timeout'){
