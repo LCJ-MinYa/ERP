@@ -9,7 +9,7 @@ import {
     ScrollView
 } from 'react-native';
 import UISize from '../../utils/uiSize';
-import Request from '../../utils/request';
+import HttpRequest from '../../utils/httpRequest';
 import API from '../../config/apiConfig';
 import CommonHeader from '../common/commonHeader';
 
@@ -65,10 +65,6 @@ let msg = React.createClass({
                     {this.renderContent('#f79e16', 'order', message, '订单消息', '关于订单审核、发货状态变化的及时通知')}
                     {this.renderContent('#0095d7', 'notice', false, '通知公告', '供货商公告，比如促销信息，放假通知等')}
                 </ScrollView>
-                <Request
-                    ref="request"
-                    isShowLoading={false}
-                />
       		</View>
     	);
   	},
@@ -77,7 +73,7 @@ let msg = React.createClass({
     },
     getInitMsg(){
         let _this = this;
-        this.refs.request.PostService(API.NOREAD_MESSAGE_COUNT, {}, function(result){
+        HttpRequest.PostService(API.NOREAD_MESSAGE_COUNT, {}, function(result){
             _this.props.dispatch(setMessageCount(_this.props.message, result.data));
         })
     }

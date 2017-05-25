@@ -11,13 +11,15 @@ import {
     TouchableHighlight
 } from 'react-native';
 import { NavigationActions } from 'react-navigation'
-import Storage from '../../utils/customStorage.js';
-import Request from '../../utils/request.js';
-let {width, height} = Dimensions.get('window');
+
+import Storage from '../../utils/customStorage';
+import HttpRequest from '../../utils/httpRequest';
+import API from '../../config/apiConfig';
 
 import { connect } from 'react-redux';
 import { showLoading,hideLoading } from '../../action'
 
+let {width, height} = Dimensions.get('window');
 const resetAction = NavigationActions.reset({
     index: 0,
     actions: [
@@ -31,20 +33,6 @@ let login = React.createClass({
             userName: '',
             password: '',
         };
-    },
-    componentDidMount(){
-        let token, profileId;
-        Storage.getData('token')
-        .then((value)=>{ 
-            token = value;
-            Storage.getData('profileId')
-            .then((value)=>{
-                profileId = value;
-                if(token && profileId){
-                    //this.props.navigation.navigate('TabRoot');
-                }
-            })
-        })
     },
   	render() {
     	return (
@@ -91,12 +79,6 @@ let login = React.createClass({
                 >
                     <Text style={styles.btnText}>登录</Text> 
                 </TouchableHighlight>
-
-                <Request
-                    ref="request"
-                    isShowLoading={false}
-                    loadingText={'登录中...'}
-                />
             </View>
     	);
   	},
@@ -109,12 +91,12 @@ let login = React.createClass({
         }else if(!password){
             alert("请输入登录密码");
         }else{
-            this.props.dispatch(showLoading(this.props.isLoading));
-            this.refs.request.PostService('/api/user/login', {
+            this.props.dispatch(showLoading());
+            HttpRequest.PostService(API.LOGIN, {
                 userName: userName,
                 password: password
             },function(result){
-                _this.props.dispatch(hideLoading(_this.props.isLoading));
+                _this.props.dispatch(hideLoading());
                 Storage.setData("token",result.data.token);
                 Storage.setData("profileId",result.data.profileId);
                 _this.props.navigation.dispatch(resetAction);

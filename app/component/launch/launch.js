@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { NavigationActions } from 'react-navigation'
 import Storage from '../../utils/customStorage';
-import Request from '../../utils/request';
+import HttpRequest from '../../utils/httpRequest';
 import API from '../../config/apiConfig';
 
 const resetTabRootAction = NavigationActions.reset({
@@ -30,10 +30,6 @@ class launch extends Component {
     	return (
       		<View style={styles.container}>
       			<Text>这是加载页面</Text>
-                <Request
-                    ref="request"
-                    isShowLoading={false}
-                />
       		</View>
     	);
   	}
@@ -48,7 +44,7 @@ class launch extends Component {
         .then((value)=>{
             profileId = value;
             if(token && profileId){
-                this.refs.request.PostService(API.GLOBAL_INFO, {}, function(result){
+                HttpRequest.PostService(API.GLOBAL_INFO, {}, function(result){
                     if(result == "请求超时"){
                         console.log("网络差");
                         _this.props.navigation.dispatch(resetTabRootAction);

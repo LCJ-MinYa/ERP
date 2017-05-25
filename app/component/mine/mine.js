@@ -10,7 +10,7 @@ import {
     Platform,
 } from 'react-native';
 
-import Request from '../../utils/request';
+import HttpRequest from '../../utils/httpRequest';
 import API from '../../config/apiConfig';
 import UISize from '../../utils/uiSize';
 
@@ -135,11 +135,6 @@ class mine extends Component{
                 <View style={styles.setBtn}>
                     <Text style={styles.setBtnIcon}>&#xe63f;</Text>
                 </View>
-
-                <Request
-                    ref="request"
-                    isShowLoading={false}
-                />
             </View>
     	);
   	}
@@ -148,7 +143,7 @@ class mine extends Component{
     }
     getUserInfo(){
         let _this = this;
-        this.refs.request.PostService(API.USER_INFO, {}, function(result){
+        HttpRequest.PostService(API.USER_INFO, {}, function(result){
             _this.setState({userInfo: result.data});
         })
     }

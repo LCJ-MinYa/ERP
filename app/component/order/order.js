@@ -11,7 +11,7 @@ import {
   	RefreshControl
 } from 'react-native';
 import UISize from '../../utils/uiSize';
-import Request from '../../utils/request';
+import HttpRequest from '../../utils/httpRequest';
 import API from '../../config/apiConfig';
 import Config from '../../config/config';
 import CommonHeader from '../common/commonHeader';
@@ -70,11 +70,6 @@ let order = React.createClass({
 
             	{/*订单nav*/}
             	{this.renderOrderNav()}
-
-                <Request
-                    ref="request"
-                    isShowLoading={false}
-                />
       		</View>
     	);
   	},
@@ -83,8 +78,8 @@ let order = React.createClass({
   	},
   	getOrderListMsg(){
   		let _this = this;
-  		this.props.dispatch(showLoading(this.props.isLoading));
-        this.refs.request.PostService(API.ORDER_LIST, {
+  		this.props.dispatch(showLoading());
+        HttpRequest.PostService(API.ORDER_LIST, {
         	period: this.state.period,
         	status: this.state.orderState,
         	startDate: this.state.startDate,
@@ -94,7 +89,7 @@ let order = React.createClass({
             pageIndex: this.state.pageIndex,
         }, function(result){
         	console.log(result);
-            _this.props.dispatch(hideLoading(_this.props.isLoading));
+            _this.props.dispatch(hideLoading());
         })
   	}
 })

@@ -5,16 +5,14 @@ export const addCart = (cart) => {
 	}
 }
 
-export const showLoading = (isLoading) => {  
+export const showLoading = () => {  
 	return {  
-		type: 'SHOW_LOADING',
-		isLoading
+		type: 'SHOW_LOADING'
 	}
 }
 
-export const hideLoading = (isLoading) => {  
+export const hideLoading = () => {  
 	return {  
-		type: 'HIDE_LOADING',
-		isLoading
+		type: 'HIDE_LOADING'
 	}
 }

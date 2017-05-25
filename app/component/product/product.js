@@ -11,7 +11,7 @@ import {
     RefreshControl,
     TouchableWithoutFeedback
 } from 'react-native';
-import Request from '../../utils/request';
+import HttpRequest from '../../utils/httpRequest';
 import API from '../../config/apiConfig';
 import Config from '../../config/config';
 import ProductHeader from '../common/productHeader';
@@ -28,7 +28,6 @@ let productReq = false;
 let product = React.createClass({
     getInitialState: function() {
         return {
-            isRefreshing: false,
             isShowSmallProductList: true,
             bannerNoticeData: {},
             productData: []
@@ -80,11 +79,6 @@ let product = React.createClass({
                         </View>
                     </TouchableWithoutFeedback>
                 </ScrollView>
-
-                <Request
-                    ref="request"
-                    isShowLoading={false}
-                />
             </View>
     	);
   	},
@@ -95,14 +89,14 @@ let product = React.createClass({
         this.getInitMsg();
     },
     getInitMsg(){
-        this.props.dispatch(showLoading(this.props.isLoading));
+        this.props.dispatch(showLoading());
         this.getBannerNoticeData();
         this.getProductData();
     },
     getBannerNoticeData(){
         let _this = this;
         bannerNoticeReq = true;
-        this.refs.request.PostService(API.BANNER_NOTICE, {}, function(result){
+        HttpRequest.PostService(API.BANNER_NOTICE, {}, function(result){
             bannerNoticeReq = false;
             _this.isRequestFinish();
             if(result == '请求超时'){
@@ -119,7 +113,7 @@ let product = React.createClass({
     getProductData(){
         let _this = this;
         productReq = true;
-        this.refs.request.PostService(API.PRODUCT_LIST, {
+        HttpRequest.PostService(API.PRODUCT_LIST, {
             isRecommend:1,
             includeOOS:1,
             pageIndex: 1,
@@ -141,7 +135,9 @@ let product = React.createClass({
     },
     isRequestFinish(){
         if(!bannerNoticeReq && !productReq){
-            this.props.dispatch(hideLoading(this.props.isLoading));
+            setTimeout(()=>{
+                this.props.dispatch(hideLoading());
+            },200);
         }
     },
     changeProductList(){
