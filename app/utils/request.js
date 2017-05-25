@@ -51,6 +51,30 @@ let request = React.createClass({
 	},
 
 	/*
+     *  strIsNullOrEmpty检查是否为空（可以为0）
+     *  @params: 传入字符串string
+     *  @return: 返回布尔值真或假（真代表为空，假代表不为空）
+     */
+    strIsNullOrEmpty(str){
+	    if (str === null || str === undefined || str === '' || this.trim(str) === '' || str === 'null') {
+	        return true;
+	    }
+	    return false;
+    },
+
+	/*
+     *  strIsNullOrEmpty检查是否为空（可以为0）
+     *  @params: 传入字符串string
+     *  @return: 返回布尔值真或假（真代表为空，假代表不为空）
+     */
+    trim(str){
+	    if (typeof str !== 'string') {
+	        return str;
+	    }　　
+	    return str.replace(/(^\s*)|(\s*$)/g, "");    	
+    },
+
+	/*
      *  getTimestamp获取当前时间戳参数
      *  return:返回number类型时间戳
      */
@@ -73,7 +97,7 @@ let request = React.createClass({
 	    for (var i = 0; i < newParams.length; i++) {
 	        var tkey = newParams[i];
 	        var tvalue = data[tkey];
-	        if (tvalue) {
+	        if (!this.strIsNullOrEmpty(tvalue)) {
 	            if (typeof(tvalue) == "object") {
 	                tvalue = JSON.stringify(tvalue);
 	            }

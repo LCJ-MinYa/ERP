@@ -17,5 +17,8 @@ export default {
 	USER_INFO: '/api/personalcenter/getUserInfo',
 
 	//msg消息接口
-	NOREAD_MESSAGE_COUNT: '/api/message/getNoReadMessageCount'
+	NOREAD_MESSAGE_COUNT: '/api/message/getNoReadMessageCount',
+
+	//order订单接口
+	ORDER_LIST: '/api/order/getOrderList',
 };
