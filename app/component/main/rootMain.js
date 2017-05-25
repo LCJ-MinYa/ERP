@@ -27,7 +27,7 @@ import productListScreen from '../product/productList';
 import productClassScreen from '../product/productClass';
 import productDetailScreen from '../product/productDetail';
 
-import Request from '../../utils/request';
+import Loading from '../../utils/loading';
 import tabBar from '../common/tabBar';
 import storage from '../../utils/customStorage';
 
@@ -124,8 +124,7 @@ class rootMain extends Component{
                 />
                 {this.renderNetInfo()}
 
-                <Request
-                    ref="request"
+                <Loading
                     isShowLoading={isLoading}
                 />
             </View>
