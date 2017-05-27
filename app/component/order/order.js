@@ -147,18 +147,17 @@ let order = React.createClass({
   	},
     doRefresh(){
         this.state.pageIndex = 1;
-        this.getOrderListMsg();
+        this.setState({isRefreshing: true}, ()=>{
+            this.getOrderListMsg(true);
+        });
     },
     loadMoreData(){
         if(this.state.isLoadMore || this.state.isShowFooter == 2){
             return;
         }
         this.state.isLoadMore = true;
-        this.setState({
-            isShowFooter: 1,
-            isRefreshing: true
-        }, ()=>{
-            this.getOrderListMsg(true);
+        this.setState({isShowFooter: 1}, ()=>{
+            this.getOrderListMsg();
         });
     }
 })

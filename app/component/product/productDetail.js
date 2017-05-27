@@ -11,16 +11,11 @@ import {
   	ScrollView,
   	TouchableWithoutFeedback
 } from 'react-native';
-import { NavigationActions } from 'react-navigation'
+
 import Request from '../../utils/request.js';
 import API from '../../config/apiConfig.js';
 import Swiper from 'react-native-swiper';
-const resetCartTabAction = NavigationActions.reset({
-    index: 0,
-    actions: [
-        NavigationActions.navigate({ routeName: 'CartTab'}),
-    ]
-});
+
 let {width, height} = Dimensions.get('window');
 
 class productDetail extends Component {
@@ -41,10 +36,7 @@ class productDetail extends Component {
 					>
 				        {this.renderImageItemView()}
 				  	</Swiper>
-				  	<TouchableWithoutFeedback onPress={()=>{
-                        console.log(this.props);
-                        this.props.navigation.navigate('CartTab');
-                    }}>
+				  	<TouchableWithoutFeedback onPress={this.goCart.bind(this)}>
 				  		<View>
 				  			<Text style={styles.goCartView}>购物车</Text>
 				  		</View>
@@ -76,9 +68,7 @@ class productDetail extends Component {
                     {this.renderSwiperView()}
                 </ScrollView>
 
-                <View style={styles.footerView} onPress={()=>{
-                    navigation.navigate('CartTab');
-                }}>
+                <View style={styles.footerView}>
                     <View style={styles.footerLeftView}>
                         <Text style={styles.footerLeftIcon}>&#xe64c;</Text>
                         <Text style={styles.footerLeftText}>收藏</Text>
@@ -94,7 +84,7 @@ class productDetail extends Component {
     	);
   	}
     goCart(){
-        this.props.navigation.dispatch(resetCartTabAction);
+        this.props.navigation.navigate("CartTab");
     }
   	componentDidMount(){
   		let id = this.props.navigation.state.params.productId;

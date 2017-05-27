@@ -133,7 +133,9 @@ let product = React.createClass({
     },
     isRequestFinish(){
         if(!bannerNoticeReq && !productReq){
-            this.setState({isShowLoading: false});
+            setTimeout(()=>{
+                this.setState({isShowLoading: false});
+            }, 200);
         }
     },
     changeProductList(){

@@ -10,7 +10,7 @@ import {
 
 var setNavigationOptions = function(obj, title, label, icon, pathName, num){
 	obj.navigationOptions = ({navigation}) =>({
-		//gesturesEnabled: false,
+		gesturesEnabled: false,
 		//tabBarVisible: false,
 		path: pathName,
 		title: title,
