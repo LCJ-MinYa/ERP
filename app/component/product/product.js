@@ -101,17 +101,14 @@ let product = React.createClass({
         let _this = this;
         bannerNoticeReq = true;
         this.refs.request.PostService(API.BANNER_NOTICE, {}, function(result){
-            bannerNoticeReq = false;
-            _this.isRequestFinish();
-            if(result == '请求超时'){
-                alert("请求超时");
-                return;
-            }
             if(result.hasOwnProperty('banner') && result.banner.length === 0){
                 result.banner[0] = 'index_banner_1';
                 result.banner[1] = 'index_banner_2';
             }
-            _this.setState({bannerNoticeData: result});
+            _this.setState({bannerNoticeData: result}, ()=>{
+                bannerNoticeReq = false;
+                _this.isRequestFinish();
+            });
         }, true);
     },
     getProductData(){
@@ -123,14 +120,11 @@ let product = React.createClass({
             pageIndex: 1,
             pageSize: Config.PAGESIZE
         }, function(result){
-            productReq = false;
-            _this.isRequestFinish();
-            if(result == '请求超时'){
-                alert("请求超时");
-                return;
-            }
             if(result.data.length !== 0){
-                _this.setState({productData: result.data});
+                _this.setState({productData: result.data}, ()=>{
+                    productReq = false;
+                    _this.isRequestFinish();
+                });
             }
         }, true);
     },

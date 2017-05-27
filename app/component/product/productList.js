@@ -25,7 +25,6 @@ let productList = React.createClass({
         	isShowSmallProductList: true,
             productData: [],
             isRefreshing: false,
-            isShowLoading: true,
             isShowFooter: 0,//0不显示 1.加载中... 2.没有更多数据了
             isLoadMore: false,
         };
@@ -69,23 +68,22 @@ let productList = React.createClass({
 					productData={this.state.productData}
 					isShowRefresh={true}
 					isRefreshing={this.state.isRefreshing}
-					doRefresh={()=>this.doRefresh()}
-					loadMoreData={()=>this.loadMoreData()}
+					doRefresh={this.doRefresh}
+					loadMoreData={this.loadMoreData}
 					isShowFooter={this.state.isShowFooter}
 					popDoClick={(url, params)=>{this.popToNewView(url, params)}}
 				/>
 
 				<Request
 					ref="request"
-					isShowLoading={this.state.isShowLoading}
 				/>
 			</View>
 		)
 	},
 	componentDidMount(){
-		this.getProductData(false, true);
+		this.getProductData();
 	},
-	getProductData(isRefresh, isFirst){
+	getProductData(isRefresh){
 		let _this = this;
 		this.state.params = this.props.navigation.state.params;
 		let params = JSON.parse(JSON.stringify(this.state.params));
@@ -97,11 +95,6 @@ let productList = React.createClass({
 			params.pageIndex = this.state.pageIndex;
 		}
         this.refs.request.PostService(API.PRODUCT_LIST, params, function(result){
-        	console.log(result);
-        	//判断是否首次加载
-        	if(isFirst){
-        		_this.setState({isShowLoading: false});
-        	}
         	//判断是否是下啦刷新加载
         	if(isRefresh){
         		_this.setState({isRefreshing: false});
@@ -122,7 +115,7 @@ let productList = React.createClass({
                 _this.state.pageIndex += 1;
                 _this.state.isLoadMore = false;
             }
-        })
+        });
 	},
 	popToNewView(url, params){
 		if(!url){
@@ -138,11 +131,12 @@ let productList = React.createClass({
 	},
 	loadMoreData(){
 		if(this.state.isLoadMore || this.state.isShowFooter == 2){
-			return
+			return;
 		}
 		this.state.isLoadMore = true;
-		this.setState({isShowFooter: 1});
-		this.getProductData();
+		this.setState({isShowFooter: 1}, ()=>{
+			this.getProductData();	
+		});
 	}
 });
 

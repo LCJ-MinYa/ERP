@@ -197,7 +197,7 @@ let request = React.createClass({
 			                        text: '确定',
 			                    }
 			                ])
-						}, 500);
+						}, 200);
 					}
 				}else{
 					if(callback != undefined){
