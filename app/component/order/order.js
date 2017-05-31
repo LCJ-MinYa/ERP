@@ -109,7 +109,6 @@ let order = React.createClass({
   		this.getOrderListMsg();
   	},
   	getOrderListMsg(isRefresh){
-        console.log(this.state.pageIndex);
         let _this = this;
         this.refs.request.PostService(API.ORDER_LIST, {
         	period: this.state.period,

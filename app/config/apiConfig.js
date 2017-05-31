@@ -24,4 +24,7 @@ export default {
 
 	//order订单接口
 	ORDER_LIST: '/api/order/getOrderList',
+
+	//cart购物车接口
+	CART_LIST: '/api/cart/getCartList',
 };

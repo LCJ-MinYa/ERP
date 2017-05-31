@@ -85,7 +85,6 @@ const styles = StyleSheet.create({
 	},
 	footerBoxView:{
 		height: 40,
-		backgroundColor: '#fff',
 		alignItems: 'center',
 		justifyContent: 'center'
 	}

@@ -210,9 +210,9 @@ let request = React.createClass({
 					this.setState({isShowLoadingState: false});
 				}
 				if(err.message === 'Network request failed'){
-	                callback('网络出错');
+	                alert('网络出错');
 	            }else if(err === 'Network request timeout'){
-	                callback('请求超时');
+	                alert('请求超时');
 	            }
 			})
 		})
