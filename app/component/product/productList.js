@@ -125,9 +125,9 @@ let productList = React.createClass({
 		}
 	},
 	doRefresh(){
-		this.setState({isRefreshing: true,});
-		this.getProductData(true);
-
+		this.setState({isRefreshing: true}, ()=>{
+			this.getProductData(true);
+		});
 	},
 	loadMoreData(){
 		if(this.state.isLoadMore || this.state.isShowFooter == 2){
