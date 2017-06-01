@@ -63,6 +63,7 @@ let cart = React.createClass({
     renderCartList(){
         return(
             <CommonListView
+                listViewStyle={styles.commonListViewStyle}
                 arrayData={this.state.cartData}
                 isShowRefresh={true}
                 renderRow={this.renderRow}
@@ -73,7 +74,31 @@ let cart = React.createClass({
     },
     renderRow(rowdata){
         return(
-            <Text>{rowdata.fullName}</Text>
+            <View style={styles.cartListBox}>
+                {/*列表内容*/}
+                <View style={styles.cartListContent}>
+                    <Image
+                      style={styles.cartListImg}
+                      source={{uri: rowdata.picUrl}}
+                    />
+                    <View style={styles.cartListContentRight}>
+                        <Text style={styles.cartListfullName} numberOfLines={1}>{rowdata.fullName}</Text>
+                        <Text style={styles.cartListCode}>{rowdata.code}</Text>
+                        <Text style={styles.cartListCode}>{rowdata.properties}</Text>
+                        <Text style={styles.cartListCode}>库存:{rowdata.stockQty}/{rowdata.baseUnit}</Text>
+                        <Text style={styles.cartListPrice}>
+                            <Text style={styles.cartListCurrency}>￥</Text>
+                            {rowdata.discountPrice}/{rowdata.baseUnit}
+                        </Text>
+                    </View>
+                </View>
+                {/*列表内容操作*/}
+                <View style={styles.cartListHandle}>
+                    <View style={styles.cartListDel}>
+                        <Text style={styles.cartListDelIcon}>&#xe631;</Text>
+                    </View>
+                </View>
+            </View>
         )
     },
   	render() {
@@ -133,7 +158,7 @@ let cart = React.createClass({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#eee'
+        backgroundColor: '#eee',
     },
     submitOrderBox:{
         width: UISize.width(),
@@ -169,6 +194,73 @@ const styles = StyleSheet.create({
     submitOrderRightText:{
         color: '#fff',
         fontSize: 14
+    },
+    commonListViewStyle:{
+        paddingBottom: UISize.p2d(100)
+    },
+    cartListBox:{
+        width: UISize.width(),
+        backgroundColor: '#fff',
+        marginBottom: UISize.p2d(16)
+    },
+    cartListContent:{
+        flexDirection: 'row',
+        minHeight: UISize.p2d(240),
+        paddingLeft: UISize.p2d(24),
+        paddingRight: UISize.p2d(24),
+        alignItems: 'center'
+    },
+    cartListImg:{
+        width: UISize.p2d(180),
+        height: UISize.p2d(180)
+    },
+    cartListContentRight:{
+        marginLeft: UISize.p2d(36),
+        paddingBottom: UISize.p2d(24),
+        paddingTop: UISize.p2d(24),
+    },
+    cartListfullName:{
+        color: '#323232',
+        fontSize: 14,
+        width: UISize.width() - UISize.p2d(264)
+    },
+    cartListCode:{
+        color: '#9f9f9f',
+        fontSize: 12,
+        paddingTop: 2,
+        paddingBottom: 2
+    },
+    cartListPrice:{
+        color: '#f65a44',
+        fontSize: 14,
+    },
+    cartListCurrency:{
+        color: '#f65a44',
+        fontSize: 12
+    },
+    cartListHandle:{
+        flexDirection: 'row',
+        width: UISize.width(),
+        height: UISize.p2d(80),
+        borderTopWidth: 0.5,
+        borderColor: '#e1e1e1',
+        paddingLeft: UISize.p2d(24),
+        paddingRight: UISize.p2d(24),
+        alignItems: 'center'
+    },
+    cartListDel:{
+        width: UISize.p2d(60),
+        height: UISize.p2d(60),
+        borderRadius: UISize.p2d(30),
+        borderColor: '#e5e5e5',
+        borderWidth: 0.5,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    cartListDelIcon:{
+        fontFamily: 'iconfont',
+        fontSize: 16,
+        color: '#d1d1d1'
     }
 });
 

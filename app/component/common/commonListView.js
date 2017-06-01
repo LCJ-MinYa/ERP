@@ -65,7 +65,7 @@ let commonListView = React.createClass({
   	render() {
     	return (
             <ListView
-                contentContainerStyle={styles.listViewContentBox}
+                contentContainerStyle={this.props.listViewStyle}
                 dataSource={this.state.dataSource}
                 renderRow={this.props.renderRow}
                 enableEmptySections={true}
