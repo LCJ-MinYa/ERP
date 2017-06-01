@@ -22,6 +22,7 @@ import Storage from './customStorage';
 import config from '../config/config';
 import sha1 from './sha1';
 import Loading from './loading';
+import Toast from 'react-native-root-toast';
 
 let request = React.createClass({
 	propTypes:{
@@ -36,7 +37,8 @@ let request = React.createClass({
 	},
 	getInitialState: function() {
 		return {
-			isShowLoadingState: this.props.isShowLoading
+			isShowLoadingState: this.props.isShowLoading,
+			loadingTextState: this.props.loadingText,
 		};
 	},
 	componentWillReceiveProps(nextProps){
@@ -191,13 +193,8 @@ let request = React.createClass({
 					if(resultJSON.error_code == -12 || resultJSON.error_code == -15){
 						callback(resultJSON);
 					}else{
-						setTimeout(()=>{
-			                Alert.alert('请求失败',resultJSON.error_message,[
-			                    {
-			                        text: '确定',
-			                    }
-			                ])
-						}, 200);
+						this.toast(resultJSON.error_message);
+
 					}
 				}else{
 					if(callback != undefined){
@@ -210,9 +207,9 @@ let request = React.createClass({
 					this.setState({isShowLoadingState: false});
 				}
 				if(err.message === 'Network request failed'){
-	                alert('网络出错');
+					this.toast('网络出错');
 	            }else if(err === 'Network request timeout'){
-	                alert('请求超时');
+	            	this.toast('请求超时');
 	            }
 			})
 		})
@@ -265,6 +262,14 @@ let request = React.createClass({
 	        	reject(err);
 	        })
 	    })
+	},
+
+	toast(msg){
+		Toast.show(msg, {
+		    position: 0,
+		    shadow: false,
+		    delay: 500,
+		});
 	}
 });
 
