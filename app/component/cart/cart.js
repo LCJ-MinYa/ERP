@@ -7,7 +7,8 @@ import {
   	View,
   	Text,
   	Image,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    TextInput
 } from 'react-native';
 
 import { connect,Provider } from 'react-redux';
@@ -96,6 +97,20 @@ let cart = React.createClass({
                 <View style={styles.cartListHandle}>
                     <View style={styles.cartListDel}>
                         <Text style={styles.cartListDelIcon}>&#xe631;</Text>
+                    </View>
+                    <View style={styles.cartListAddSub}>
+                        <View style={styles.cartListSubBox}><Text style={styles.cartListSub}>&#xe630;</Text></View>
+                        <TextInput
+                            autoCapitalize={'none'}
+                            style={styles.inputStyle}
+                            underlineColorAndroid={'transparent'}
+                            onChangeText={(text)=>{
+                                this.setState({
+                                    userName: text
+                                })
+                            }}
+                        />
+                        <View style={[styles.cartListSubBox, styles.cartListAddBox]}><Text style={[styles.cartListSub, styles.cartListAdd]}>&#xe62f;</Text></View>
                     </View>
                 </View>
             </View>
@@ -243,6 +258,7 @@ const styles = StyleSheet.create({
     },
     cartListHandle:{
         flexDirection: 'row',
+        justifyContent: 'space-between',
         width: UISize.width(),
         height: UISize.p2d(80),
         borderTopWidth: 0.5,
@@ -264,6 +280,43 @@ const styles = StyleSheet.create({
         fontFamily: 'iconfont',
         fontSize: 16,
         color: '#d1d1d1'
+    },
+    cartListAddSub:{
+        width: UISize.p2d(220),
+        height: UISize.p2d(60),
+        borderColor: '#e6e6e6',
+        borderRadius: 2,
+        borderWidth: 1,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    cartListSubBox:{
+        flex: 1,
+        height: UISize.p2d(60),
+        borderRightWidth: 0.5,
+        borderColor: '#e6e6e6',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    cartListAddBox:{
+        borderRightWidth: 0,
+        borderLeftWidth: 0.5,
+        borderColor: '#e6e6e6'
+    },
+    cartListSub:{
+        fontFamily: 'iconfont',
+        fontSize: 18,
+        color: '#eee',
+        textAlign: 'center',
+    },
+    cartListAdd:{
+        color: '#111',
+    },
+    inputStyle:{
+        flex: 2,
+        height: UISize.p2d(60),
+        fontSize: 12,
+        textAlign: 'center'
     }
 });
 
