@@ -101,6 +101,7 @@ let order = React.createClass({
 
                 <Request
                     ref="request"
+                    popGoLogin={this.popGoLogin}
                 />
       		</View>
     	);
@@ -108,6 +109,9 @@ let order = React.createClass({
   	componentDidMount(){
   		this.getOrderListMsg();
   	},
+    popGoLogin(){
+        this.props.navigation.navigate('Login');
+    },
   	getOrderListMsg(isRefresh){
         let _this = this;
         this.refs.request.PostService(API.ORDER_LIST, {

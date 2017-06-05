@@ -81,12 +81,16 @@ let product = React.createClass({
                 <Request
                     ref="request"
                     isShowLoading={this.state.isShowLoading}
+                    popGoLogin={this.popGoLogin}
                 />
             </View>
     	);
   	},
     popToNewView(url, params){
         this.props.navigation.navigate(url, params);
+    },
+    popGoLogin(){
+        this.props.navigation.navigate('Login');
     },
     componentDidMount(){
         this.getInitMsg();

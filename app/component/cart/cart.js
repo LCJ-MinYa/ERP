@@ -121,6 +121,7 @@ let cart = React.createClass({
 
                 <Request
                     ref="request"
+                    popGoLogin={this.popGoLogin}
                 />
       		</View>
     	);
@@ -151,8 +152,10 @@ let cart = React.createClass({
         }else{
             this.props.navigation.navigate(url);
         }
-    }
-
+    },
+    popGoLogin(){
+        this.props.navigation.navigate('Login');
+    },
 })
 
 const styles = StyleSheet.create({

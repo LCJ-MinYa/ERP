@@ -76,6 +76,7 @@ let productList = React.createClass({
 
 				<Request
 					ref="request"
+					popGoLogin={this.popGoLogin}
 				/>
 			</View>
 		)
@@ -124,6 +125,9 @@ let productList = React.createClass({
 			this.props.navigation.navigate(url, params);
 		}
 	},
+    popGoLogin(){
+        this.props.navigation.navigate('Login');
+    },
 	doRefresh(){
 		this.setState({isRefreshing: true}, ()=>{
 			this.getProductData(true);

@@ -79,10 +79,14 @@ class productDetail extends Component {
                 </View>
                 <Request
                     ref="request"
+                    popGoLogin={this.popGoLogin}
                 />
             </View>
     	);
   	}
+    popGoLogin(){
+        this.props.navigation.navigate('Login');
+    }
     goCart(){
         this.props.navigation.navigate("CartTab");
     }

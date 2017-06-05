@@ -83,6 +83,7 @@ let productClass = React.createClass({
 				<Request
 					ref="request"
 					isShowLoading={this.state.isShowLoading}
+					popGoLogin={this.popGoLogin}
 				/>
 		  	</View>
 		);
@@ -94,6 +95,9 @@ let productClass = React.createClass({
 			this.props.navigation.navigate(url);
 		}
 	},
+    popGoLogin(){
+        this.props.navigation.navigate('Login');
+    },
 	renderFirstRow(rowData, sectionID, rowID, highlightRow){
 		return(
 			<TouchableOpacity onPress={()=>{
