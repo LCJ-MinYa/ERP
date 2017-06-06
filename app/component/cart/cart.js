@@ -8,7 +8,8 @@ import {
   	Text,
   	Image,
     TouchableWithoutFeedback,
-    TextInput
+    TextInput,
+    KeyboardAvoidingView
 } from 'react-native';
 
 import { connect,Provider } from 'react-redux';
@@ -45,7 +46,8 @@ let cart = React.createClass({
         return {
             headerTitle: '购物车',
             cartData: [],
-            isRefreshing: false
+            isRefreshing: false,
+            marginTop: 0,
         };
     },
     renderSubmitOrder(){
@@ -63,17 +65,23 @@ let cart = React.createClass({
     },
     renderCartList(){
         return(
-            <CommonListView
-                listViewStyle={styles.commonListViewStyle}
-                arrayData={this.state.cartData}
-                isShowRefresh={true}
-                renderRow={this.renderRow}
-                isRefreshing={this.state.isRefreshing}
-                doRefresh={this.doRefresh}
-            />
+            <KeyboardAvoidingView
+                behavior={'position'}
+                style={styles.keyboardStyle}
+                contentContainerStyle={{marginTop: this.state.marginTop}}
+            >
+                <CommonListView
+                    listViewStyle={styles.commonListViewStyle}
+                    arrayData={this.state.cartData}
+                    isShowRefresh={true}
+                    renderRow={this.renderRow}
+                    isRefreshing={this.state.isRefreshing}
+                    doRefresh={this.doRefresh}
+                />
+            </KeyboardAvoidingView>
         )
     },
-    renderRow(rowdata){
+    renderRow(rowdata, sectionID, rowID){
         return(
             <View style={styles.cartListBox}>
                 {/*列表内容*/}
@@ -100,16 +108,23 @@ let cart = React.createClass({
                     </View>
                     <View style={styles.cartListAddSub}>
                         <View style={styles.cartListSubBox}><Text style={styles.cartListSub}>&#xe630;</Text></View>
-                        <TextInput
-                            autoCapitalize={'none'}
-                            style={styles.inputStyle}
-                            underlineColorAndroid={'transparent'}
-                            onChangeText={(text)=>{
-                                this.setState({
-                                    userName: text
-                                })
-                            }}
-                        />
+                            <TextInput
+                                autoCapitalize={'none'}
+                                style={styles.inputStyle}
+                                underlineColorAndroid={'transparent'}
+                                defaultValue={'1'}
+                                onChangeText={(text)=>{
+                                    this.setState({
+                                        userName: text
+                                    })
+                                }}
+                                onFocus={()=>{
+                                    this.setState({marginTop: 44});
+                                }}
+                                onBlur={()=>{
+                                    this.setState({marginTop: 0});
+                                }}
+                            />
                         <View style={[styles.cartListSubBox, styles.cartListAddBox]}><Text style={[styles.cartListSub, styles.cartListAdd]}>&#xe62f;</Text></View>
                     </View>
                 </View>
@@ -178,6 +193,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#eee',
     },
+    keyboardStyle:{
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: '#eee',
+    },
     submitOrderBox:{
         width: UISize.width(),
         height: UISize.p2d(100),
@@ -214,7 +234,8 @@ const styles = StyleSheet.create({
         fontSize: 14
     },
     commonListViewStyle:{
-        paddingBottom: UISize.p2d(100)
+        paddingBottom: UISize.p2d(100),
+        backgroundColor: '#eee'
     },
     cartListBox:{
         width: UISize.width(),
