@@ -69,8 +69,23 @@ let order = React.createClass({
             <TouchableOpacity onPress={()=>{
                 console.log('点击row');
             }}>
-                <View style={{marginBottom: 50}}>
-                    <Text>{rowdata.billNumber}</Text>
+                <View style={styles.orderListBox}>
+                    <View style={styles.orderListMsgBox}>
+                        <Text style={styles.billNumberStyle}>{rowdata.billNumber}</Text>
+                        <Text style={styles.billDateStyle}>{rowdata.billDate}</Text>
+                        <View style={styles.moneyStyle}>
+                            <Text style={styles.billNumberStyle}>金额:</Text>
+                            <Text style={styles.unPayTotalStyle}>¥{rowdata.unPayTotal}</Text>
+                            <View style={styles.unPayTotalIconBox}><Text style={styles.unPayTotalIcon}>未付款</Text></View>
+                        </View>
+                        <Text style={styles.billStatusNameStyle}>{rowdata.billStatusName}</Text>
+                    </View>
+
+                    <View style={styles.orderListBtnBox}>
+                        <View style={styles.btnBox}><Text style={styles.btnText}>取消</Text></View>
+                        <View style={styles.btnBox}><Text style={styles.btnText}>付款</Text></View>
+                        <View style={styles.btnBox}><Text style={styles.btnText}>再次购买</Text></View>
+                    </View>
                 </View>
             </TouchableOpacity>
         )
@@ -123,7 +138,6 @@ let order = React.createClass({
             number: this.state.number,
             pageIndex: this.state.pageIndex,
         }, function(result){
-        	console.log(result);
             if(result.data.length != 0){
                 if(_this.state.pageIndex == 1){
                     _this.state.orderListData = result.data;
@@ -175,7 +189,6 @@ const styles = StyleSheet.create({
 		height: UISize.p2d(90),
 		flexDirection: 'row',
 		backgroundColor: '#fff',
-		marginBottom: 5
 	},
 	orderNavTextBox:{
 		flex: 1,
@@ -193,6 +206,75 @@ const styles = StyleSheet.create({
 	chooseOrderNavText:{
 		color: '#f65a44',
 	},
+    orderListBox:{
+        width: UISize.width(),
+        marginBottom: 5,
+        backgroundColor: '#fff',
+        borderTopWidth: 0.5,
+        borderBottomWidth: 0.5,
+        borderColor: '#eee',
+    },
+    orderListMsgBox:{
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderBottomWidth: 0.5,
+        borderColor: '#eee',
+    },
+    billNumberStyle:{
+        fontSize: 14,
+        color: '#505050'
+    },
+    billDateStyle:{
+        fontSize: 12,
+        paddingVertical: 5,
+        color: '#a5a5a5'
+    },
+    moneyStyle:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingTop: 10,
+    },
+    unPayTotalStyle:{
+        color: '#f65a44',
+        fontWeight: 'bold',
+        paddingHorizontal: 10
+    },
+    unPayTotalIconBox:{
+        borderWidth: 1,
+        borderColor: '#f89432',
+        backgroundColor: '#f89432',
+        borderRadius: 2
+    },
+    unPayTotalIcon:{
+        padding: 2,
+        color: '#fff',
+        fontSize: 12,
+    },
+    billStatusNameStyle:{
+        position: 'absolute',
+        right: 10,
+        top: 10,
+        color: '#f65a44',
+        fontSize: 14
+    },
+    orderListBtnBox:{
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        padding: 10,
+    },
+    btnBox:{
+        borderColor: '#efefef',
+        borderWidth: 1,
+        marginRight: 10,
+        borderRadius: 2,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    btnText:{
+        fontSize: 14,
+        color: '#3f3f3f',
+        padding: 4,
+    }
 });
 
 export default order;

@@ -47,7 +47,6 @@ let cart = React.createClass({
             headerTitle: '购物车',
             cartData: [],
             isRefreshing: false,
-            marginTop: 0,
         };
     },
     renderSubmitOrder(){
@@ -65,20 +64,14 @@ let cart = React.createClass({
     },
     renderCartList(){
         return(
-            <KeyboardAvoidingView
-                behavior={'position'}
-                style={styles.keyboardStyle}
-                contentContainerStyle={{marginTop: this.state.marginTop}}
-            >
-                <CommonListView
-                    listViewStyle={styles.commonListViewStyle}
-                    arrayData={this.state.cartData}
-                    isShowRefresh={true}
-                    renderRow={this.renderRow}
-                    isRefreshing={this.state.isRefreshing}
-                    doRefresh={this.doRefresh}
-                />
-            </KeyboardAvoidingView>
+            <CommonListView
+                listViewStyle={styles.commonListViewStyle}
+                arrayData={this.state.cartData}
+                isShowRefresh={true}
+                renderRow={this.renderRow}
+                isRefreshing={this.state.isRefreshing}
+                doRefresh={this.doRefresh}
+            />
         )
     },
     renderRow(rowdata, sectionID, rowID){
@@ -117,12 +110,6 @@ let cart = React.createClass({
                                     this.setState({
                                         userName: text
                                     })
-                                }}
-                                onFocus={()=>{
-                                    this.setState({marginTop: 44});
-                                }}
-                                onBlur={()=>{
-                                    this.setState({marginTop: 0});
                                 }}
                             />
                         <View style={[styles.cartListSubBox, styles.cartListAddBox]}><Text style={[styles.cartListSub, styles.cartListAdd]}>&#xe62f;</Text></View>
