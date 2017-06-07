@@ -8,10 +8,9 @@ import {
   	Text,
     Dimensions,
     TextInput,
-    TouchableHighlight
+    TouchableHighlight,
 } from 'react-native';
 import { NavigationActions } from 'react-navigation'
-
 import Storage from '../../utils/customStorage';
 import Request from '../../utils/request';
 import API from '../../config/apiConfig';
@@ -34,6 +33,7 @@ let login = React.createClass({
   	render() {
     	return (
       		<View style={styles.page}>
+            
                 <Text style={styles.title}>
                     章鱼侠云订货
                 </Text>
