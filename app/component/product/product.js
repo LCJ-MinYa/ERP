@@ -9,7 +9,8 @@ import {
     Alert,
     ScrollView,
     RefreshControl,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    StatusBar
 } from 'react-native';
 import Request from '../../utils/request';
 import API from '../../config/apiConfig';
@@ -34,6 +35,10 @@ let product = React.createClass({
   	render() {
     	return (
       		<View style={styles.container}>
+                <StatusBar
+                    barStyle={'light-content'}
+                />
+
                 <ProductHeader popDoClick={(url)=>{this.popToNewView(url)}} />
 
                 <ScrollView

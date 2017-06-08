@@ -3,10 +3,11 @@
 import React, { Component } from 'react';
 
 import {
-  StyleSheet,
-  View,
-  Text,
-  Dimensions
+	StyleSheet,
+	View,
+	Text,
+	Dimensions,
+	StatusBar
 } from 'react-native';
 
 import Request from '../../utils/request.js';
@@ -32,6 +33,10 @@ let productList = React.createClass({
 	render() {
 		return(
 			<View style={styles.container}>
+                <StatusBar
+                    barStyle={'light-content'}
+                />
+			
 				{/*---- 商品列表header ----*/}
 				<ProductHeader
 					showProductClass={false}

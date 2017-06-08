@@ -26,6 +26,7 @@ import loginScreen from '../login/login';
 import productListScreen from '../product/productList';
 import productClassScreen from '../product/productClass';
 import productDetailScreen from '../product/productDetail';
+import productSearchScreen from '../product/productSearch';
 
 import Loading from '../../utils/loading';
 import tabBar from '../common/tabBar';
@@ -74,7 +75,13 @@ const Navigator = StackNavigator({
     },
     ProductList: { screen: productListScreen },
     ProductClass: { screen: productClassScreen },
-    ProductDetail: { screen: productDetailScreen }
+    ProductDetail: { screen: productDetailScreen },
+    productSearch: {
+        screen: productSearchScreen,
+        navigationOptions:{
+            gesturesEnabled: false
+        }
+    }
 },{
     lazy: true,
     headerMode: 'none',

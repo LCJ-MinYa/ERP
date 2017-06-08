@@ -31,10 +31,12 @@ let productHeader = React.createClass({
 	      					{this.renderLeftIcon()}
 	      				</View>
       				</TouchableWithoutFeedback>
-      				<View style={styles.middleInput}>
-      					<Text style={styles.searchIcon}>&#xe623;</Text>
-      					<Text style={styles.searchMsg}>输入商品名称或编号进行搜索</Text>
-      				</View>
+      				<TouchableWithoutFeedback onPress={this.goProductSearch}>
+	      				<View style={styles.middleInput}>
+	      					<Text style={styles.searchIcon}>&#xe623;</Text>
+	      					<Text style={styles.searchMsg}>输入商品名称或编号进行搜索</Text>
+	      				</View>
+      				</TouchableWithoutFeedback>
       				<TouchableWithoutFeedback onPress={this.goRight}>
 	      				<View style={styles.leftIconBox}>
 	      					{this.renderRightIcon()}
@@ -64,6 +66,9 @@ let productHeader = React.createClass({
   		}else{
   			this.props.popDoClick(null);
   		}
+  	},
+  	goProductSearch(){
+  		this.props.popDoClick('productSearch');
   	},
   	goRight(){
   		this.props.popDoClick('Login');
