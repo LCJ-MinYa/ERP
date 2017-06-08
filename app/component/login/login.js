@@ -10,10 +10,14 @@ import {
     TextInput,
     TouchableHighlight,
 } from 'react-native';
+
+import Experience from './experienceEnter';
+
 import { NavigationActions } from 'react-navigation'
 import Storage from '../../utils/customStorage';
 import Request from '../../utils/request';
 import API from '../../config/apiConfig';
+import Toast from 'react-native-root-toast';
 
 let {width, height} = Dimensions.get('window');
 const resetAction = NavigationActions.reset({
@@ -28,6 +32,7 @@ let login = React.createClass({
         return {
             userName: '',
             password: '',
+            isShowExperience: false
         };
     },
   	render() {
@@ -77,6 +82,20 @@ let login = React.createClass({
                     <Text style={styles.btnText}>登录</Text> 
                 </TouchableHighlight>
 
+                <TouchableHighlight
+                    onPress={this.clickExperience}
+                    style={[styles.btnBox, styles.experienceBtn]}
+                    underlayColor='#fff'
+                >
+                    <Text style={[styles.btnText, styles.experienceBtnText]}>体验</Text> 
+                </TouchableHighlight>
+
+                <Experience
+                    isShowExperience={this.state.isShowExperience}
+                    closeExperience={this.closeExperience}
+                    experienceLogin={(userName, password)=>{this.experienceLogin(userName, password)}}
+                />
+
                 <Request
                     ref="request"
                     loadingText={'登录中...'}
@@ -85,23 +104,43 @@ let login = React.createClass({
     	);
   	},
     clickLogin(){
-        let _this = this;
         let userName = this.state.userName;
         let password = this.state.password;
         if(!userName){
-            alert("请输入登录账号");
-        }else if(!password){
-            alert("请输入登录密码");
-        }else{
-            this.refs.request.PostService(API.LOGIN, {
-                userName: userName,
-                password: password
-            },function(result){
-                Storage.setData("token",result.data.token);
-                Storage.setData("profileId",result.data.profileId);
-                _this.props.navigation.dispatch(resetAction);
+            Toast.show("请输入登录账号", {
+                position: 0,
+                shadow: false,
             });
+        }else if(!password){
+            Toast.show("请输入登录密码", {
+                position: 0,
+                shadow: false,
+            });
+        }else{
+            this.sendLoginRequest(userName, password);
         }
+    },
+    sendLoginRequest(userName, password){
+        let _this = this;
+        this.refs.request.PostService(API.LOGIN, {
+            userName: userName,
+            password: password
+        },function(result){
+            Storage.setData("token",result.data.token);
+            Storage.setData("profileId",result.data.profileId);
+            _this.props.navigation.dispatch(resetAction);
+        });      
+    },
+    clickExperience(){
+        this.setState({isShowExperience: true});
+    },
+    closeExperience(){
+        this.setState({isShowExperience: false});
+    },
+    experienceLogin(userName, password){
+        this.setState({isShowExperience: false}, ()=>{
+            this.sendLoginRequest(userName, password);
+        });
     }
 })
 
@@ -159,6 +198,15 @@ const styles = StyleSheet.create({
     btnText:{
         fontSize: 20,
         color: '#fff'
+    },
+    experienceBtn:{
+        marginTop: 20,
+        backgroundColor: '#fff',
+        borderColor: '#f65a44',
+        borderWidth: 0.5
+    },
+    experienceBtnText:{
+        color: '#f65a44'
     }
 });
 

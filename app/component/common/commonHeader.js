@@ -39,9 +39,11 @@ let commonHeader = React.createClass({
 	renderRight(){
 		if(this.props.isShowRight){
 			return(
-				<View style={styles.rightBox}>
-					<Text style={styles.rightText}>{this.props.rightText}</Text>
-				</View>
+				<TouchableWithoutFeedback onPress={this.doRightBtn}>
+					<View style={styles.rightBox}>
+						<Text style={styles.rightText}>{this.props.rightText}</Text>
+					</View>
+				</TouchableWithoutFeedback>
 			)
 		}
 	},
@@ -60,6 +62,9 @@ let commonHeader = React.createClass({
 	},
 	goBack(){
 		this.props.popDoClick(null);
+	},
+	doRightBtn(){
+		this.props.doRightBtn();
 	}
 });
 
