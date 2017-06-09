@@ -8,7 +8,8 @@ import {
   	Text,
   	Platform,
   	StatusBar,
-  	TouchableOpacity
+  	TouchableOpacity,
+  	TextInput
 } from 'react-native';
 import UISize from '../../utils/uiSize';
 let productSearch = React.createClass({
@@ -32,6 +33,19 @@ let productSearch = React.createClass({
 		      					<Text style={[styles.leftIcon,{paddingTop: 2,fontSize: 20}]}>&#xe640;</Text>
 		      				</View>
 	      				</TouchableOpacity>
+	      				<View style={styles.middleInput}>
+		      				<TextInput
+		                        autoCapitalize={'none'}
+		                        style={styles.inputStyle}
+		                        placeholder='输入商品名称或编号进行搜索'
+		                        underlineColorAndroid={'transparent'}
+		                    />
+	      				</View>
+	      				<TouchableOpacity activeOpacity={0.8} onPress={this.goSearch}>
+		      				<View style={styles.rightBox}>
+		      					<Text style={styles.rightText}>搜索</Text>
+		      				</View>
+	      				</TouchableOpacity>
       				</View>
 	    		</View>
 	    	</View>
@@ -41,6 +55,9 @@ let productSearch = React.createClass({
   		this.setState({stateBar: 'light-content'}, ()=>{
   			this.props.navigation.goBack(null);
   		})
+  	},
+  	goSearch(){
+
   	}
 })
 
@@ -72,6 +89,35 @@ const styles = StyleSheet.create({
 		fontFamily: 'iconfont',
 		fontSize: 26,
 		color: '#b5b5b5',
+	},
+	middleInput:{
+		width: UISize.width() - 144,
+		marginVertical: 7,
+		marginHorizontal: 10,
+		height: 30,
+		borderColor: '#f65a44',
+		borderBottomWidth: 0.5,
+		alignItems: 'center'
+	},
+	inputStyle:{
+		width: UISize.width() - 144,
+		paddingHorizontal: 10,
+		height: 30,
+		fontSize: 14,
+	},
+	rightBox:{
+		marginVertical: 7,
+		marginHorizontal: 10,
+		width: 60,
+		height: 30,
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: '#f65a44',
+		borderRadius: 5,
+	},
+	rightText:{
+		fontSize: 14,
+		color: '#fff'
 	}
 });
 

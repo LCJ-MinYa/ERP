@@ -30,6 +30,7 @@ let experienceEnter = React.createClass({
   	render() {
     	return (
       		<Modal
+      			onRequestClose={() => {}}
       			animationType={'slide'}
       			visible={this.props.isShowExperience}
       		>
