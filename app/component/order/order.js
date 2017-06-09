@@ -189,6 +189,8 @@ const styles = StyleSheet.create({
 		height: UISize.p2d(90),
 		flexDirection: 'row',
 		backgroundColor: '#fff',
+        borderColor: '#eee',
+        borderBottomWidth: 0.5
 	},
 	orderNavTextBox:{
 		flex: 1,

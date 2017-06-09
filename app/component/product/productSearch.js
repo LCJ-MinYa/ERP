@@ -48,6 +48,23 @@ let productSearch = React.createClass({
 	      				</TouchableOpacity>
       				</View>
 	    		</View>
+
+	    		{/*搜索历史*/}
+	    		<Text style={styles.searchHistroyTitle}>搜索历史</Text>
+	    		<View style={styles.searchHistroyBox}>
+	    			<Text style={styles.searchHistroyList}>aa</Text>
+	    			<Text style={styles.searchHistroyList}>aa</Text>
+	    			<Text style={styles.searchHistroyList}>aa</Text>
+	    			<Text style={styles.searchHistroyList}>aa</Text>
+
+	    		</View>
+
+	    		{/*底部清空按钮*/}
+	    		<TouchableOpacity activeOpacity={0.8} onPress={this.clearSearchHistroy} style={styles.clearSearchHistroyBox}>
+	    			<View style={styles.clearSearchHistroyView}>
+	    				<Text style={styles.clearSearchHistroyText}>清空搜索历史</Text>
+	    			</View>
+	    		</TouchableOpacity>
 	    	</View>
 	    );
   	},
@@ -57,6 +74,9 @@ let productSearch = React.createClass({
   		})
   	},
   	goSearch(){
+
+  	},
+  	clearSearchHistroy(){
 
   	}
 })
@@ -97,11 +117,11 @@ const styles = StyleSheet.create({
 		height: 30,
 		borderColor: '#f65a44',
 		borderBottomWidth: 0.5,
-		alignItems: 'center'
 	},
 	inputStyle:{
 		width: UISize.width() - 144,
 		paddingHorizontal: 10,
+		paddingVertical: 0,
 		height: 30,
 		fontSize: 14,
 	},
@@ -118,6 +138,46 @@ const styles = StyleSheet.create({
 	rightText:{
 		fontSize: 14,
 		color: '#fff'
+	},
+	clearSearchHistroyBox:{
+		width: UISize.width(),
+		height: 48,
+		borderColor: '#e1e1e1',
+		borderTopWidth: 0.5,
+		position: 'absolute',
+		bottom: 0,
+		left: 0
+	},
+	clearSearchHistroyView:{
+		width: UISize.width(),
+		height: 48,
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	clearSearchHistroyText:{
+		color: '#f65a44',
+		fontSize: 14
+	},
+	searchHistroyTitle:{
+		marginVertical: 20,
+		marginLeft: 15,
+		color: '#494949',
+		fontSize: 14
+	},
+	searchHistroyBox:{
+		width: UISize.width(),
+		flexWrap: 'wrap',
+		alignItems: 'flex-start',
+		flexDirection: 'row',
+		paddingHorizontal: 30,
+	},
+	searchHistroyList:{
+		padding: 10,
+		marginRight: 10,
+		marginBottom: 10,
+		backgroundColor: '#f4f4f4',
+		color: '#717171',
+		borderRadius: 5
 	}
 });
 
