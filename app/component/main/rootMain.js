@@ -53,6 +53,10 @@ const TabScreenNavigator = TabNavigator({
         labelStyle:{
             fontSize: 12,
         },
+        tabStyle:{
+            padding: 0,
+            margin: 0,
+        },
         style:{
             backgroundColor: '#fafafa',
         },
