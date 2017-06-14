@@ -20,12 +20,6 @@ import API from '../../config/apiConfig';
 import Toast from 'react-native-root-toast';
 
 let {width, height} = Dimensions.get('window');
-const resetAction = NavigationActions.reset({
-    index: 0,
-    actions: [
-        NavigationActions.navigate({ routeName: 'TabRoot'}),
-    ]
-});
 
 let login = React.createClass({
     getInitialState: function() {
@@ -128,7 +122,7 @@ let login = React.createClass({
         },function(result){
             Storage.setData("token",result.data.token);
             Storage.setData("profileId",result.data.profileId);
-            _this.props.navigation.dispatch(resetAction);
+            _this.props.navigation.navigate("ProductTab");
         });      
     },
     clickExperience(){
