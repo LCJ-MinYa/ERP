@@ -9,7 +9,8 @@ import {
   	Text,
   	Image,
   	ScrollView,
-  	TouchableWithoutFeedback
+  	TouchableWithoutFeedback,
+    Platform
 } from 'react-native';
 
 import Request from '../../utils/request.js';
@@ -22,11 +23,11 @@ class productDetail extends Component {
     constructor(props){
         super(props);
         this.state = {
-            picData: []
+            productData: {},
         };
     }
     renderSwiperView(){
-    	if(this.state.picData.length !== 0){
+    	if(this.state.productData.picData && this.state.productData.picData.length !== 0){
 	    	return(
 	    		<View style={styles.wrapper}>
 					<Swiper
@@ -36,11 +37,6 @@ class productDetail extends Component {
 					>
 				        {this.renderImageItemView()}
 				  	</Swiper>
-				  	<TouchableWithoutFeedback onPress={this.goCart.bind(this)}>
-				  		<View>
-				  			<Text style={styles.goCartView}>购物车</Text>
-				  		</View>
-	    			</TouchableWithoutFeedback>
 	    		</View>
 	    	)
     	}else{
@@ -49,23 +45,33 @@ class productDetail extends Component {
     }
     renderImageItemView(){
 		let imageItemArr = [];
-		for (var i = 0; i < this.state.picData.length; i++) {
+		for (var i = 0; i < this.state.productData.picData.length; i++) {
 			imageItemArr.push(
 		        <View style={styles.slide} key={i}>
 		          	<Image
 		          	  style={styles.slideImage}
-		          	  source={{uri: this.state.picData[i]}}
+		          	  source={{uri: this.state.productData.picData[i]}}
 		          	/>
 		        </View>
 			)
 		}
 		return imageItemArr;   	
     }
+    renderProductMsgView(){
+        return(
+            <View>
+                <Text>{this.state.productData.fullName}</Text>
+            </View>
+        )
+    }
   	render() {
     	return (
             <View style={styles.container}>
                 <ScrollView style={styles.scrollViewStyle}>
                     {this.renderSwiperView()}
+
+                    {/*商品信息*/}
+                    {this.renderProductMsgView()}
                 </ScrollView>
 
                 <View style={styles.footerView}>
@@ -77,6 +83,19 @@ class productDetail extends Component {
                         <Text style={styles.footerRightText}>加入购物车</Text>
                     </View>
                 </View>
+
+                <TouchableWithoutFeedback onPress={this.goBack.bind(this)}>
+                    <View style={[styles.goCartView, styles.goBackView]}>
+                        <Text style={styles.goCartText}>&#xe640;</Text>
+                    </View>
+                </TouchableWithoutFeedback>
+
+                <TouchableWithoutFeedback onPress={this.goCart.bind(this)}>
+                    <View style={styles.goCartView}>
+                        <Text style={styles.goCartText}>&#xe600;</Text>
+                    </View>
+                </TouchableWithoutFeedback>
+
                 <Request
                     ref="request"
                     popGoLogin={this.popGoLogin}
@@ -89,6 +108,9 @@ class productDetail extends Component {
     }
     goCart(){
         this.props.navigation.navigate("CartTab");
+    }
+    goBack(){
+        this.props.navigation.goBack(null);
     }
   	componentDidMount(){
   		let id = this.props.navigation.state.params.productId;
@@ -104,9 +126,8 @@ class productDetail extends Component {
   		this.refs.request.PostService(API.PRODUCT_DETAIL, {
   			productId: id
   		}, function(result){
-  			//console.log(result);
   			_this.setState({
-  				picData: result.data.picData
+  				productData: result.data
   			})
   		})
   	}
@@ -115,13 +136,11 @@ class productDetail extends Component {
   		this.refs.request.PostService(API.RELEVANCE_PRODUCT, {
   			productId: id
   		}, function(result){
-  			//console.log(result);
   		}, true);
   	}
   	doAddBrowsingRecord(id){
   		let _this = this;
   		this.refs.request.PostService(API.ADD_BROWSING_RECORD, {productId: id}, function(){
-            //console.log(result);
         }, true);
   	}
 }
@@ -184,9 +203,23 @@ const styles = StyleSheet.create({
   	},
   	goCartView:{
   		position: 'absolute',
-  		top: 10,
-  		right: 20
-  	}
+  		top: Platform.OS === 'ios' ? 20 : 10,
+  		right: 10,
+        width: 42,
+        height: 42,
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        borderRadius: 21,
+        justifyContent: 'center',
+        alignItems: 'center'
+  	},
+    goBackView:{
+        left: 10,
+    },
+    goCartText:{
+        fontFamily: 'iconfont',
+        fontSize: 18,
+        color: '#fff'
+    }
 });
 
 export default productDetail;
