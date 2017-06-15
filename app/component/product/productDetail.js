@@ -10,12 +10,14 @@ import {
   	Image,
   	ScrollView,
   	TouchableWithoutFeedback,
-    Platform
+    Platform,
+    WebView
 } from 'react-native';
 
 import Request from '../../utils/request.js';
 import API from '../../config/apiConfig.js';
 import Swiper from 'react-native-swiper';
+import WebViewContainer from '../common/webViewContainer';
 
 let {width, height} = Dimensions.get('window');
 
@@ -24,7 +26,8 @@ class productDetail extends Component {
         super(props);
         this.state = {
             productData: {},
-            showRelevanceProduct: false
+            showRelevanceProduct: false,
+            webViewHeight: 0,
         };
     }
     renderSwiperView(){
@@ -90,6 +93,13 @@ class productDetail extends Component {
                         <View style={[styles.productTabsTitle, this.state.showRelevanceProduct ? styles.productTabsChoose : null]}><Text style={styles.productTabsTitleText}>商品参数</Text></View>
                     </TouchableWithoutFeedback>
                 </View>
+                {
+                    !this.state.showRelevanceProduct ? (
+                        <WebViewContainer html={this.state.productData.description}/>
+                    ) : (
+                         <Text>321</Text>
+                    )  
+                }
             </View>
         )
     }
@@ -314,6 +324,10 @@ const styles = StyleSheet.create({
     productTabsChoose:{
         borderBottomWidth: 1,
         borderColor: '#f65a44'
+    },
+    webView:{
+        width: width,
+        backgroundColor: '#fff',
     }
 });
 
