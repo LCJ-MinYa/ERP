@@ -24,6 +24,7 @@ class productDetail extends Component {
         super(props);
         this.state = {
             productData: {},
+            showRelevanceProduct: false
         };
     }
     renderSwiperView(){
@@ -78,6 +79,20 @@ class productDetail extends Component {
             </View>
         )
     }
+    renderProductTabsView(){
+        return(
+            <View style={styles.productTabsView}>
+                <View style={styles.productTabsTitleView}>
+                    <TouchableWithoutFeedback onPress={this.changeRelevanceProduct.bind(this)}>
+                        <View style={[styles.productTabsTitle, !this.state.showRelevanceProduct ? styles.productTabsChoose : null]}><Text style={styles.productTabsTitleText}>图文详情</Text></View>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={this.changeRelevanceProduct.bind(this)}>
+                        <View style={[styles.productTabsTitle, this.state.showRelevanceProduct ? styles.productTabsChoose : null]}><Text style={styles.productTabsTitleText}>商品参数</Text></View>
+                    </TouchableWithoutFeedback>
+                </View>
+            </View>
+        )
+    }
   	render() {
     	return (
             <View style={styles.container}>
@@ -86,6 +101,9 @@ class productDetail extends Component {
 
                     {/*商品信息*/}
                     {this.renderProductMsgView()}
+
+                    {/*商品详情和参数*/}
+                    {this.renderProductTabsView()}
                 </ScrollView>
 
                 <View style={styles.footerView}>
@@ -125,6 +143,9 @@ class productDetail extends Component {
     }
     goBack(){
         this.props.navigation.goBack(null);
+    }
+    changeRelevanceProduct(){
+        this.setState({showRelevanceProduct: !this.state.showRelevanceProduct});
     }
   	componentDidMount(){
   		let id = this.props.navigation.state.params.productId;
@@ -266,6 +287,33 @@ const styles = StyleSheet.create({
         left: width * 0.6,
         fontSize: 13,
         color: '#979797'
+    },
+    productTabsView:{
+        marginBottom: 44,
+        backgroundColor: '#fff',
+    },
+    productTabsTitleView:{
+        width: width,
+        height: 36,
+        flexDirection: 'row',
+        borderColor: '#d6d7dc',
+        borderBottomWidth: 0.5,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    productTabsTitle:{
+        flex: 1,
+        height: 36,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    productTabsTitleText:{
+        fontSize: 15,
+        color: '#4d4d4d',
+    },
+    productTabsChoose:{
+        borderBottomWidth: 1,
+        borderColor: '#f65a44'
     }
 });
 
