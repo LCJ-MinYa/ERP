@@ -27,7 +27,6 @@ class productDetail extends Component {
         this.state = {
             productData: {},
             showRelevanceProduct: false,
-            webViewHeight: 0,
         };
     }
     renderSwiperView(){
@@ -86,10 +85,10 @@ class productDetail extends Component {
         return(
             <View style={styles.productTabsView}>
                 <View style={styles.productTabsTitleView}>
-                    <TouchableWithoutFeedback onPress={this.changeRelevanceProduct.bind(this)}>
+                    <TouchableWithoutFeedback onPress={this.changeRelevanceProduct.bind(this, false)}>
                         <View style={[styles.productTabsTitle, !this.state.showRelevanceProduct ? styles.productTabsChoose : null]}><Text style={styles.productTabsTitleText}>图文详情</Text></View>
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={this.changeRelevanceProduct.bind(this)}>
+                    <TouchableWithoutFeedback onPress={this.changeRelevanceProduct.bind(this, true)}>
                         <View style={[styles.productTabsTitle, this.state.showRelevanceProduct ? styles.productTabsChoose : null]}><Text style={styles.productTabsTitleText}>商品参数</Text></View>
                     </TouchableWithoutFeedback>
                 </View>
@@ -97,7 +96,12 @@ class productDetail extends Component {
                     !this.state.showRelevanceProduct ? (
                         <WebViewContainer html={this.state.productData.description}/>
                     ) : (
-                         <Text>321</Text>
+                        <View>
+                            <View style={styles.productParamsView}>
+                                <Text style={styles.productParamsTitle}>名称</Text>
+                                <Text numberOfLines={1} style={styles.productParamsDec} >{this.state.productData.fullName}</Text>
+                            </View>
+                        </View>
                     )  
                 }
             </View>
@@ -155,8 +159,12 @@ class productDetail extends Component {
     goBack(){
         this.props.navigation.goBack(null);
     }
-    changeRelevanceProduct(){
-        this.setState({showRelevanceProduct: !this.state.showRelevanceProduct});
+    changeRelevanceProduct(showRelevanceProduct){
+        if(showRelevanceProduct){
+            this.setState({showRelevanceProduct: true});
+        }else{
+            this.setState({showRelevanceProduct: false});
+        }
     }
   	componentDidMount(){
   		let id = this.props.navigation.state.params.productId;
@@ -329,6 +337,27 @@ const styles = StyleSheet.create({
     webView:{
         width: width,
         backgroundColor: '#fff',
+    },
+    productParamsView:{
+        paddingHorizontal: 10,
+        borderColor: '#f3f3f3',
+        borderBottomWidth: 0.5,
+        width: width,
+        height: 42,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#fff'
+    },
+    productParamsTitle:{
+        width: 30,
+        marginRight: 40,
+        fontSize: 13,
+        color: '#606060'
+    },
+    productParamsDec:{
+        width: width - 90,
+        fontSize: 13,
+        color: '#20282b'
     }
 });
 

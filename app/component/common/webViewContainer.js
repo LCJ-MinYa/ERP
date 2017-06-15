@@ -12,7 +12,7 @@ const script = `<script>
         document.title = document.documentElement.offsetHeight;
         document.body.style.height = document.documentElement.offsetHeight;
     }
-    window.addEventListener('load', _autoHeight)
+    window.addEventListener('load', _autoHeight);
 </script>`;
 
 let safeHtml = function (html) {
@@ -27,7 +27,7 @@ let safeHtml = function (html) {
                 <title></title>
                 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
                 <style media="screen">
-                    html,body{overflow: hidden;min-height:64px;}
+                    html,body{overflow: hidden;min-height:64px; margin: 0; padding: 0;}
                     img{max-width: 100%}
                 </style>
             </head>
@@ -47,7 +47,8 @@ export default class webViewContainer extends Component {
         };
     }
     onNavigationStateChange(navState) {
-        let h = Number(navState.title)|| 0;
+        let h = Number(navState.title) || 0;
+        console.log(h);
         if (h) {
             this.setState({height: h});
         }
@@ -76,7 +77,7 @@ export default class webViewContainer extends Component {
                 scrollEnabled={false}
                 source={{html: page, baseUrl: '', title: ''}}
                 ref={(c) => {this.webview = c}}
-                automaticallyAdjustContentInsets={true}
+                automaticallyAdjustContentInsets={false}
                 javaScriptEnabled={true}
                 domStorageEnabled={true}
                 decelerationRate="normal"
