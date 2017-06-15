@@ -140,12 +140,13 @@ class productDetail extends Component {
 
                 <Request
                     ref="request"
-                    popGoLogin={this.popGoLogin}
+                    popGoLogin={this.popGoLogin.bind(this)}
                 />
             </View>
     	);
   	}
     popGoLogin(){
+
         this.props.navigation.navigate('Login');
     }
     goCart(){

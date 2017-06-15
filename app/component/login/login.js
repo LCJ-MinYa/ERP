@@ -87,7 +87,7 @@ let login = React.createClass({
                 <Experience
                     isShowExperience={this.state.isShowExperience}
                     closeExperience={this.closeExperience}
-                    experienceLogin={(userName, password)=>{this.experienceLogin(userName, password)}}
+                    experienceLogin={(userName, password)=>{this.popExperienceLogin(userName, password)}}
                 />
 
                 <Request
@@ -115,11 +115,13 @@ let login = React.createClass({
         }
     },
     sendLoginRequest(userName, password){
+        console.log('进入发送请求');
         let _this = this;
         this.refs.request.PostService(API.LOGIN, {
             userName: userName,
             password: password
         },function(result){
+            console.log('发送请求成功回调');
             Storage.setData("token",result.data.token);
             Storage.setData("profileId",result.data.profileId);
             _this.props.navigation.navigate("ProductTab");
@@ -131,8 +133,10 @@ let login = React.createClass({
     closeExperience(){
         this.setState({isShowExperience: false});
     },
-    experienceLogin(userName, password){
+    popExperienceLogin(userName, password){
+        console.log('回到login');
         this.setState({isShowExperience: false}, ()=>{
+            console.log('关闭modal');
             this.sendLoginRequest(userName, password);
         });
     }

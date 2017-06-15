@@ -73,7 +73,8 @@ let experienceEnter = React.createClass({
   		}
   		return(
   			<TouchableOpacity activeOpacity={0.8} onPress={()=>{
-  				this.experienceLogin(userName, password)
+  				console.log('断点测试ios模拟器崩溃原因,准备回到login');
+  				this.props.experienceLogin(userName, password)
   			}}>
 	        	<View style={styles.listContentBox}>
 	        		{icon}
@@ -85,9 +86,6 @@ let experienceEnter = React.createClass({
   	closeExperience(){
   		this.props.closeExperience();
   	},
-  	experienceLogin(userName, password){
-  		this.props.experienceLogin(userName, password);
-  	}
 })
 
 const styles = StyleSheet.create({
