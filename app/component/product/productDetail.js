@@ -59,8 +59,22 @@ class productDetail extends Component {
     }
     renderProductMsgView(){
         return(
-            <View>
-                <Text>{this.state.productData.fullName}</Text>
+            <View style={styles.productMsgView}>
+                <Text numberOfLines={2} style={styles.productFullName}>{this.state.productData.fullName}</Text>
+                <Text numberOfLines={1} style={styles.productCode}>编号:{this.state.productData.code}</Text>
+                <View style={styles.productPriceView}>
+                    <Text style={styles.productTradePrice}>
+                        批发价：
+                        <Text style={styles.productTradePriceColor}>
+                            ¥<Text style={styles.productTradePriceSize}>{this.state.productData.tradePrice}</Text>
+                        </Text>
+                    </Text>
+                    <Text style={styles.productMarketPrice}>市场价：{this.state.productData.marketPrice}</Text>
+                </View>
+                <View style={[styles.productPriceView, {marginTop: 5}]}>
+                    <Text style={styles.productTradePrice}>起订量：{this.state.productData.minQty}{this.state.productData.unit}</Text>
+                    <Text style={styles.productMarketPrice}>库存：{this.state.productData.stockQty}{this.state.productData.unit}</Text>
+                </View>
             </View>
         )
     }
@@ -219,6 +233,39 @@ const styles = StyleSheet.create({
         fontFamily: 'iconfont',
         fontSize: 18,
         color: '#fff'
+    },
+    productMsgView:{
+        padding: 8,
+        backgroundColor: '#fff',
+        marginBottom: 8,
+    },
+    productFullName:{
+        fontSize: 15,
+        color: '#323232'
+    },
+    productCode:{
+        fontSize: 12,
+        color: '#898989',
+        paddingVertical: 4,
+    },
+    productPriceView:{
+        flexDirection: 'row',
+    },
+    productTradePrice:{
+        fontSize: 13,
+        color: '#646464'
+    },
+    productTradePriceColor:{
+        color: '#f65a44'
+    },
+    productTradePriceSize:{
+        fontSize: 15
+    },
+    productMarketPrice:{
+        position: 'absolute',
+        left: width * 0.6,
+        fontSize: 13,
+        color: '#979797'
     }
 });
 
