@@ -193,6 +193,8 @@ let request = React.createClass({
 					if(resultJSON.error_code == -12 || resultJSON.error_code == -15){
 						if(!isNotBaseLoading){
 							this.props.popGoLogin();
+						}else{
+							callback(resultJSON);
 						}
 					}else{
 						this.toast(resultJSON.error_message);

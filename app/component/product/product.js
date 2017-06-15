@@ -86,7 +86,6 @@ let product = React.createClass({
                 <Request
                     ref="request"
                     isShowLoading={this.state.isShowLoading}
-                    popGoLogin={this.popGoLogin}
                 />
             </View>
     	);
@@ -116,7 +115,11 @@ let product = React.createClass({
             }
             _this.setState({bannerNoticeData: result}, ()=>{
                 bannerNoticeReq = false;
-                _this.isRequestFinish();
+                if(result.error_code == -12 || result.error_code == -15){
+                    _this.isRequestFinish('loginOut');
+                }else{
+                    _this.isRequestFinish();
+                }
             });
         }, true);
     },
@@ -132,7 +135,11 @@ let product = React.createClass({
             if(result.data.length !== 0){
                 _this.setState({productData: result.data}, ()=>{
                     productReq = false;
-                    _this.isRequestFinish();
+                    if(result.error_code == -12 || result.error_code == -15){
+                        _this.isRequestFinish('loginOut');
+                    }else{
+                        _this.isRequestFinish();
+                    }
                 });
             }
         }, true);
@@ -140,7 +147,14 @@ let product = React.createClass({
     doRefresh(){
         this.getInitMsg();
     },
-    isRequestFinish(){
+    isRequestFinish(loginOut){
+        if(loginOut){
+            setTimeout(()=>{
+                this.setState({isShowLoading: false}, ()=>{
+                    this.popGoLogin();
+                });
+            }, 500);
+        }
         if(!bannerNoticeReq && !productReq){
             setTimeout(()=>{
                 this.setState({isShowLoading: false});
