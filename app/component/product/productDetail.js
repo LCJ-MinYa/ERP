@@ -134,7 +134,13 @@ class productDetail extends Component {
 
                 <View style={styles.footerView}>
                     <View style={styles.footerLeftView}>
-                        <Text style={styles.footerLeftIcon}>&#xe64c;</Text>
+                        {
+                            this.state.productData.isCollected ? (
+                                <Text style={[styles.footerLeftIcon,{paddingTop: 2}]}>&#xe64b;</Text>
+                            ) : (
+                                <Text style={styles.footerLeftIcon}>&#xe64c;</Text>
+                            )
+                        }
                         <Text style={styles.footerLeftText}>收藏</Text>
                     </View>
                     <View style={[styles.footerLeftView, styles.footerRightView]}>
