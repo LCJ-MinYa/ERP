@@ -101,6 +101,18 @@ class productDetail extends Component {
                                 <Text style={styles.productParamsTitle}>名称</Text>
                                 <Text numberOfLines={1} style={styles.productParamsDec} >{this.state.productData.fullName}</Text>
                             </View>
+                            <View style={styles.productParamsView}>
+                                <Text style={styles.productParamsTitle}>规格</Text>
+                                <Text numberOfLines={1} style={styles.productParamsDec} >{this.state.productData.standard}</Text>
+                            </View>
+                            <View style={styles.productParamsView}>
+                                <Text style={styles.productParamsTitle}>型号</Text>
+                                <Text numberOfLines={1} style={styles.productParamsDec} >{this.state.productData.typeName}</Text>
+                            </View>
+                            <View style={styles.productParamsView}>
+                                <Text style={styles.productParamsTitle}>单位</Text>
+                                <Text numberOfLines={1} style={styles.productParamsDec} >{this.state.productData.unit}</Text>
+                            </View>
                         </View>
                     )  
                 }
