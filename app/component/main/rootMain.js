@@ -27,6 +27,7 @@ import productListScreen from '../product/productList';
 import productClassScreen from '../product/productClass';
 import productDetailScreen from '../product/productDetail';
 import productSearchScreen from '../product/productSearch';
+import ModalScreen from '../common/productDetailPopUp';
 
 import Loading from '../../utils/loading';
 import tabBar from '../common/tabBar';
@@ -47,6 +48,7 @@ const TabScreenNavigator = TabNavigator({
 },{
     lazy: true,
     tabBarPosition: 'bottom',
+    animationEnabled: false,
     tabBarOptions:{
         activeTintColor: '#f65a44',
         inactiveTintColor: '#323232',
@@ -85,7 +87,8 @@ const Navigator = StackNavigator({
         navigationOptions:{
             gesturesEnabled: false
         }
-    }
+    },
+    Modal: { screen: ModalScreen }
 },{
     lazy: true,
     headerMode: 'none',
