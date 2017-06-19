@@ -168,12 +168,12 @@ class productDetail extends Component {
                 <ProductDetailPopUo
                     productData={this.state.productData}
                     showProductDetailPopUp={this.state.showProductDetailPopUp}
+                    hideProductDetailPopUp={this.hideProductDetailPopUp.bind(this)}
                 />
 
                 <Request
                     ref={"request"}
                     popGoLogin={this.popGoLogin.bind(this)}
-                    hideProductDetailPopUp={this.hideProductDetailPopUp.bind(this)}
                 />
             </View>
     	);
