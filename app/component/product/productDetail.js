@@ -146,9 +146,9 @@ class productDetail extends Component {
                         <Text style={styles.footerLeftText}>收藏</Text>
                     </View>
                     <TouchableWithoutFeedback onPress={this.showProductDetailPopUp.bind(this)}>
-                    <View style={[styles.footerLeftView, styles.footerRightView]}>
-                        <Text style={styles.footerRightText}>加入购物车</Text>
-                    </View>
+                        <View style={[styles.footerLeftView, styles.footerRightView]}>
+                            <Text style={styles.footerRightText}>加入购物车</Text>
+                        </View>
                     </TouchableWithoutFeedback>
                 </View>
 
@@ -166,7 +166,7 @@ class productDetail extends Component {
 
                 {/*购物弹出框*/}
                 <ProductDetailPopUo
-                    ref={"modal"}
+                    productData={this.state.productData}
                     showProductDetailPopUp={this.state.showProductDetailPopUp}
                 />
 
@@ -179,7 +179,6 @@ class productDetail extends Component {
     	);
   	}
     popGoLogin(){
-
         this.props.navigation.navigate('Login');
     }
     goCart(){
