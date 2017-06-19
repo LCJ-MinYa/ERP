@@ -48,7 +48,6 @@ export default class webViewContainer extends Component {
     }
     onNavigationStateChange(navState) {
         let h = Number(navState.title) || 0;
-        console.log(h);
         if (h) {
             this.setState({height: h});
         }

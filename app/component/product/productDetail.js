@@ -18,6 +18,7 @@ import Request from '../../utils/request.js';
 import API from '../../config/apiConfig.js';
 import Swiper from 'react-native-swiper';
 import WebViewContainer from '../common/webViewContainer';
+import ProductDetailPopUo from '../common/productDetailPopUp';
 
 let {width, height} = Dimensions.get('window');
 
@@ -27,6 +28,7 @@ class productDetail extends Component {
         this.state = {
             productData: {},
             showRelevanceProduct: false,
+            showProductDetailPopUp: false
         };
     }
     renderSwiperView(){
@@ -143,9 +145,11 @@ class productDetail extends Component {
                         }
                         <Text style={styles.footerLeftText}>收藏</Text>
                     </View>
+                    <TouchableWithoutFeedback onPress={this.showProductDetailPopUp.bind(this)}>
                     <View style={[styles.footerLeftView, styles.footerRightView]}>
                         <Text style={styles.footerRightText}>加入购物车</Text>
                     </View>
+                    </TouchableWithoutFeedback>
                 </View>
 
                 <TouchableWithoutFeedback onPress={this.goBack.bind(this)}>
@@ -160,9 +164,16 @@ class productDetail extends Component {
                     </View>
                 </TouchableWithoutFeedback>
 
+                {/*购物弹出框*/}
+                <ProductDetailPopUo
+                    ref={"modal"}
+                    showProductDetailPopUp={this.state.showProductDetailPopUp}
+                />
+
                 <Request
-                    ref="request"
+                    ref={"request"}
                     popGoLogin={this.popGoLogin.bind(this)}
+                    hideProductDetailPopUp={this.hideProductDetailPopUp.bind(this)}
                 />
             </View>
     	);
@@ -215,6 +226,12 @@ class productDetail extends Component {
   		this.refs.request.PostService(API.ADD_BROWSING_RECORD, {productId: id}, function(){
         }, true);
   	}
+    showProductDetailPopUp(){
+        this.setState({showProductDetailPopUp: true});
+    }
+    hideProductDetailPopUp(){
+        this.setState({showProductDetailPopUp: false});
+    }
 }
 
 const styles = StyleSheet.create({
