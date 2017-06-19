@@ -27,7 +27,6 @@ import productListScreen from '../product/productList';
 import productClassScreen from '../product/productClass';
 import productDetailScreen from '../product/productDetail';
 import productSearchScreen from '../product/productSearch';
-import ModalScreen from '../common/productDetailPopUp';
 
 import Loading from '../../utils/loading';
 import tabBar from '../common/tabBar';
@@ -88,7 +87,6 @@ const Navigator = StackNavigator({
             gesturesEnabled: false
         }
     },
-    Modal: { screen: ModalScreen }
 },{
     lazy: true,
     headerMode: 'none',
