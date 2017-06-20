@@ -38,9 +38,11 @@ let productDetailPopUp = React.createClass({
 						批发价：<Text style={styles.productTradePriceColor}>¥<Text style={styles.productTradePriceSize}>{this.props.productData.tradePrice}</Text></Text>    市场价:¥{this.props.productData.marketPrice}
 					</Text>
 				</View>
-				<View style={styles.closeView}>
-					<Text style={styles.closeIcon}>&#xe642;</Text>
-				</View>
+				<TouchableWithoutFeedback onPress={this.props.hideProductDetailPopUp}>
+					<View style={styles.closeView}>
+						<Text style={styles.closeIcon}>&#xe642;</Text>
+					</View>
+				</TouchableWithoutFeedback>
 			</View>
   		)
   	},
@@ -80,6 +82,7 @@ let productDetailPopUp = React.createClass({
 	        			{/*商品基本信息*/}
 	        			{this.renderProductInfo()}
 
+	        			{/*商品单位*/}
 	        		</View>
 
 	        		{/*底部按钮信息*/}
