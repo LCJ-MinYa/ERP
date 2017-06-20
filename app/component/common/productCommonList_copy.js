@@ -12,6 +12,8 @@ import {
   	RefreshControl,
   	TouchableWithoutFeedback
 } from 'react-native';
+import CommonListView from '../common/commonListView';
+
 let {width, height} = Dimensions.get('window');
 let productCommonList = React.createClass({
 	propTypes:{
@@ -23,22 +25,9 @@ let productCommonList = React.createClass({
 			isShowFooter: 0,
 		};
 	},
-	getInitialState: function() {
-		let ds = new ListView.DataSource({
-			rowHasChanged:(row1, row2) => row1 !== row2
-		})
-		return {
-			dataSource: ds,
-		};
-	},
-	componentWillReceiveProps(nextProps){
-		if(nextProps.productData.length !== 0){
-			this.setState({dataSource: this.state.dataSource.cloneWithRows(nextProps.productData)})
-		}
-	},
 	render() {
 		return (
-			<View style={{flex: 1}}>
+			<View>
 				{this.renderSmallList()}
 				{this.renderBigList()}
 			</View>
@@ -47,16 +36,14 @@ let productCommonList = React.createClass({
 	renderSmallList(){
 		if(this.props.isShowSmallProductList){
 			return(
-				<ListView
-					contentContainerStyle={styles.productListSmellBox}
-					dataSource={this.state.dataSource}
+				<CommonListView
+					arrayData={this.props.productData}
+					isShowRefresh={this.props.isShowRefresh}
 					renderRow={this.renderSmellRow}
-					enableEmptySections={true}
-                    refreshControl={this.shoudeShowRefresh()}
-                    onEndReached={this.props.loadMoreData}
-                    onEndReachedThreshold={0}
-                    renderFooter={this.renderFooterView}
-                    removeClippedSubviews={false}
+					isRefreshing={this.props.isRefreshing}
+                    doRefresh={this.props.doRefresh}
+                    loadMoreData={this.props.loadMoreData}
+                    isShowFooter={this.props.isShowFooter}
 				/>
 			)
 		}
@@ -64,50 +51,17 @@ let productCommonList = React.createClass({
 	renderBigList(){
 		if(!this.props.isShowSmallProductList){
 			return(
-				<ListView
-					contentContainerStyle={styles.productListBigBox}
-					dataSource={this.state.dataSource}
+				<CommonListView
+					arrayData={this.props.productData}
+					isShowRefresh={this.props.isShowRefresh}
 					renderRow={this.renderBigRow}
-					enableEmptySections={true}
-                    refreshControl={this.shoudeShowRefresh()}
-                    onEndReached={this.props.loadMoreData}
-                    onEndReachedThreshold={0}
-                    renderFooter={this.renderFooterView}
-                    removeClippedSubviews={false}
+					isRefreshing={this.props.isRefreshing}
+                    doRefresh={this.props.doRefresh}
+                    loadMoreData={this.props.loadMoreData}
+                    isShowFooter={this.props.isShowFooter}
 				/>
 			)
 		}
-	},
-	shoudeShowRefresh(){
-		if(this.props.isShowRefresh){
-			return(
-                <RefreshControl
-                    refreshing={this.props.isRefreshing}
-                    onRefresh={this.props.doRefresh}
-                    tintColor="#989898"
-                    colors={['#989898']}
-                    progressBackgroundColor="#eee"
-                />
-			)
-		}else{
-			return null;
-		}
-	},
-	renderFooterView(){
-		if(this.props.isShowFooter == 0){
-			return null;
-		}else if(this.props.isShowFooter == 1){
-			return this.footerView("加载更多...");
-		}else if(this.props.isShowFooter == 2){
-			return this.footerView("没有更多数据...");
-		}
-	},
-	footerView(footerText){
-		return(
-			<View style={styles.footerBoxView}>
-				<Text>{footerText}</Text>
-			</View>
-		)
 	},
 	renderSmellRow(rowdata){
 		return(

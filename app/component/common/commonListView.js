@@ -63,6 +63,7 @@ let commonListView = React.createClass({
 		)
 	},
   	render() {
+  		console.log(this.props.arrayData);
     	return (
             <ListView
                 contentContainerStyle={this.props.listViewStyle}
