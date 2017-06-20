@@ -13,7 +13,7 @@ import {
     Platform,
     WebView
 } from 'react-native';
-
+import Toast from 'react-native-root-toast';
 import Request from '../../utils/request.js';
 import API from '../../config/apiConfig.js';
 import Swiper from 'react-native-swiper';
@@ -121,6 +121,29 @@ class productDetail extends Component {
             </View>
         )
     }
+    renderFootBtnView(){
+        return(
+            <View style={styles.footerView}>
+                <TouchableWithoutFeedback onPress={this.changeFavoriteState.bind(this)}>
+                    <View style={styles.footerLeftView}>
+                        {
+                            this.state.productData.isCollected ? (
+                                <Text style={[styles.footerLeftIcon,{paddingTop: 2}]}>&#xe64b;</Text>
+                            ) : (
+                                <Text style={styles.footerLeftIcon}>&#xe64c;</Text>
+                            )
+                        }
+                        <Text style={styles.footerLeftText}>收藏</Text>
+                    </View>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={this.showProductDetailPopUp.bind(this)}>
+                    <View style={[styles.footerLeftView, styles.footerRightView]}>
+                        <Text style={styles.footerRightText}>加入购物车</Text>
+                    </View>
+                </TouchableWithoutFeedback>
+            </View>
+        )
+    }
   	render() {
     	return (
             <View style={styles.container}>
@@ -134,23 +157,8 @@ class productDetail extends Component {
                     {this.renderProductTabsView()}
                 </ScrollView>
 
-                <View style={styles.footerView}>
-                    <View style={styles.footerLeftView}>
-                        {
-                            this.state.productData.isCollected ? (
-                                <Text style={[styles.footerLeftIcon,{paddingTop: 2}]}>&#xe64b;</Text>
-                            ) : (
-                                <Text style={styles.footerLeftIcon}>&#xe64c;</Text>
-                            )
-                        }
-                        <Text style={styles.footerLeftText}>收藏</Text>
-                    </View>
-                    <TouchableWithoutFeedback onPress={this.showProductDetailPopUp.bind(this)}>
-                        <View style={[styles.footerLeftView, styles.footerRightView]}>
-                            <Text style={styles.footerRightText}>加入购物车</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </View>
+                {/*底部按钮信息*/}
+                {this.renderFootBtnView()}
 
                 <TouchableWithoutFeedback onPress={this.goBack.bind(this)}>
                     <View style={[styles.goCartView, styles.goBackView]}>
@@ -166,9 +174,11 @@ class productDetail extends Component {
 
                 {/*购物弹出框*/}
                 <ProductDetailPopUo
+                    ref={"modal"}
                     productData={this.state.productData}
                     showProductDetailPopUp={this.state.showProductDetailPopUp}
                     hideProductDetailPopUp={this.hideProductDetailPopUp.bind(this)}
+                    popGoLogin={this.popGoLogin.bind(this)}
                 />
 
                 <Request
@@ -225,6 +235,34 @@ class productDetail extends Component {
   		this.refs.request.PostService(API.ADD_BROWSING_RECORD, {productId: id}, function(){
         }, true);
   	}
+    changeFavoriteState(){
+        let _this = this;
+        let id = this.state.productData.id;
+        if(this.state.productData.isCollected){
+            this.refs.request.PostService(API.CANCEL_FAVORITE, {
+                productId: id
+            }, function(result){
+                Toast.show("取消收藏成功!", {
+                    position: 0,
+                    shadow: false,
+                });
+                _this.state.productData.isCollected = false;
+                _this.forceUpdate();
+            })
+        }else{
+            this.refs.request.PostService(API.ADD_FAVORITE, {
+                productId: id,
+                price: this.state.productData.tradePrice
+            }, function(result){
+                Toast.show("收藏成功!", {
+                    position: 0,
+                    shadow: false,
+                });
+                _this.state.productData.isCollected = true;
+                _this.forceUpdate();
+            })
+        }
+    }
     showProductDetailPopUp(){
         this.setState({showProductDetailPopUp: true});
     }

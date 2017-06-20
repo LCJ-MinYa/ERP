@@ -15,6 +15,8 @@ export default {
 	PRODUCT_DETAIL: '/api/product/getProductDetail',
 	RELEVANCE_PRODUCT: '/api/product/getRelevanceProduct',
 	ADD_BROWSING_RECORD: '/api/personalcenter/addBrowsingRecord',
+	CANCEL_FAVORITE: '/api/product/cancelFavorite',
+	ADD_FAVORITE: '/api/product/addFavorite',
 
 	//mine我的接口
 	USER_INFO: '/api/personalcenter/getUserInfo',
