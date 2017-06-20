@@ -47,7 +47,7 @@ let productDetailPopUp = React.createClass({
 						批发价：<Text style={styles.productTradePriceColor}>¥<Text style={styles.productTradePriceSize}>{this.state.productData.tradePrice}</Text></Text>    市场价:¥{this.state.productData.marketPrice}
 					</Text>
 				</View>
-				<TouchableWithoutFeedback onPress={this.state.hideProductDetailPopUp}>
+				<TouchableWithoutFeedback onPress={this.props.hideProductDetailPopUp}>
 					<View style={styles.closeView}>
 						<Text style={styles.closeIcon}>&#xe642;</Text>
 					</View>
