@@ -1,17 +1,19 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, {
+	Component
+} from 'react';
 
 import {
-  	StyleSheet,
-  	View,
-  	Modal,
-  	Text,
-  	ActivityIndicator
+	StyleSheet,
+	View,
+	Text,
+	ActivityIndicator
 } from 'react-native';
+import UISize from './uiSize';
 
 let loading = React.createClass({
-	propTypes:{
+	propTypes: {
 		isShowLoading: React.PropTypes.bool.isRequired,
 		loadingText: React.PropTypes.string.isRequired,
 	},
@@ -21,15 +23,10 @@ let loading = React.createClass({
 			loadingText: '加载中...'
 		};
 	},
-  	render() {
-    	return (
-      		<Modal
-      			animationType={'fade'}
-      			onRequestClose={() => this.close()}
-      			visible={this.props.isShowLoading}
-      			transparent={true}
-      		>
-      			<View style={styles.loadingWrap}>
+	render() {
+		if (this.props.isShowLoading) {
+			return (
+				<View style={styles.loadingWrap}>
       				<View style={styles.loadingBox}>
       					<ActivityIndicator
       						style={styles.loadingIcon}
@@ -39,19 +36,26 @@ let loading = React.createClass({
       					<Text style={styles.loadingTextStyle}>{this.props.loadingText}</Text>
       				</View>
       			</View>
-      		</Modal>
-    	);
-  	},
-  	close(){
-  		console.log('onRequestClose...');
-  	}
+			)
+		} else {
+			return null;
+		}
+	},
+	close() {
+		console.log('onRequestClose...');
+	}
 });
 
 const styles = StyleSheet.create({
-	loadingWrap:{
+	loadingWrap: {
 		flex: 1,
 		justifyContent: 'center',
-		alignItems: 'center'		
+		alignItems: 'center',
+		position: 'absolute',
+		width: UISize.width(),
+		height: UISize.height(),
+		top: 0,
+		left: 0,
 	},
 	loadingBox: {
 		width: 100,
@@ -59,12 +63,13 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: 'rgba(0, 0, 0, 0.6)',
-		borderRadius: 5
+		borderRadius: 5,
+		marginBottom: 80,
 	},
-	loadingIcon:{
+	loadingIcon: {
 		padding: 10
 	},
-	loadingTextStyle:{
+	loadingTextStyle: {
 		color: '#fff'
 	}
 });
