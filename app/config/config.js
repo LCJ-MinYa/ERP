@@ -15,5 +15,9 @@ export default {
 	},
 	//API: 'http://zxdhapi.cmgrasp.com',
 	API: 'http://ydhapi.zhangyuxia.com.cn',
-	PAGESIZE: 10
+	PAGESIZE: 10,
+	APPKEY: {
+		IOS: 'M-8WL_WgRDOlRKJH3y6kRSnAv5MqSjGM',
+		ANDROID: 'yiiUMsnGQv-tDt3vFnGYJa3A5dtZ0UaU'
+	}
 };
