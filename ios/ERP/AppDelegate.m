@@ -11,6 +11,7 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import "RCTHotUpdate.h"
 
 @implementation AppDelegate
 
@@ -20,9 +21,14 @@
   
   //设置状态栏
   [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-
+  
+  #if DEBUG
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
-
+  #else
+  jsCodeLocation=[RCTHotUpdate bundleURL];
+  #endif
+  // ... 其它代码
+  
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"ERP"
                                                initialProperties:nil

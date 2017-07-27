@@ -12,6 +12,8 @@ import com.facebook.soloader.SoLoader;
 import java.util.Arrays;
 import java.util.List;
 
+import cn.reactnative.modules.update.UpdateContext;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -26,6 +28,11 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new UpdatePackage()
       );
+    }
+
+    @Override
+    protected String getJSBundleFile() {
+      return UpdateContext.getBundleUrl(MainApplication.this);
     }
   };
 
