@@ -4,30 +4,14 @@ import React, {
 	Component
 } from 'react';
 import {
-	Platform,
-} from 'react-native';
-import {
 	Provider
 } from 'react-redux';
 import {
 	createStore
 } from 'redux';
-import {
-	isFirstTime,
-	isRolledBack,
-	packageVersion,
-	currentVersion,
-	checkUpdate,
-	downloadUpdate,
-	switchVersion,
-	switchVersionLater,
-	markSuccess,
-} from 'react-native-update';
-import Config from './config/config';
 
 import AppReducer from './Reducers';
 import RootMain from './component/main/rootMain';
-const appKey = Platform.OS == 'ios' ? Config.APPKEY.IOS : Config.APPKEY.ANDROID;
 
 class App extends React.Component {
 	/* 
@@ -42,12 +26,6 @@ class App extends React.Component {
         		<RootMain ref="RootMain"/>
       		</Provider>
 		);
-	}
-	componentDidMount() {
-		checkUpdate(appKey)
-			.then(info => {
-				console.log(info);
-			})
 	}
 }
 
